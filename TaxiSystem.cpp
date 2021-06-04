@@ -36,7 +36,71 @@ void printTerms() {
 	}
 }
 
+void driverLogin() {
+	int menuChoice, licencePlate, age, driveTime, licenceNumber;
+	string Email, Password, carModel, WOFExpiry;
 
+	cout << "\n\nDriver Login\n";
+	line();
+	cout << "\n1. Login \n 2. Register\n";
+	line();
+	cin >> menuChoice;
+	//login
+	if (menuChoice == 1) {
+		cout << "\n\n\nDriver Login\n";
+		line();
+		cout << "Email: ";
+		cin >> Email;
+		cout << "password: ";
+		cin >> Password;
+		line();
+	}//Eligibility
+	if (menuChoice == 2) {
+		cout << "Eligibility Questions\n";
+		line();
+
+		cout << "\nEnter Full licence number: ";
+		cin >> licenceNumber;
+			cout << "\nEnter Years of Driving Experiance: ";
+			cin >> driveTime;
+				cout << "\nEnter Car Model: ";
+				cin >> carModel;
+					cout << "\nEnter licence Plate: ";
+					cin >> licencePlate;
+						cout << "Enter WOF expiry: ";
+						cin >> WOFExpiry;
+							cout << "Enter Age: ";
+							cin >> age;
+		line();
+		cout << "Checking eligibility, ";
+		if (age >= 20 && driveTime >= 10) {
+			line();
+			cout << "\tYou are Eligible Welcome";
+			line();
+		}
+		else {
+			line();
+			cout << "\tYou are Not Eligible";
+			line();
+		}
+
+		cout << "\n\nDriver Registration\n";
+		line();
+		cout << "\nPlease enter your Full Name: ";
+		cin >> /*placeholder*/;
+		cout << "\nEnter Gender: ";
+		cin >> /*placeholder*/;
+		cout << "\nEnter Date Of birth: ";
+		cin >> /*placeholder*/;
+		cout << "\nEnter Nationality";
+		cin >> /*placeholder*/;
+		cout << "\nLicence Number: " << licenceNumber;
+		cin >> /*placeholder*/;
+		cout << "\nExperiance: " << driveTime;
+		cin >> /*placeholder*/;
+
+	}
+}
 
 void line() {
 	for (int i = 0; i != 66; i++) {
