@@ -2,7 +2,9 @@
 #include <string>
 #include <fstream>
 #include <time.h>
+
 using namespace std;
+
 
 void printTerms() {
 	char ans;
@@ -36,69 +38,16 @@ void printTerms() {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+void line() {
+	for (int i = 0; i != 66; i++) {
+		cout << "*";
+	}
+}
 
 
 int main()
 {
-	
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	int ans;
 	rerun:
@@ -146,9 +95,6 @@ int main()
 
 
 	}
-
-
-
 
 
 
