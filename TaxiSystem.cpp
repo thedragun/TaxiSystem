@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
-#include <time.h>
+#include <ctime>
 
 using namespace std;
 
@@ -109,6 +109,42 @@ void line() {
 }
 
 
+
+void userLogin() {	
+	string details[5]; 
+	int i, j;
+	ofstream myfile;
+	for (i = 0; i < 5; i++) {
+		myfile.open("customerFile.csv", ios::out);
+		cin.ignore();
+		cout << "\nEnter Full Name : ";
+		getline(cin, details[i]);
+		myfile << details[i] << ",";
+		i++;
+		cout << "\nEnter Contact Number :  ";
+		getline(cin, details[i]);
+		myfile << details[i] << ",";
+		i++;
+		cout << "\nEnter Email :  ";
+		getline(cin, details[i]);
+		myfile << details[i] << ",";
+		i++;
+		cout << "\nEnter Adress : ";
+		getline(cin, details[i]);
+		myfile << details[i] << ",";
+		i++;
+		cout << "\nEnter Payment method : ";
+		getline(cin, details[i]);
+		myfile << details[i] << ",";
+		myfile.close();
+		break;
+	}
+}
+	
+
+
+
+
 int main()
 {
 
@@ -134,7 +170,7 @@ int main()
 		goto rerun;
 
 	case 2 : 
-
+		userLogin();
 		goto rerun;
 
 	case 3 :
