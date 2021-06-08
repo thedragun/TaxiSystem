@@ -108,34 +108,37 @@ void line() {
 	}
 }
 
+void userlog() {
+
+}
 
 
-void userLogin() {	
+void userReg() {	
 	string details[5]; 
 	int i, j;
 	ofstream myfile;
 	for (i = 0; i < 5; i++) {
-		myfile.open("customerFile.csv", ios::out);
+		myfile.open("customerFile.csv", ios::out | ofstream::app);
 		cin.ignore();
 		cout << "\nEnter Full Name : ";
 		getline(cin, details[i]);
 		myfile << details[i] << ",";
-		i++;
+
 		cout << "\nEnter Contact Number :  ";
 		getline(cin, details[i]);
 		myfile << details[i] << ",";
-		i++;
+		
 		cout << "\nEnter Email :  ";
 		getline(cin, details[i]);
 		myfile << details[i] << ",";
-		i++;
-		cout << "\nEnter Adress : ";
+		
+		cout << "\nEnter Address : ";
 		getline(cin, details[i]);
 		myfile << details[i] << ",";
-		i++;
+		
 		cout << "\nEnter Payment method : ";
 		getline(cin, details[i]);
-		myfile << details[i] << ",";
+		myfile << details[i] << ",\n";
 		myfile.close();
 		break;
 	}
@@ -149,7 +152,7 @@ int main()
 {
 
 	
-	int ans;
+	int ans, logans;
 	rerun:
 	cout << "\nTaxi Trip Booking System\n\n";
 	cout << "*************************************\n";
@@ -170,9 +173,25 @@ int main()
 		goto rerun;
 
 	case 2 : 
-		userLogin();
+		relog:
+		cout << "\n\nCustomer Login\n";
+		cout << "*************************************\n";
+		cout << "1. Login\n";
+		cout << "2. Register\n";
+		cout << "*************************************\n";
+		cout << "Please Select an Option : ";
+		cin >> logans;
+		if (logans == 1) {
+			userlog();
+		}
+		else if (logans == 2) {
+			userReg();
+		}
+		else {
+			cout << "\nPlease Enter a Valid Input.\n";
+			goto relog;
+		}		
 		goto rerun;
-
 	case 3 :
 
 		goto rerun;
