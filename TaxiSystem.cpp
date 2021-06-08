@@ -36,10 +36,21 @@ void printTerms() {
 	}
 }
 
-void driverLogin() {
-	int menuChoice, licencePlate, age, driveTime, licenceNumber;
-	string Email, Password, carModel, WOFExpiry;
+struct DriverRegistryInfo {
+	string firstName, lastName, gender, licenceExpiry, dateOfBirth, Nationality, emailAddress, streetAddress, bankName, bankAccountName, carModel, experiance, password, rePassword, endorcementNumberExpiry, WOFExpiry, licencePlate;
+	int age, licenceNumber, contactNumber, bankAccountNumber, experiance, carRegistrationNumber, endorcementNumber;
 
+	DriverRegistryInfo(string firstName = "", string lastName = "", string gender = "", string dateOfBirth = "", string Nationality = "", string emailAddress = "", string streetAddress = "", string bankName = "", string carModel = "", string password = "", string rePassword = "", string endorcementNumberExpiry = "", int licenceNumber = 0, string licenceNumberExpiry = "", string WOFExpiry, int contactNumber = 0, int bankAccountNumber = 0, int carRegistrationNumber = 0, int endorcementNumber = 0,int experiance = 0) {
+		string a = firstName, b = gender, c = lastName, d = dateOfBirth, e = Nationality, f = emailAddress, g = streetAddress, h = bankName, i = carModel, k = password, l = rePassword, m = endorcementNumberExpiry, n = licenceNumberExpiry;
+		int o = licenceNumber, p = contactNumber, q = bankAccountNumber, r = carRegistrationNumber, s = endorcementNumber;
+	}
+};
+
+void driverLogin() {
+	struct DriverRegistryInfo DRI;
+	int menuChoice;
+	string Email, Password;
+	//Menu
 	cout << "\n\nDriver Login\n";
 	line();
 	cout << "\n1. Login \n 2. Register\n";
@@ -60,20 +71,20 @@ void driverLogin() {
 		line();
 
 		cout << "\nEnter Full licence number: ";
-		cin >> licenceNumber;
+		cin >> DRI.licenceNumber;
 			cout << "\nEnter Years of Driving Experiance: ";
-			cin >> driveTime;
+			cin >> DRI.experiance;
 				cout << "\nEnter Car Model: ";
-				cin >> carModel;
+				cin >> DRI.carModel;
 					cout << "\nEnter licence Plate: ";
-					cin >> licencePlate;
+					cin >> DRI.licencePlate;
 						cout << "Enter WOF expiry: ";
-						cin >> WOFExpiry;
+						cin >> DRI.WOFExpiry;
 							cout << "Enter Age: ";
-							cin >> age;
+							cin >> DRI.age;
 		line();
 		cout << "Checking eligibility, ";
-		if (age >= 20 && driveTime >= 10) {
+		if (DRI.age >= 20 && DRI.experiance >= 10) {
 			line();
 			cout << "\tYou are Eligible Welcome";
 			line();
@@ -86,19 +97,44 @@ void driverLogin() {
 
 		cout << "\n\nDriver Registration\n";
 		line();
-		cout << "\nPlease enter your Full Name: ";
-		cin >> /*placeholder*/;
+		cout << "\nPlease enter your First Name: ";
+		cin >> DRI.firstName;
+		cout << "\nEnter your Last Name: ";
+		cin >> DRI.lastName;
 		cout << "\nEnter Gender: ";
-		cin >> /*placeholder*/;
+		cin >> DRI.gender;
 		cout << "\nEnter Date Of birth: ";
-		cin >> /*placeholder*/;
+		cin >> DRI.dateOfBirth;
 		cout << "\nEnter Nationality";
-		cin >> /*placeholder*/;
-		cout << "\nLicence Number: " << licenceNumber;
-		cin >> /*placeholder*/;
-		cout << "\nExperiance: " << driveTime;
-		cin >> /*placeholder*/;
-
+		cin >> DRI.Nationality;
+		cout << "\nLicence Number: " << DRI.licenceNumber;
+		cout << "\nExperiance: " << DRI.experiance;
+		cout << "\nEnter Contact Number: ";
+		cin >> DRI.contactNumber;
+		cout << "\nEnter Email addresss: ";
+		cin >> DRI.emailAddress;
+		cout << "\nEnter Address: ";
+		cin >> DRI.streetAddress;
+		cout << "\nEnter Bank Account Number: ";
+		cin >> DRI.bankAccountNumber;
+		cout << "\nEnter Bank Name: ";
+		cin >> DRI.bankName;
+		cout << "\nEnter Account Name: ";
+		cin >> DRI.bankAccountName;
+		cout << "\nEnter Car Registration Number: ";
+		cin >> DRI.carRegistrationNumber;
+		cout << "\nCar Model: " << DRI.carModel;
+		cout << "\nWOF Expiry: " << DRI.WOFExpiry;
+		cout << "\nEnter Endorcement Number: ";
+		cin >> DRI.endorcementNumber;
+		cout << "\nEnter Endorcement Number Expiry Date: ";
+		cin >> DRI.endorcementNumberExpiry;
+		cout << "\nEnter Password: ";
+		cin >> DRI.password;
+		cout << "\nRenter Password: ";
+		cin >> DRI.rePassword;
+		line();
+		cout << "Thank You For Registering " << DRI.firstName;
 	}
 }
 
