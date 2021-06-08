@@ -114,7 +114,7 @@ void userlog() {
 
 
 void userReg() {	
-	string details[5]; 
+	string details[5], pass1,pass2; 
 	int i, j;
 	ofstream myfile;
 	for (i = 0; i < 5; i++) {
@@ -138,9 +138,33 @@ void userReg() {
 		
 		cout << "\nEnter Payment method : ";
 		getline(cin, details[i]);
-		myfile << details[i] << ",\n";
-		myfile.close();
-		break;
+		myfile << details[i] << ",";
+
+		cout << "\n Enter Card Expiry Date : ";
+		getline(cin, details[i]);
+		myfile << details[i] << ",";
+
+		cout << "\n CVC : ";
+		getline(cin, details[i]);
+		myfile << details[i] << ",";
+
+		repass:
+		cout << "\nEnter Password : ";
+		getline(cin, pass1);
+		myfile << pass1 << ",";
+
+		cout << "\nRe-Enter Password :  ";
+		getline(cin, pass2);
+		if (pass1 == pass2) {
+			myfile.close();
+			break;
+		}
+		else {
+			cout << "\nPasswords Must match Try Again.\n";
+			goto repass;
+		}
+
+		
 	}
 }
 	
