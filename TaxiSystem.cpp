@@ -2,6 +2,7 @@
 #include <string>
 #include <fstream>
 #include <ctime>
+#include <sstream>
 
 using namespace std;
 
@@ -145,21 +146,36 @@ void line() {
 }
 
 void userlog() {
-
+	int linenum = 0;
+	string line, email;
+	cout << "\n\nCustomer Login\n";
+	cout << "*************************************\n";
+	cout << "Enter Email : ";
+	cin.ignore();
+	getline(cin, email);
+	ifstream myfile;
+	myfile.open("customerFile.csv", ios::in);
+	while (getline(myfile,line)) {
+		
+		
+	}
+	
 }
 
 
 void userReg() {	
-	string details[5]; 
-	int i, j;
+	string details[7], pass1,pass2; 
+	int i;
 	ofstream myfile;
+	cout << "\n\nRegister\n";
+	cout << "*************************************\n";
 	for (i = 0; i < 5; i++) {
 		myfile.open("customerFile.csv", ios::out | ofstream::app);
 		cin.ignore();
 		cout << "\nEnter Full Name : ";
 		getline(cin, details[i]);
 		myfile << details[i] << ",";
-
+		
 		cout << "\nEnter Contact Number :  ";
 		getline(cin, details[i]);
 		myfile << details[i] << ",";
@@ -174,9 +190,34 @@ void userReg() {
 		
 		cout << "\nEnter Payment method : ";
 		getline(cin, details[i]);
-		myfile << details[i] << ",\n";
-		myfile.close();
-		break;
+		myfile << details[i] << ",";
+
+		cout << "\nEnter Card Expiry Date(MM/YY) : ";
+		getline(cin, details[i]);
+		myfile << details[i] << ",";
+
+		cout << "\nCVC : ";
+		getline(cin, details[i]);
+		myfile << details[i] << ",";
+
+		repass:
+		cout << "\nEnter Password : ";
+		getline(cin, pass1);
+		
+
+		cout << "\nRe-Enter Password :  ";
+		getline(cin, pass2);
+		if (pass1 == pass2) {
+			myfile << pass2 << ",\n";
+			myfile.close();
+			break;
+		}
+		else {
+			cout << "\nPasswords Must match Try Again.\n";
+			goto repass;
+		}
+
+		
 	}
 }
 	
