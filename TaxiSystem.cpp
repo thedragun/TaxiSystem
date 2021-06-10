@@ -4,6 +4,7 @@
 #include <time.h>
 #include <ctime>
 #include <sstream>
+#include <vector>
 
 using namespace std;
 
@@ -143,6 +144,15 @@ void driverLogin() {
 		cout << "\nRenter Password: ";
 		cin >> DRI.rePassword;
 		line();
+		while (DRI.password != DRI.rePassword)
+		{
+			cout << "\nthose password dot not match please try again";
+				cout << "please enter a password: ";
+				cin >> DRI.password;
+				cout << "\nplease reenter the password: ";
+				cin >> DRI.rePassword;
+		}
+
 		cout << "Thank You For Registering " << DRI.firstName;
 		//Data Transfer to External File
 		fstream driverFile;
@@ -230,7 +240,129 @@ void userReg() {
 }
 	
 
+void adminMenu() {
+	string usernameCheck;
+	string passwordCheck;
+	string storedLogin = "OnlyTripper";
+	string storedPassword = "500Miles";
 
+	//Login 
+	cout << "\n\nAdmin Menu\n";
+	line();
+	cout << "\nLogin:\n";
+	cout << "Username: ";
+	cin >> usernameCheck;
+	cout << "\nPassword: ";
+	cin >> passwordCheck;
+	//Password Checking
+	while (usernameCheck != storedLogin && passwordCheck != storedPassword) {
+		cout << "\nThat login dosen't match please try again.\n";
+		cout << "\nLogin:\n";
+		cout << "Username: ";
+		cin >> usernameCheck;
+		cout << "\nPassword: ";
+		cin >> passwordCheck;
+	}
+	line();
+	cout << "Welcome Admins";
+	line();
+
+	//Weekly Report
+	cout << "\n\nWeekly Report";
+	line();
+	cout << "\n" << ctime;
+	cout << "\nNumber of trips: ";
+	cout << "\nPayments: ";
+	cout << "\nPaid to drivers: $";
+	cout << "\nGross: ";
+	cout << "\nTax deduction: $";
+	cout << "\nNet profit: ";
+	cout << "\n";
+	line();
+	
+	//Driver Report
+	cout << "Driver Report\n";
+	line();
+	fstream driverFile;
+
+	driverFile.open("driverFile.csv", ios::in);
+
+	int driverinfo;
+	int drivernum = 1;
+
+	vector<string> row;
+	string rowB, word, temp;
+
+	while (driverFile >> temp) {
+		row.clear();
+
+		getline(driverFile, rowB);
+		stringstream s(rowB);
+		while (getline(s, word, ', ')) {
+			row.push_back(word);
+		}
+
+		driverinfo = stoi(row[0]);
+
+		if (driverinfo == drivernum) {
+			cout << row[0] << "\n";
+			cout << row[1] << "\n";
+			cout << row[2] << "\n";
+			cout << row[3] << "\n";
+			cout << row[4] << "\n";
+			break;
+		}
+
+	}
+	driverFile.close();
+	line();
+
+	//Customer Report
+	cout << "Customer Report\n";
+	line();
+	//getting customer info
+	fstream customerFile;
+
+	customerFile.open("customerFile.csv", ios::in);
+
+	int customerinfo;
+	int customernum = 1;
+
+	vector<string> row;
+	string rowB, word, temp;
+
+	while (customerFile >> temp) {
+		row.clear();
+
+		getline(customerFile, rowB);
+		stringstream s(rowB);
+		while (getline(s, word, ', ')) {
+			row.push_back(word);
+		}
+
+		customerinfo = stoi(row[0]);
+
+		if (customerinfo == customernum) {
+			cout << row[0] << "\n";
+			cout << row[1] << "\n";
+			cout << row[2] << "\n";
+			cout << row[3] << "\n";
+			cout << row[4] << "\n";
+			break;
+		}
+
+	}
+	customerFile.close();
+	line();
+
+	//Cancellation Report
+	cout << "Cancelation Report";
+	line();
+	cout << "\nAmount of cancelattions: ";
+	cout << "Profit loss: $";
+	cout << "\n";
+	line();
+}
 
 
 int main()
