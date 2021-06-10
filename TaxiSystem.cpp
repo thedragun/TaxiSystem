@@ -163,77 +163,61 @@ void driverLogin() {
 
 }
 
-void userlog() {
-	int linenum = 0;
-	string line, email;
+
+
+struct UserReg {
+public:
+	string name, number, email, address, payment, date, cvc, password;
+
+	UserReg() {
+		name = "", number = "", email = "", address = "", payment = "", date = "", cvc = "", password = "";
+	}
+};
+
+void userReg() {
+relog:
+	UserReg data[8];
+	UserReg alldata;
+	int logans;
 	cout << "\n\nCustomer Login\n";
 	cout << "*************************************\n";
-	cout << "Enter Email : ";
-	cin.ignore();
-	getline(cin, email);
-	ifstream myfile;
-	myfile.open("customerFile.csv", ios::in);
-	while (getline(myfile,line)) {
-		
-		
-	}
-	
-}
-
-
-void userReg() {	
-	string details[7], pass1,pass2; 
-	int i;
-	ofstream myfile;
-	cout << "\n\nRegister\n";
+	cout << "1. Login\n";
+	cout << "2. Register\n";
 	cout << "*************************************\n";
-	for (i = 0; i < 5; i++) {
-		myfile.open("customerFile.csv", ios::out | ofstream::app);
+	cout << "Please Select an Option : ";
+	cin >> logans;
+
+	if (logans == 1) {
+		//Login
+		ifstream myfile;
+		myfile.open("customerFile.csv", ios::in);
+		string line, email, field;
+		int linenum = 0;
 		cin.ignore();
-		cout << "\nEnter Full Name : ";
-		getline(cin, details[i]);
-		myfile << details[i] << ",";
-		
-		cout << "\nEnter Contact Number :  ";
-		getline(cin, details[i]);
-		myfile << details[i] << ",";
-		
-		cout << "\nEnter Email :  ";
-		getline(cin, details[i]);
-		myfile << details[i] << ",";
-		
-		cout << "\nEnter Address : ";
-		getline(cin, details[i]);
-		myfile << details[i] << ",";
-		
-		cout << "\nEnter Payment method : ";
-		getline(cin, details[i]);
-		myfile << details[i] << ",";
+		/*cout << "\n";
+		cout << "\n\nCustomer Login\n";
+		cout << "*************************************\n";
+		cout << "Enter Your Email : ";
+		getline(cin, email);*/
 
-		cout << "\nEnter Card Expiry Date(MM/YY) : ";
-		getline(cin, details[i]);
-		myfile << details[i] << ",";
+		vector <vector<string> > array;
+		vector<string> v;
 
-		cout << "\nCVC : ";
-		getline(cin, details[i]);
-		myfile << details[i] << ",";
-
-		repass:
-		cout << "\nEnter Password : ";
-		getline(cin, pass1);
-		
-
-		cout << "\nRe-Enter Password :  ";
-		getline(cin, pass2);
-		if (pass1 == pass2) {
-			myfile << pass2 << ",\n";
-			myfile.close();
-			break;
+		while (getline(myfile, line)) {
+			v.clear();
+			stringstream ss(line);
+			while (getline(ss,field,',')) {
+				v.push_back(field);
+			}
+			array.push_back(v);
 		}
-		else {
-			cout << "\nPasswords Must match Try Again.\n";
-			goto repass;
+		for (size_t i = 0; i < array.size(); ++i) {
+			for (size_t j = 0; j < array.size(); ++j) {
+				cout << array[i][j] << ", ";
+			}
+			cout << "\n";
 		}
+
 
 		
 	}
@@ -380,6 +364,210 @@ void adminMenu() {
 }
 
 
+	else if (logans == 2) {
+		//Register
+		struct UserReg UR;
+		string pass1, pass2;
+		ofstream myfile;
+		cout << "\n\nRegister\n";
+		cout << "*************************************\n";
+		for (int i = 0; i < 8; i++) {
+			myfile.open("customerFile.csv", ios::out | ofstream::app);
+			cin.ignore();
+			cout << "\nEnter Full Name : ";
+			getline(cin, UR.name);
+
+			cout << "\nEnter Contact Number :  ";
+			getline(cin, UR.number);
+
+			cout << "\nEnter Email :  ";
+			getline(cin, UR.email);
+
+
+			cout << "\nEnter Address : ";
+			getline(cin, UR.address);
+
+
+			cout << "\nEnter Payment method : ";
+			getline(cin, UR.payment);
+
+
+			cout << "\nEnter Card Expiry Date(MM*YY) : ";
+			getline(cin, UR.date);
+
+
+			cout << "\nCVC : ";
+			getline(cin, UR.cvc);
+
+		repass:
+			cout << "\nEnter Password : ";
+			getline(cin, pass1);
+
+			cout << "\nRe-Enter Password :  ";
+			getline(cin, pass2);
+			if (pass1 == pass2) {
+				UR.password = pass2;
+				myfile << UR.name << "," << UR.number << "," << UR.email << "," << UR.address << "," << UR.payment << "," << UR.date << "," << UR.cvc << "," << UR.password << ",\n";
+				myfile.close();
+				break;
+			}
+			else {
+				cout << "\nPasswords Must match Try Again.\n";
+				goto repass;
+			}
+
+			cout << "*************************************\n";
+			cout << "\n\nThank you for Registering\n" << UR.name;
+			cout << "*************************************\n";
+
+		}
+	}
+
+
+	else {
+		cout << "\nPlease Enter a Valid Input.\n";
+		goto relog;
+	}
+
+	customerFile.close();
+	line();
+
+	//Cancellation Report
+	cout << "Cancelation Report";
+	line();
+	cout << "\nAmount of cancelattions: " << TI.tripCancels;
+	cout << "Profit loss: $" << TI.profitLoss;
+	cout << "\n";
+	line();
+
+}
+	
+
+void adminMenu() {
+	string usernameCheck;
+	string passwordCheck;
+	string storedLogin = "OnlyTripper";
+	string storedPassword = "500Miles";
+
+	//Login 
+	cout << "\n\nAdmin Menu\n";
+	line();
+	cout << "\nLogin:\n";
+	cout << "Username: ";
+	cin >> usernameCheck;
+	cout << "\nPassword: ";
+	cin >> passwordCheck;
+	//Password Checking
+	while (usernameCheck != storedLogin && passwordCheck != storedPassword) {
+	cout << "\nThat login dosen't match please try again.\n";
+	cout << "\nLogin:\n";
+	cout << "Username: ";
+	cin >> usernameCheck;
+	cout << "\nPassword: ";
+  cin >> passwordCheck;
+	}
+	line();
+	cout << "Welcome Admins";
+	line();
+
+	//Weekly Report
+	cout << "\n\nWeekly Report";
+	line();
+  cout << "\n" << ctime;
+	cout << "\nNumber of trips: ";
+	cout << "\nPayments: ";
+	cout << "\nPaid to drivers: $";
+	cout << "\nGross: ";
+	cout << "\nTax deduction: $";
+	cout << "\nNet profit: ";
+	cout << "\n";
+	line();
+
+	//Driver Report
+	cout << "Driver Report\n";
+	line();
+	fstream driverFile;
+
+	driverFile.open("driverFile.csv", ios::in);
+
+	int driverinfo;
+	int drivernum = 1;
+
+	vector<string> row;
+	string rowB, word, temp;
+
+	while (driverFile >> temp) {
+		row.clear();
+
+		getline(driverFile, rowB);
+		stringstream s(rowB);
+		while (getline(s, word, ', ')) {
+			row.push_back(word);
+		}
+
+		driverinfo = stoi(row[0]);
+
+		if (driverinfo == drivernum) {
+		cout << row[0] << "\n";
+		cout << row[1] << "\n";
+		cout << row[2] << "\n";
+		cout << row[3] << "\n";
+		cout << row[4] << "\n";
+		break;
+		}
+
+	}
+  driverFile.close();
+	line();
+
+	//Customer Report
+	cout << "Customer Report\n";
+	line();
+	//getting customer info
+	fstream customerFile;
+
+	customerFile.open("customerFile.csv", ios::in);
+
+	int customerinfo;
+	int customernum = 1;
+
+	vector<string> row;
+	string rowB, word, temp;
+
+	while (customerFile >> temp) {
+		row.clear();
+
+		getline(customerFile, rowB);
+		stringstream s(rowB);
+		while (getline(s, word, ', ')) {
+			row.push_back(word);
+		}
+
+		customerinfo = stoi(row[0]);
+
+		if (customerinfo == customernum) {
+			cout << row[0] << "\n";
+			cout << row[1] << "\n";
+			cout << row[2] << "\n";
+			cout << row[3] << "\n";
+			cout << row[4] << "\n";
+			break;
+		}
+
+	}
+	customerFile.close();
+	line();
+
+	//Cancellation Report
+	cout << "Cancelation Report";
+	line();
+	cout << "\nAmount of cancelattions: ";
+  cout << "Profit loss: $";
+	cout << "\n";
+	line();
+}
+
+
 
 
 
@@ -390,7 +578,7 @@ int main()
 {
 
 	
-	int ans, logans;
+	int ans;
 	rerun:
 	cout << "\nTaxi Trip Booking System\n\n";
 	cout << "*************************************\n";
@@ -411,24 +599,7 @@ int main()
 		goto rerun;
 
 	case 2 : 
-		relog:
-		cout << "\n\nCustomer Login\n";
-		cout << "*************************************\n";
-		cout << "1. Login\n";
-		cout << "2. Register\n";
-		cout << "*************************************\n";
-		cout << "Please Select an Option : ";
-		cin >> logans;
-		if (logans == 1) {
-			userlog();
-		}
-		else if (logans == 2) {
-			userReg();
-		}
-		else {
-			cout << "\nPlease Enter a Valid Input.\n";
-			goto relog;
-		}		
+		userReg();
 		goto rerun;
 	case 3 :
 		driverLogin();
@@ -442,13 +613,6 @@ int main()
 
 		break;
 	}
-
-
-
-
-
-
-
 
 
 	}
