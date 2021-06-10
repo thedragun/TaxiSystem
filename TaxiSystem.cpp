@@ -44,12 +44,14 @@ void printTerms() {
 }
 
 struct DriverRegistryInfo {
+public:
 	string firstName, lastName, gender, licenceExpiry, dateOfBirth, Nationality, emailAddress, streetAddress, bankName, bankAccountName, carModel, password, rePassword, endorcementNumberExpiry, WOFExpiry, licencePlate;
 	int age, licenceNumber, contactNumber, bankAccountNumber, experiance, carRegistrationNumber, endorcementNumber;
 
-	DriverRegistryInfo(string firstName = "", string lastName = "", string gender = "", string dateOfBirth = "", string Nationality = "", string emailAddress = "", string streetAddress = "", string bankName = "", string carModel = "", string password = "", string rePassword = "", string endorcementNumberExpiry = "", string licenceNumberExpiry = "", string WOFExpiry = "", int licenceNumber = 0, int contactNumber = 0, int bankAccountNumber = 0, int carRegistrationNumber = 0, int endorcementNumber = 0,int experiance = 0, int age = 0) {
-		string a = firstName, b = gender, c = lastName, d = dateOfBirth, e = Nationality, f = emailAddress, g = streetAddress, h = bankName, i = carModel, k = password, l = rePassword, m = endorcementNumberExpiry, n = licenceNumberExpiry;
-		int o = licenceNumber, p = contactNumber, q = bankAccountNumber, r = carRegistrationNumber, s = endorcementNumber;
+	DriverRegistryInfo() 
+	{
+		firstName = "", gender = "", lastName = "", dateOfBirth = "", Nationality = "", emailAddress = "", streetAddress = "", bankName = "", carModel = "", password = "", rePassword = "", endorcementNumberExpiry = "", licenceExpiry = "";
+		licenceNumber = 0, contactNumber = 0, bankAccountNumber = 0, carRegistrationNumber = 0,endorcementNumber = 0;
 	}
 };
 
