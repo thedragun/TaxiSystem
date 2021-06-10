@@ -6,6 +6,11 @@
 
 using namespace std;
 
+void line() {
+	for (int i = 0; i != 66; i++) {
+		cout << "*";
+	}
+}
 
 void printTerms() {
 	char ans;
@@ -139,11 +144,7 @@ void driverLogin() {
 	}
 }
 
-void line() {
-	for (int i = 0; i != 66; i++) {
-		cout << "*";
-	}
-}
+
 
 void userlog() {
 	int linenum = 0;
