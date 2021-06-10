@@ -239,8 +239,21 @@ void userReg() {
 	}
 }
 	
+struct TripInfo {
+	int numberOfTrips;
+	int payments;
+	int paidToDrivers;
+	int Gross;
+	int taxDeduction;
+	int netProfit;
+	int tripCancels;
+	int profitLoss;
+};
 
 void adminMenu() {
+	
+	struct TripInfo TI;
+
 	string usernameCheck;
 	string passwordCheck;
 	string storedLogin = "OnlyTripper";
@@ -266,17 +279,19 @@ void adminMenu() {
 	line();
 	cout << "Welcome Admins";
 	line();
+	//Gathering for weekly and cancel
+
 
 	//Weekly Report
 	cout << "\n\nWeekly Report";
 	line();
 	cout << "\n" << ctime;
-	cout << "\nNumber of trips: ";
-	cout << "\nPayments: ";
-	cout << "\nPaid to drivers: $";
-	cout << "\nGross: ";
-	cout << "\nTax deduction: $";
-	cout << "\nNet profit: ";
+	cout << "\nNumber of trips: " << TI.numberOfTrips;
+	cout << "\nPayments: " << TI.payments;
+	cout << "\nPaid to drivers: $" << TI.paidToDrivers;
+	cout << "\nGross: " << TI.Gross;
+	cout << "\nTax deduction: $" << TI.taxDeduction;
+	cout << "\nNet profit: " << TI.netProfit;
 	cout << "\n";
 	line();
 	
@@ -358,11 +373,17 @@ void adminMenu() {
 	//Cancellation Report
 	cout << "Cancelation Report";
 	line();
-	cout << "\nAmount of cancelattions: ";
-	cout << "Profit loss: $";
+	cout << "\nAmount of cancelattions: " << TI.tripCancels;
+	cout << "Profit loss: $" << TI.profitLoss;
 	cout << "\n";
 	line();
 }
+
+
+
+
+
+
 
 
 int main()
