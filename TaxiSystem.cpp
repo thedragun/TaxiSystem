@@ -179,8 +179,6 @@ relog:
 	UserReg data[8];
 	UserReg alldata;
 	int logans;
-	
-
 	cout << "\n\nCustomer Login\n";
 	cout << "*************************************\n";
 	cout << "1. Login\n";
@@ -193,36 +191,34 @@ relog:
 		//Login
 		ifstream myfile;
 		myfile.open("customerFile.csv", ios::in);
-		string line, email;
+		string line, email, field;
 		int linenum = 0;
-		while (getline(myfile, line)) {
-			istringstream linestream(line);
-			string item;
-			getline(linestream, item, ',');
-			alldata.email = item;
-
-			getline(linestream, item, ',');
-			stringstream ss(item);
-			ss >> alldata.password;
-			data[linenum] = alldata;
-			linenum++;
-		}
 		cin.ignore();
-		cout << "\n";
+		/*cout << "\n";
 		cout << "\n\nCustomer Login\n";
 		cout << "*************************************\n";
 		cout << "Enter Your Email : ";
-		getline(cin, email);
+		getline(cin, email);*/
 
-		for (int i = 0; i < 1; i++) {
-			if (data[i].email == email) {
-				cout << "Email found : " << data[i].email;
-			}
-			else {
-				cout << "Email not found.";
+		vector <vector<string> > array;
+		vector<string> v;
 
+		while (getline(myfile, line)) {
+			v.clear();
+			stringstream ss(line);
+			while (getline(ss,field,',')) {
+				v.push_back(field);
 			}
+			array.push_back(v);
 		}
+		for (size_t i = 0; i < array.size(); ++i) {
+			for (size_t j = 0; j < array.size(); ++j) {
+				cout << array[i][j] << ", ";
+			}
+			cout << "\n";
+		}
+
+
 		myfile.close();
 	}
 
@@ -238,30 +234,29 @@ relog:
 			myfile.open("customerFile.csv", ios::out | ofstream::app);
 			cin.ignore();
 			cout << "\nEnter Full Name : ";
-			getline(cin, data[i].name);
+			getline(cin, UR.name);
 
 			cout << "\nEnter Contact Number :  ";
-			getline(cin, data[i].number);
-
+			getline(cin, UR.number);
 
 			cout << "\nEnter Email :  ";
-			getline(cin, data[i].email);
+			getline(cin, UR.email);
 
 
 			cout << "\nEnter Address : ";
-			getline(cin, data[i].address);
+			getline(cin, UR.address);
 
 
 			cout << "\nEnter Payment method : ";
-			getline(cin, data[i].payment);
+			getline(cin, UR.payment);
 
 
-			cout << "\nEnter Card Expiry Date(MM/YY) : ";
-			getline(cin, data[i].date);
+			cout << "\nEnter Card Expiry Date(MM*YY) : ";
+			getline(cin, UR.date);
 
 
 			cout << "\nCVC : ";
-			getline(cin, data[i].cvc);
+			getline(cin, UR.cvc);
 
 		repass:
 			cout << "\nEnter Password : ";
@@ -270,7 +265,7 @@ relog:
 			cout << "\nRe-Enter Password :  ";
 			getline(cin, pass2);
 			if (pass1 == pass2) {
-				data[i].password = pass2;
+				UR.password = pass2;
 				myfile << UR.name << "," << UR.number << "," << UR.email << "," << UR.address << "," << UR.payment << "," << UR.date << "," << UR.cvc << "," << UR.password << ",\n";
 				myfile.close();
 				break;
@@ -280,6 +275,9 @@ relog:
 				goto repass;
 			}
 
+			cout << "*************************************\n";
+			cout << "\n\nThank you for Registering\n" << UR.name;
+			cout << "*************************************\n";
 
 		}
 	}
@@ -293,129 +291,129 @@ relog:
 }
 	
 
-void adminMenu() {
-	string usernameCheck;
-	string passwordCheck;
-	string storedLogin = "OnlyTripper";
-	string storedPassword = "500Miles";
-
-	//Login 
-	cout << "\n\nAdmin Menu\n";
-	line();
-	cout << "\nLogin:\n";
-	cout << "Username: ";
-	cin >> usernameCheck;
-	cout << "\nPassword: ";
-	cin >> passwordCheck;
-	//Password Checking
-	while (usernameCheck != storedLogin && passwordCheck != storedPassword) {
-		cout << "\nThat login dosen't match please try again.\n";
-		cout << "\nLogin:\n";
-		cout << "Username: ";
-		cin >> usernameCheck;
-		cout << "\nPassword: ";
-		cin >> passwordCheck;
-	}
-	line();
-	cout << "Welcome Admins";
-	line();
-
-	//Weekly Report
-	cout << "\n\nWeekly Report";
-	line();
-	cout << "\n" << ctime;
-	cout << "\nNumber of trips: ";
-	cout << "\nPayments: ";
-	cout << "\nPaid to drivers: $";
-	cout << "\nGross: ";
-	cout << "\nTax deduction: $";
-	cout << "\nNet profit: ";
-	cout << "\n";
-	line();
-	
-	//Driver Report
-	cout << "Driver Report\n";
-	line();
-	fstream driverFile;
-
-	driverFile.open("driverFile.csv", ios::in);
-
-	int driverinfo;
-	int drivernum = 1;
-
-	vector<string> row;
-	string rowB, word, temp;
-
-	while (driverFile >> temp) {
-		row.clear();
-
-		getline(driverFile, rowB);
-		stringstream s(rowB);
-		while (getline(s, word, ', ')) {
-			row.push_back(word);
-		}
-
-		driverinfo = stoi(row[0]);
-
-		if (driverinfo == drivernum) {
-			cout << row[0] << "\n";
-			cout << row[1] << "\n";
-			cout << row[2] << "\n";
-			cout << row[3] << "\n";
-			cout << row[4] << "\n";
-			break;
-		}
-
-	}
-	driverFile.close();
-	line();
-
-	//Customer Report
-	cout << "Customer Report\n";
-	line();
-	//getting customer info
-	fstream customerFile;
-
-	customerFile.open("customerFile.csv", ios::in);
-
-	int customerinfo;
-	int customernum = 1;
-
-	vector<string> row;
-	string rowB, word, temp;
-
-	while (customerFile >> temp) {
-		row.clear();
-
-		getline(customerFile, rowB);
-		stringstream s(rowB);
-		while (getline(s, word, ', ')) {
-			row.push_back(word);
-		}
-
-		customerinfo = stoi(row[0]);
-
-		if (customerinfo == customernum) {
-			cout << row[0] << "\n";
-			cout << row[1] << "\n";
-			cout << row[2] << "\n";
-			cout << row[3] << "\n";
-			cout << row[4] << "\n";
-			break;
-		}
-
-	}
-	customerFile.close();
-	line();
-
-	//Cancellation Report
-	cout << "Cancelation Report";
-	line();
-	cout << "\nAmount of cancelattions: ";
-	cout << "Profit loss: $";
-	cout << "\n";
-	line();
-}
+//void adminMenu() {
+//	string usernameCheck;
+//	string passwordCheck;
+//	string storedLogin = "OnlyTripper";
+//	string storedPassword = "500Miles";
+//
+//	//Login 
+//	cout << "\n\nAdmin Menu\n";
+//	line();
+//	cout << "\nLogin:\n";
+//	cout << "Username: ";
+//	cin >> usernameCheck;
+//	cout << "\nPassword: ";
+//	cin >> passwordCheck;
+//	//Password Checking
+//	while (usernameCheck != storedLogin && passwordCheck != storedPassword) {
+//		cout << "\nThat login dosen't match please try again.\n";
+//		cout << "\nLogin:\n";
+//		cout << "Username: ";
+//		cin >> usernameCheck;
+//		cout << "\nPassword: ";
+//		cin >> passwordCheck;
+//	}
+//	line();
+//	cout << "Welcome Admins";
+//	line();
+//
+//	//Weekly Report
+//	cout << "\n\nWeekly Report";
+//	line();
+//	cout << "\n" << ctime;
+//	cout << "\nNumber of trips: ";
+//	cout << "\nPayments: ";
+//	cout << "\nPaid to drivers: $";
+//	cout << "\nGross: ";
+//	cout << "\nTax deduction: $";
+//	cout << "\nNet profit: ";
+//	cout << "\n";
+//	line();
+//	
+//	//Driver Report
+//	cout << "Driver Report\n";
+//	line();
+//	fstream driverFile;
+//
+//	driverFile.open("driverFile.csv", ios::in);
+//
+//	int driverinfo;
+//	int drivernum = 1;
+//
+//	vector<string> row;
+//	string rowB, word, temp;
+//
+//	while (driverFile >> temp) {
+//		row.clear();
+//
+//		getline(driverFile, rowB);
+//		stringstream s(rowB);
+//		while (getline(s, word, ', ')) {
+//			row.push_back(word);
+//		}
+//
+//		driverinfo = stoi(row[0]);
+//
+//		if (driverinfo == drivernum) {
+//			cout << row[0] << "\n";
+//			cout << row[1] << "\n";
+//			cout << row[2] << "\n";
+//			cout << row[3] << "\n";
+//			cout << row[4] << "\n";
+//			break;
+//		}
+//
+//	}
+//	driverFile.close();
+//	line();
+//
+//	//Customer Report
+//	cout << "Customer Report\n";
+//	line();
+//	//getting customer info
+//	fstream customerFile;
+//
+//	customerFile.open("customerFile.csv", ios::in);
+//
+//	int customerinfo;
+//	int customernum = 1;
+//
+//	vector<string> row;
+//	string rowB, word, temp;
+//
+//	while (customerFile >> temp) {
+//		row.clear();
+//
+//		getline(customerFile, rowB);
+//		stringstream s(rowB);
+//		while (getline(s, word, ', ')) {
+//			row.push_back(word);
+//		}
+//
+//		customerinfo = stoi(row[0]);
+//
+//		if (customerinfo == customernum) {
+//			cout << row[0] << "\n";
+//			cout << row[1] << "\n";
+//			cout << row[2] << "\n";
+//			cout << row[3] << "\n";
+//			cout << row[4] << "\n";
+//			break;
+//		}
+//
+//	}
+//	customerFile.close();
+//	line();
+//
+//	//Cancellation Report
+//	cout << "Cancelation Report";
+//	line();
+//	cout << "\nAmount of cancelattions: ";
+//	cout << "Profit loss: $";
+//	cout << "\n";
+//	line();
+//}
 
 
 int main()
