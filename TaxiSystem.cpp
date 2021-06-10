@@ -1,11 +1,17 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <time.h>
 #include <ctime>
 #include <sstream>
 
 using namespace std;
 
+void line() {
+	for (int i = 0; i != 66; i++) {
+		cout << "*";
+	}
+}
 
 void printTerms() {
 	char ans;
@@ -38,12 +44,14 @@ void printTerms() {
 }
 
 struct DriverRegistryInfo {
-	string firstName, lastName, gender, licenceExpiry, dateOfBirth, Nationality, emailAddress, streetAddress, bankName, bankAccountName, carModel, experiance, password, rePassword, endorcementNumberExpiry, WOFExpiry, licencePlate;
+public:
+	string firstName, lastName, gender, licenceExpiry, dateOfBirth, Nationality, emailAddress, streetAddress, bankName, bankAccountName, carModel, password, rePassword, endorcementNumberExpiry, WOFExpiry, licencePlate;
 	int age, licenceNumber, contactNumber, bankAccountNumber, experiance, carRegistrationNumber, endorcementNumber;
 
-	DriverRegistryInfo(string firstName = "", string lastName = "", string gender = "", string dateOfBirth = "", string Nationality = "", string emailAddress = "", string streetAddress = "", string bankName = "", string carModel = "", string password = "", string rePassword = "", string endorcementNumberExpiry = "", int licenceNumber = 0, string licenceNumberExpiry = "", string WOFExpiry, int contactNumber = 0, int bankAccountNumber = 0, int carRegistrationNumber = 0, int endorcementNumber = 0,int experiance = 0) {
-		string a = firstName, b = gender, c = lastName, d = dateOfBirth, e = Nationality, f = emailAddress, g = streetAddress, h = bankName, i = carModel, k = password, l = rePassword, m = endorcementNumberExpiry, n = licenceNumberExpiry;
-		int o = licenceNumber, p = contactNumber, q = bankAccountNumber, r = carRegistrationNumber, s = endorcementNumber;
+	DriverRegistryInfo() 
+	{
+		firstName = "", gender = "", lastName = "", dateOfBirth = "", Nationality = "", emailAddress = "", streetAddress = "", bankName = "", carModel = "", password = "", rePassword = "", endorcementNumberExpiry = "", licenceExpiry = "";
+		licenceNumber = 0, contactNumber = 0, bankAccountNumber = 0, carRegistrationNumber = 0,endorcementNumber = 0;
 	}
 };
 
@@ -73,16 +81,16 @@ void driverLogin() {
 
 		cout << "\nEnter Full licence number: ";
 		cin >> DRI.licenceNumber;
-			cout << "\nEnter Years of Driving Experiance: ";
-			cin >> DRI.experiance;
-				cout << "\nEnter Car Model: ";
-				cin >> DRI.carModel;
-					cout << "\nEnter licence Plate: ";
-					cin >> DRI.licencePlate;
-						cout << "Enter WOF expiry: ";
-						cin >> DRI.WOFExpiry;
-							cout << "Enter Age: ";
-							cin >> DRI.age;
+		cout << "\nEnter Years of Driving Experiance: ";
+		cin >> DRI.experiance;
+		cout << "\nEnter Car Model: ";
+		cin >> DRI.carModel;
+		cout << "\nEnter licence Plate: ";
+		cin >> DRI.licencePlate;
+		cout << "Enter WOF expiry: ";
+		cin >> DRI.WOFExpiry;
+		cout << "Enter Age: ";
+		cin >> DRI.age;
 		line();
 		cout << "Checking eligibility, ";
 		if (DRI.age >= 20 && DRI.experiance >= 10) {
@@ -136,13 +144,13 @@ void driverLogin() {
 		cin >> DRI.rePassword;
 		line();
 		cout << "Thank You For Registering " << DRI.firstName;
+		//Data Transfer to External File
+		fstream driverFile;
+		driverFile.open("driverFile.csv", ios::in | ofstream::app);
+		driverFile << DRI.firstName << "," << DRI.lastName << "," << DRI.gender << "," << DRI.dateOfBirth << "," << DRI.Nationality << "," << DRI.licenceNumber << "," << DRI.licenceExpiry << "," << DRI.experiance << "," << DRI.contactNumber << "," << DRI.emailAddress << "," << DRI.streetAddress << "," << DRI.bankName << "," << DRI.bankAccountName << "," << DRI.bankAccountNumber << "," << DRI.carRegistrationNumber << "," << DRI.carModel << "," << DRI.WOFExpiry << "," << DRI.endorcementNumber << "," << DRI.endorcementNumberExpiry << "," << DRI.password << "," << DRI.rePassword << "\n";
+		driverFile.close();
 	}
-}
 
-void line() {
-	for (int i = 0; i != 66; i++) {
-		cout << "*";
-	}
 }
 
 void userlog() {
@@ -270,7 +278,7 @@ int main()
 		}		
 		goto rerun;
 	case 3 :
-
+		driverLogin();
 		goto rerun;
 
 	case 4 :
