@@ -1,16 +1,17 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include <string>
 #include <fstream>
-#include <time.h>
 #include <ctime>
 #include <sstream>
 #include <vector>
 #include <cmath>
+#include <iomanip>
 
 using namespace std;
 
 void line() {
-	for (int i = 0; i != 66; i++) {
+	for (int i = 0; i != 37; i++) {
 		cout << "*";
 	}
 }
@@ -64,7 +65,7 @@ void driverLogin() {
 	//Menu
 	cout << "\n\nDriver Login\n";
 	line();
-	cout << "\n1. Login \n 2. Register\n";
+	cout << "\n1. Login \n2. Register\n";
 	line();
 	cin >> menuChoice;
 	//login
@@ -164,9 +165,135 @@ void driverLogin() {
 
 }
 
-void userMain() {
+void userMain(int hold) {
+	int ans;
+	ifstream myfile;
+	myfile.open("customerFile.csv", ios::in);
+	string line, field, loc, des, date, tim, spe, lug;
+	int linenum = 0, pas;
+	char quote = '"', confirm;
+	vector <vector<string> > array;
+	vector<string> v;
 
+	while (getline(myfile, line)) {
+		v.clear();
+		stringstream ss(line);
+		while (getline(ss, field, ',')) {
+			v.push_back(field);
+		}
+		array.push_back(v);
+	}
 
+	ofstream file;
+	file.open("tripBooking.csv", ios::out | ofstream::app);
+	cout << "*************************************\n";
+	cout << "         Only Trips Booking\n";
+	cout << "*************************************\n\n";
+	cout << "1. Estimated Trip\n";
+	cout << "2. Trip Bookling\n";
+	cout << "3. Trip Costs (Per Km)\n";
+	cout << "4. Standard Trip Costs\n";
+	cout << "5. Exit Program\n\n";
+	cout << "*************************************\n";
+	cout << "Please Select an Option : ";
+	cin >> ans;
+
+	switch (ans) {
+	case 1:
+
+		break;
+
+	case 2:
+		
+		int randId;
+		srand(time(0));
+		randId = rand() % 1000 + 8000;
+		cout << "\n\nTrip Booking\n";
+		cout << "*************************************\n";
+		cout << "Randomly Genorated Trip ID : " << randId;
+		cout << "\n\nFull Name : " << array[hold][0];
+		cout << "\n\nContact Number : +64" << array[hold][1];
+		cout << "\n\nEnter Starting Location (Enter " << quote << "Home" << quote << " or Seprate address) : ";
+		cin >> loc;
+		if (loc == "Home" || loc == "home") {
+			cout << "\nStarting location is : " << array[hold][3];
+			loc == array[hold][3];
+		}
+			else {
+				cout << "\n\nStarting location is : " << loc;
+			}
+		reuse:
+		cout << "\n\nEnter Destination (Enter "<< quote << "Home" << quote << " or Seprate address) : ";
+		cin >> des;
+		if (des == loc) {
+			cout << "\nStarting location cannot be the same as destination. Try again.";
+			goto reuse;
+		}
+			else if (des == "Home" || des == "home") {
+				cout << "\nStarting location is : " << array[hold][3];
+				des = array[hold][3];
+			}
+				else {
+					cout << "\nDestination location is : " << des;
+				}
+		cout << "\n\nEnter Booking Date (Enter " << quote << "Today" << quote << " or (DD*MM*YY) : ";
+		cin >> date;
+		if (date == "Today" || date == "today") {
+			auto t = time(nullptr);
+			auto tm = *localtime(&t);
+			cout << "\nBooking Date Set for : " <<  put_time(&tm, "%d-%m-%Y") << endl;
+		}
+			else {
+				cout << "\nDate is set to : " << date;
+			}
+		cout << "\nEnter Booking Time (Enter " << quote << "Now" << quote << " or (Hour:Min) : ";
+		cin >> tim;
+		if (tim == "Now" || tim == "now") {
+			auto t = time(nullptr);
+			auto tm = *localtime(&t);
+			cout << "\nBooking Time Set for : " << put_time(&tm, "%H-%M") << endl;
+		}
+			else {
+			cout << "\nTime Set for : " << tim;
+			}
+		repas:
+		cout << "\nEnter Number of passengers : ";
+		cin >> pas;
+		if (pas > 4) {
+			cout << "\nPassengers cannot me more than 4. Try Again.";
+			goto repas;
+		}
+		cout << "\nEnter Any Special Reqirements : ";
+		cin >> spe;
+		cout << "\nEnter Luggage Requirements (Eg 1 Suitcase) : ";
+		cin >> lug;
+		cout << "\nPayment Details : ";
+		cout << "\n\nVisa Card : " << array[hold][4];
+		cout << "\n\nExpiry Date : " << array[hold][5];
+		cout << "\n\nCVC : " << array[hold][6];
+		cout << "\n\nConfirm Payment Method and Book Trip? (Y or N) : ";
+		cin >> confirm;
+		if (confirm == 'Y' || confirm == 'y')
+			file << "," << randId << "," << array[hold][0] << "," << loc << "," << des << "," << pas;
+		break;
+
+	case 3: 
+		auto t = time(nullptr);
+		auto tm = *localtime(&t);
+		cout << "\nBooking Time Set for : " << put_time(&tm, "%H-%M") << endl;
+		cout << "Trip Cost is ";
+		break;
+
+	case 4:
+
+		break;
+
+	case 5:
+
+		break;
+	}
+	file.close();
+	myfile.close();
 }
 
 
@@ -226,6 +353,8 @@ relog:
 						getline(cin, pass);
 							if (array[i][7] == pass) {
 								cout << "\nPassword Correct Welcome " << array[i][0] << "\n\n";
+								int hold = i;
+								userMain(hold);
 							}
 								else {
 									cout << "\nPassword Inncorrect Try Again.";
@@ -237,7 +366,7 @@ relog:
 			
 		}		
 		myfile.close();
-		userMain();
+		
 	}
 
 
@@ -307,129 +436,129 @@ relog:
 }
 	
 
-void adminMenu() {
-	string usernameCheck;
-	string passwordCheck;
-	string storedLogin = "OnlyTripper";
-	string storedPassword = "500Miles";
-
-	//Login 
-	cout << "\n\nAdmin Menu\n";
-	line();
-	cout << "\nLogin:\n";
-	cout << "Username: ";
-	cin >> usernameCheck;
-	cout << "\nPassword: ";
-	cin >> passwordCheck;
-	//Password Checking
-	while (usernameCheck != storedLogin && passwordCheck != storedPassword) {
-		cout << "\nThat login dosen't match please try again.\n";
-		cout << "\nLogin:\n";
-		cout << "Username: ";
-		cin >> usernameCheck;
-		cout << "\nPassword: ";
-		cin >> passwordCheck;
-	}
-	line();
-	cout << "Welcome Admins";
-	line();
-
-	//Weekly Report
-	cout << "\n\nWeekly Report";
-	line();
-	cout << "\n" << ctime;
-	cout << "\nNumber of trips: ";
-	cout << "\nPayments: ";
-	cout << "\nPaid to drivers: $";
-	cout << "\nGross: ";
-	cout << "\nTax deduction: $";
-	cout << "\nNet profit: ";
-	cout << "\n";
-	line();
-	
-	//Driver Report
-	cout << "Driver Report\n";
-	line();
-	fstream driverFile;
-
-	driverFile.open("driverFile.csv", ios::in);
-
-	int driverinfo;
-	int drivernum = 1;
-
-	vector<string> row;
-	string rowB, word, temp;
-
-	while (driverFile >> temp) {
-		row.clear();
-
-		getline(driverFile, rowB);
-		stringstream s(rowB);
-		while (getline(s, word, ', ')) {
-			row.push_back(word);
-		}
-
-		driverinfo = stoi(row[0]);
-
-		if (driverinfo == drivernum) {
-			cout << row[0] << "\n";
-			cout << row[1] << "\n";
-			cout << row[2] << "\n";
-			cout << row[3] << "\n";
-			cout << row[4] << "\n";
-			break;
-		}
-
-	}
-	driverFile.close();
-	line();
-
-	//Customer Report
-	cout << "Customer Report\n";
-	line();
-	//getting customer info
-	fstream customerFile;
-
-	customerFile.open("customerFile.csv", ios::in);
-
-	int customerinfo;
-	int customernum = 1;
-
-	vector<string> row;
-	string rowB, word, temp;
-
-	while (customerFile >> temp) {
-		row.clear();
-
-		getline(customerFile, rowB);
-		stringstream s(rowB);
-		while (getline(s, word, ', ')) {
-			row.push_back(word);
-		}
-
-		customerinfo = stoi(row[0]);
-
-		if (customerinfo == customernum) {
-			cout << row[0] << "\n";
-			cout << row[1] << "\n";
-			cout << row[2] << "\n";
-			cout << row[3] << "\n";
-			cout << row[4] << "\n";
-			break;
-		}
-
-	}
-	customerFile.close();
-	line();
-
-	//Cancellation Report
-	cout << "Cancelation Report";
-	line();
-	cout << "\nAmount of cancelattions: ";
-	cout << "Profit loss: $";
-	cout << "\n";
-	line();
-}
+//void adminMenu() {
+//	string usernameCheck;
+//	string passwordCheck;
+//	string storedLogin = "OnlyTripper";
+//	string storedPassword = "500Miles";
+//
+//	//Login 
+//	cout << "\n\nAdmin Menu\n";
+//	line();
+//	cout << "\nLogin:\n";
+//	cout << "Username: ";
+//	cin >> usernameCheck;
+//	cout << "\nPassword: ";
+//	cin >> passwordCheck;
+//	//Password Checking
+//	while (usernameCheck != storedLogin && passwordCheck != storedPassword) {
+//		cout << "\nThat login dosen't match please try again.\n";
+//		cout << "\nLogin:\n";
+//		cout << "Username: ";
+//		cin >> usernameCheck;
+//		cout << "\nPassword: ";
+//		cin >> passwordCheck;
+//	}
+//	line();
+//	cout << "Welcome Admins";
+//	line();
+//
+//	//Weekly Report
+//	cout << "\n\nWeekly Report";
+//	line();
+//	cout << "\n" << ctime;
+//	cout << "\nNumber of trips: ";
+//	cout << "\nPayments: ";
+//	cout << "\nPaid to drivers: $";
+//	cout << "\nGross: ";
+//	cout << "\nTax deduction: $";
+//	cout << "\nNet profit: ";
+//	cout << "\n";
+//	line();
+//	
+//	//Driver Report
+//	cout << "Driver Report\n";
+//	line();
+//	fstream driverFile;
+//
+//	driverFile.open("driverFile.csv", ios::in);
+//
+//	int driverinfo;
+//	int drivernum = 1;
+//
+//	vector<string> row;
+//	string rowB, word, temp;
+//
+//	while (driverFile >> temp) {
+//		row.clear();
+//
+//		getline(driverFile, rowB);
+//		stringstream s(rowB);
+//		while (getline(s, word, ', ')) {
+//			row.push_back(word);
+//		}
+//
+//		driverinfo = stoi(row[0]);
+//
+//		if (driverinfo == drivernum) {
+//			cout << row[0] << "\n";
+//			cout << row[1] << "\n";
+//			cout << row[2] << "\n";
+//			cout << row[3] << "\n";
+//			cout << row[4] << "\n";
+//			break;
+//		}
+//
+//	}
+//	driverFile.close();
+//	line();
+//
+//	//Customer Report
+//	cout << "Customer Report\n";
+//	line();
+//	//getting customer info
+//	fstream customerFile;
+//
+//	customerFile.open("customerFile.csv", ios::in);
+//
+//	int customerinfo;
+//	int customernum = 1;
+//
+//	vector<string> row;
+//	string rowB, word, temp;
+//
+//	while (customerFile >> temp) {
+//		row.clear();
+//
+//		getline(customerFile, rowB);
+//		stringstream s(rowB);
+//		while (getline(s, word, ', ')) {
+//			row.push_back(word);
+//		}
+//
+//		customerinfo = stoi(row[0]);
+//
+//		if (customerinfo == customernum) {
+//			cout << row[0] << "\n";
+//			cout << row[1] << "\n";
+//			cout << row[2] << "\n";
+//			cout << row[3] << "\n";
+//			cout << row[4] << "\n";
+//			break;
+//		}
+//
+//	}
+//	customerFile.close();
+//	line();
+//
+//	//Cancellation Report
+//	cout << "Cancelation Report";
+//	line();
+//	cout << "\nAmount of cancelattions: ";
+//	cout << "Profit loss: $";
+//	cout << "\n";
+//	line();
+//}
 
 
 int main()
