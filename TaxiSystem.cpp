@@ -58,9 +58,11 @@ public:
 };
 
 void driverMenu() {
+	//retreaving info from trips file
+	fstream tripsFile;
+	tripsFile.open("tripsFile.csv", ios::out);
 
-	bool taken = 0;
-
+	//displaying data
 	cout << "Avaliable Trips\n";
 	drawLine();
 	cout << "Trip Number: ";
@@ -70,8 +72,6 @@ void driverMenu() {
 	cout << "Destination: ";
 	cout << "Date and Time: ";
 	cout << "Current Job State: ";
-	cout << "Take Job? 1(Y)/0(N)";
-	cin >> taken;
 	drawLine();
 
 	cout << "\n\nTrips Today\n";
@@ -96,16 +96,54 @@ void driverLogin() {
 	cin >> menuChoice;
 	//login
 	if (menuChoice == 1) {
-		cout << "\n\n\nDriver Login\n";
-		drawLine();
-		cout << "Email: ";
-		cin >> Email;
-		cout << "password: ";
-		cin >> Password;
-		drawLine();
+		ifstream myfile;
+		myfile.open("driverFile.csv", ios::in);
+		string line, email, field, pass;
+		int linenum = 0;
+		cin.ignore();
+		cout << "\n";
+		cout << "\n\driver Login\n";
+		cout << "*************************************\n";
+		cout << "Enter Your Email : ";
+		getline(cin, email);
+		vector <vector<string> > array;
+		vector<string> v;
 
+		while (getline(myfile, line)) {
+			v.clear();
+			stringstream ss(line);
+			while (getline(ss, field, ',')) {
+				v.push_back(field);
+			}
+			array.push_back(v);
+		}
+		//array.size() needs to have as many lines of data in the csv file as colums you want it to read as they are directly related
+		for (size_t i = 0; i < array.size(); ++i) {
+			for (size_t j = 0; j < array.size(); ++j) {
+				//cout << array[i][j] << ", ";
+				if (array[i][j] == email) {
+					cout << "\nEmail Found in line : " << i + 1 << " " << array[i][j];
+				repassb:
+					cout << "\n\nEnter Your password : ";
+					getline(cin, pass);
+					if (array[i][7] == pass) {
+						cout << "\nPassword Correct Welcome " << array[i][0] << "\n\n";
+					}
+					else {
+						cout << "\nPassword Inncorrect Try Again.";
+						goto repassb;
+					}
+				}
+
+			}
+
+		}
+		myfile.close();
 		driverMenu();
-	}//Eligibility
+	}
+
+	
+	//Eligibility and registry
 	if (menuChoice == 2) {
 		cout << "Eligibility Questions\n";
 		drawLine();
@@ -449,6 +487,8 @@ int main()
 
 
 	}
+
+
 
 
 
