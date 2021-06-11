@@ -58,12 +58,28 @@ public:
 
 void driverMenu() {
 
+	bool taken = 0;
+
 	cout << "Avaliable Trips\n";
 	drawLine();
+	cout << "Trip Number: ";
+	cout << "Customer Name: ";
+	cout << "Contact Number: ";
+	cout << "Starting Location: ";
+	cout << "Destination: ";
+	cout << "Date and Time: ";
+	cout << "Current Job State: ";
+	cout << "Take Job? 1(Y)/0(N)";
+	cin >> taken;
 	drawLine();
 
 	cout << "\n\nTrips Today\n";
 	drawLine();
+	cout << ctime_s;
+	cout << "Number of trips: ";
+	cout << "Total Earnings: ";
+	cout << "Tax Total: ";
+	cout << "Total after Tax: ";
 	drawLine();
 }
 
