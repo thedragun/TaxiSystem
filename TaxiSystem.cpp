@@ -5,6 +5,7 @@
 #include <ctime>
 #include <sstream>
 #include <vector>
+#include <cmath>
 
 using namespace std;
 
@@ -163,6 +164,10 @@ void driverLogin() {
 
 }
 
+void userMain() {
+
+
+}
 
 
 struct UserReg {
@@ -178,9 +183,7 @@ void userReg() {
 relog:
 	UserReg data[8];
 	UserReg alldata;
-	int logans;
-	
-
+	int logans;	
 	cout << "\n\nCustomer Login\n";
 	cout << "*************************************\n";
 	cout << "1. Login\n";
@@ -193,17 +196,14 @@ relog:
 		//Login
 		ifstream myfile;
 		myfile.open("customerFile.csv", ios::in);
-		string line, email, field;
+		string line, email, field, pass;
 		int linenum = 0;
-		
 		cin.ignore();
-		/*cout << "\n";
+		cout << "\n";
 		cout << "\n\nCustomer Login\n";
 		cout << "*************************************\n";
 		cout << "Enter Your Email : ";
-		getline(cin, email);*/
-
-
+		getline(cin, email);
 		vector <vector<string> > array;
 		vector<string> v;
 
@@ -215,14 +215,29 @@ relog:
 			}
 			array.push_back(v);
 		}
+		//array.size() needs to have as many lines of data in the csv file as colums you want it to read as they are directly related
 		for (size_t i = 0; i < array.size(); ++i) {
 			for (size_t j = 0; j < array.size(); ++j) {
-				cout << array[i][j] << ", ";
+				//cout << array[i][j] << ", ";
+				if (array[i][j] == email) {
+					cout << "\nEmail Found in line : " << i + 1 << " " << array[i][j];	
+						repass:
+						cout << "\n\nEnter Your password : ";
+						getline(cin, pass);
+							if (array[i][7] == pass) {
+								cout << "\nPassword Correct Welcome " << array[i][0] << "\n\n";
+							}
+								else {
+									cout << "\nPassword Inncorrect Try Again.";
+									goto repass;
+								}
+				}
+				
 			}
-			cout << "\n";
-		}
-		
+			
+		}		
 		myfile.close();
+		userMain();
 	}
 
 
@@ -262,7 +277,6 @@ relog:
 			cout << "\nCVC : ";
 			getline(cin, UR.cvc);
 
-		repass:
 			cout << "\nEnter Password : ";
 			getline(cin, pass1);
 
@@ -271,16 +285,15 @@ relog:
 			if (pass1 == pass2) {
 				UR.password = pass2;
 				myfile << UR.name << "," << UR.number << "," << UR.email << "," << UR.address << "," << UR.payment << "," << UR.date << "," << UR.cvc << "," << UR.password << ",\n";
+				cout << "*************************************\n";
+				cout << "\n\nThank you for Registering\n" << UR.name;
+				cout << "*************************************\n";
 				myfile.close();
 				break;
 			}
-			else {
-				cout << "\nPasswords Must match Try Again.\n";
-				goto repass;
-			}
-			cout << "*************************************\n";
-			cout << "\n\nThank you for Registering\n" << UR.name;
-			cout << "*************************************\n";
+			
+			
+			
 
 		} 
 	}
