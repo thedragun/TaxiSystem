@@ -59,9 +59,19 @@ public:
 
 void driverMenu() {
 	//retreaving info from trips file
-	fstream tripsFile;
-	tripsFile.open("tripsFile.csv", ios::out);
+	string readData, temp;
+	vector<string> rowStorage;
+    fstream tripsFile;
 
+	tripsFile.open("tripsFile.csv", ios::in);
+	while (getline(tripsFile, readData)) {
+
+		getline(tripsFile, readData, '\n');
+		string collumnSection = readData;
+		rowStorage.push_back(collumnSection);
+		rowStorage.push_back(", ");
+	}
+	
 	//displaying data
 	cout << "Avaliable Trips\n";
 	drawLine();
