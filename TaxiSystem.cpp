@@ -165,11 +165,13 @@ void driverLogin() {
 
 }
 
+
 void userMain(int hold) {
-	int ans;
+	int ans, ans2;
+	float pay, randPay;
 	ifstream myfile;
 	myfile.open("customerFile.csv", ios::in);
-	string line, field, loc, des, date, tim, spe, lug;
+	string line, field, loc, des, date, tim, spe, lug, setloc = "None";
 	int linenum = 0, pas;
 	char quote = '"', confirm;
 	vector <vector<string> > array;
@@ -183,10 +185,12 @@ void userMain(int hold) {
 		}
 		array.push_back(v);
 	}
-
+	re:
 	ofstream file;
 	file.open("tripBooking.csv", ios::out | ofstream::app);
-	cout << "*************************************\n";
+	ofstream canFile;
+	canFile.open("cancelFile.csv", ios::out | ofstream::app);
+	cout << "\n\n\n*************************************\n";
 	cout << "         Only Trips Booking\n";
 	cout << "*************************************\n\n";
 	cout << "1. Estimated Trip\n";
@@ -205,6 +209,7 @@ void userMain(int hold) {
 
 	case 2:
 	{
+	trip:
 		int randId;
 		srand(time(0));
 		randId = rand() % 1000 + 8000;
@@ -223,18 +228,27 @@ void userMain(int hold) {
 			cout << "\n\nStarting location is : " << loc;
 		}
 	reuse:
-		cout << "\n\nEnter Destination (Enter " << quote << "Home" << quote << " or Seprate address) : ";
-		cin >> des;
-		if (des == loc) {
-			cout << "\nStarting location cannot be the same as destination. Try again.";
-			goto reuse;
-		}
-		else if (des == "Home" || des == "home") {
-			cout << "\nStarting location is : " << array[hold][3];
-			des = array[hold][3];
+		if (setloc == "Airport" || setloc == "Railway Station" || setloc == "InterIslander") {
+			cout << "\n\nDestination is set to " << setloc;
+			setloc == "None";
+			des = setloc;
 		}
 		else {
-			cout << "\nDestination location is : " << des;
+			cout << "\n\nEnter Destination (Enter " << quote << "Home" << quote << " or Seprate address) : ";
+			cin.ignore();
+			getline(cin, des);
+			if (des == loc || loc == setloc) {
+				cout << "\nStarting location cannot be the same as destination. Try again.";
+				goto reuse;
+			}
+
+			else if (des == "Home" || des == "home") {
+				cout << "\nStarting location is : " << array[hold][3];
+				des = array[hold][3];
+			}
+			else {
+				cout << "\nDestination location is : " << des;
+			}
 		}
 		cout << "\n\nEnter Booking Date (Enter " << quote << "Today" << quote << " or (DD*MM*YY) : ";
 		cin >> date;
@@ -249,12 +263,14 @@ void userMain(int hold) {
 		cout << "\nEnter Booking Time (Enter " << quote << "Now" << quote << " or (Hour:Min) : ";
 		cin >> tim;
 		if (tim == "Now" || tim == "now") {
-			auto t = time(nullptr);
-			auto tm = *localtime(&t);
-			cout << "\nBooking Time Set for : " << put_time(&tm, "%H-%M") << endl;
+			time_t now = time(0);
+			struct tm tstruct = *localtime(&now);
+			int f = tstruct.tm_hour;
+			int o = tstruct.tm_min;
+			cout << "\nBooking Time Set for : " << f << ":" << o;
 		}
 		else {
-			cout << "\nTime Set for : " << tim;
+			cout << "\nTime Set for : " << tim << endl;
 		}
 	repas:
 		cout << "\nEnter Number of passengers : ";
@@ -267,14 +283,44 @@ void userMain(int hold) {
 		cin >> spe;
 		cout << "\nEnter Luggage Requirements (Eg 1 Suitcase) : ";
 		cin >> lug;
+		cout << "\nCalculating Trip Cost...\n\n";
+		system("pause");
+		if (setloc == "Airport") {
+			pay = 35;
+		}
+		else if (setloc == "Railway Station" || setloc == "InterIslander") {
+			pay = 15;
+		}
+		else {
+			randPay = rand() % 30 + 2;
+			time_t now = time(0);
+			struct tm tstruct = *localtime(&now);
+			int f = tstruct.tm_hour;
+			cout << "\nTrip cost is $1.35 per km and $1.65 in peak hours (7am-9am and 5pm-7pm)\n";
+			if (f == 7 || f == 8 || f == 9 || f == 17 || f == 18 || f == 19) {
+				pay = (randPay * 1.65) + 5;
+			}
+			else {
+				pay = (randPay * 1.35) + 5;
+				
+			}
+		}
+		cout << "\nYour Total Payment is $" << pay << endl;
 		cout << "\nPayment Details : ";
 		cout << "\n\nVisa Card : " << array[hold][4];
 		cout << "\n\nExpiry Date : " << array[hold][5];
 		cout << "\n\nCVC : " << array[hold][6];
 		cout << "\n\nConfirm Payment Method and Book Trip? (Y or N) : ";
 		cin >> confirm;
-		if (confirm == 'Y' || confirm == 'y')
-			file << "," << randId << "," << array[hold][0] << "," << loc << "," << des << "," << pas;
+		if (confirm == 'Y' || confirm == 'y') {
+			
+			file << randId << "," << array[hold][0] << "," << loc << "," << des << "," << pas << "," << pay << "\n";
+				
+		}
+		else if (confirm == 'N' || confirm == 'n') {
+			canFile << randId << "," << array[hold][0] << "," << loc << "," << des << "," << pas << "," << pay << "\n";
+		}
+		
 	}
 		break;
 
@@ -283,7 +329,7 @@ void userMain(int hold) {
 		struct tm tstruct = *localtime(&now);
 
 		int f = tstruct.tm_hour;
-		cout << "\nStandard trip cost is $1.35 per km and $1.65 in peak hours (7am-9am and 5pm-7pm)\n";
+		cout << "\nTrip cost is $1.35 per km and $1.65 in peak hours (7am-9am and 5pm-7pm)\n";
 		if (f == 7 || f == 8 || f == 9 || f == 17 || f == 18 || f == 19) {
 			cout << "\nStandard Trip Cost at this time is $1.65 per km\n\n";
 		}
@@ -295,14 +341,37 @@ void userMain(int hold) {
 
 	case 4:
 		
-		break;
-
+		cout << "\nStandard Trips";
+		cout << "\n*************************************";
+		cout << "\n1. Airport           $35";
+		cout << "\n2. Railway Station   $15";
+		cout << "\n3. InterIslander     $15";
+		cout << "\n4. Exit";
+		cout << "\n*************************************";
+		cout << "\nEnter your Option to Book Trip or Exit : ";
+		cin >> ans2;
+		if (ans2 == 1) {
+			setloc = "Airport";
+			goto trip;
+		}
+		else if (ans2 == 2) {
+			setloc = "Railway Station";
+			goto trip;
+		}
+		else if (ans2 == 3) {
+			setloc = "InterIslander";
+			goto trip;
+		}
+		else {
+			goto re;
+		}
 	case 5:
 
-		break;
+		exit;
 	}
 	file.close();
 	myfile.close();
+	canFile.close();
 }
 
 
