@@ -336,6 +336,9 @@ void userMain(int hold) {
 			auto t = time(nullptr);
 			auto tm = *localtime(&t);
 			cout << "\nBooking Date Set for : " << put_time(&tm, "%d-%m-%Y") << endl;
+			
+			
+			
 		}
 		else {
 			cout << "\nDate is set to : " << date;
@@ -589,62 +592,62 @@ relog:
 
 
 
-void adminMenu() {
-	//Login 
-	cout << "\n\nAdmin Menu\n";
-	drawLine();
-	cout << "\nLogin:\n";
-	cout << "Username: ";
-	cin >> usernameCheck;
-	cout << "\nPassword: ";
-	cin >> passwordCheck;
-	//Password Checking
-	while (usernameCheck != storedLogin && passwordCheck != storedPassword) {
-		cout << "\nThat login dosen't match please try again.\n";
-		cout << "\nLogin:\n";
-		cout << "Username: ";
-		cin >> usernameCheck;
-		cout << "\nPassword: ";
-		cin >> passwordCheck;
-	}
-	drawLine();
-	cout << "Welcome Admins";
-	drawLine();
-
-	//Weekly Report
-	cout << "\n\nWeekly Report";
-	drawLine();
-	cout << "\n" << ctime_s;
-	cout << "\nNumber of trips: ";
-	cout << "\nPayments: ";
-	cout << "\nPaid to drivers: $";
-	cout << "\nGross: ";
-	cout << "\nTax deduction: $";
-	cout << "\nNet profit: ";
-	cout << "\n";
-	drawLine();
-	
-	//Driver Report
-	cout << "Driver Report\n";
-	drawLine();
-
-	drawLine();
-
-	//Customer Report
-	cout << "Customer Report\n";
-	drawLine();
-	//getting customer info
-
-	drawLine();
-
-	//Cancellation Report
-	cout << "Cancelation Report";
-	drawLine();
-	cout << "\nAmount of cancelattions: ";
-	cout << "Profit loss: $";
-	cout << "\n";
-	drawLine();
-}
+//void adminMenu() {
+//	//Login 
+//	cout << "\n\nAdmin Menu\n";
+//	drawLine();
+//	cout << "\nLogin:\n";
+//	cout << "Username: ";
+//	cin >> usernameCheck;
+//	cout << "\nPassword: ";
+//	cin >> passwordCheck;
+//	//Password Checking
+//	while (usernameCheck != storedLogin && passwordCheck != storedPassword) {
+//		cout << "\nThat login dosen't match please try again.\n";
+//		cout << "\nLogin:\n";
+//		cout << "Username: ";
+//		cin >> usernameCheck;
+//		cout << "\nPassword: ";
+//		cin >> passwordCheck;
+//	}
+//	drawLine();
+//	cout << "Welcome Admins";
+//	drawLine();
+//
+//	//Weekly Report
+//	cout << "\n\nWeekly Report";
+//	drawLine();
+//	cout << "\n" << ctime_s;
+//	cout << "\nNumber of trips: ";
+//	cout << "\nPayments: ";
+//	cout << "\nPaid to drivers: $";
+//	cout << "\nGross: ";
+//	cout << "\nTax deduction: $";
+//	cout << "\nNet profit: ";
+//	cout << "\n";
+//	drawLine();
+//	
+//	//Driver Report
+//	cout << "Driver Report\n";
+//	drawLine();
+//
+//	drawLine();
+//
+//	//Customer Report
+//	cout << "Customer Report\n";
+//	drawLine();
+//	//getting customer info
+//
+//	drawLine();
+//
+//	//Cancellation Report
+//	cout << "Cancelation Report";
+//	drawLine();
+//	cout << "\nAmount of cancelattions: ";
+//	cout << "Profit loss: $";
+//	cout << "\n";
+//	drawLine();
+//}
 
 int main()
 {
@@ -666,8 +669,13 @@ int main()
 	cin >> ans;
 
 	switch (ans) {
-	case 1 :
-		printTerms();
+	case 1: {
+		/*printTerms();*/
+		auto t = time(nullptr);
+		auto tm = *localtime(&t);
+		cout << "\nBooking Date Set for : " << put_time(&tm, "%d-%m-%Y") << endl;
+		
+	}
 		goto rerun;
 
 	case 2 : 
@@ -678,7 +686,7 @@ int main()
 		goto rerun;
 
 	case 4 :
-		adminMenu();
+		/*adminMenu();*/
 		goto rerun;
 
 	case 5 : 
