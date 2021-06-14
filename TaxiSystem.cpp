@@ -10,8 +10,9 @@
 
 using namespace std;
 
-void line() {
-	for (int i = 0; i != 37; i++) {
+
+void drawLine() {
+	for (int i = 0; i != 66; i++) {
 		cout << "*";
 	}
 }
@@ -58,29 +59,106 @@ public:
 	}
 };
 
+void driverMenu() {
+	//retreaving info from trips file
+	string readData, temp;
+	vector<string> rowStorage;
+    fstream tripsFile;
+
+	tripsFile.open("tripsFile.csv", ios::in);
+	while (getline(tripsFile, readData)) {
+
+		getline(tripsFile, readData, '\n');
+		string collumnSection = readData;
+		rowStorage.push_back(collumnSection);
+		rowStorage.push_back(", ");
+	}
+	
+	//displaying data
+	cout << "Avaliable Trips\n";
+	drawLine();
+	cout << "Trip Number: ";
+	cout << "Customer Name: ";
+	cout << "Contact Number: ";
+	cout << "Starting Location: ";
+	cout << "Destination: ";
+	cout << "Date and Time: ";
+	cout << "Current Job State: ";
+	drawLine();
+
+	cout << "\n\nTrips Today\n";
+	drawLine();
+	cout << ctime_s;
+	cout << "Number of trips: ";
+	cout << "Total Earnings: ";
+	cout << "Tax Total: ";
+	cout << "Total after Tax: ";
+	drawLine();
+}
+
 void driverLogin() {
 	struct DriverRegistryInfo DRI;
 	int menuChoice;
 	string Email, Password;
 	//Menu
 	cout << "\n\nDriver Login\n";
-	line();
-	cout << "\n1. Login \n2. Register\n";
-	line();
+	drawLine();
+	cout << "\n1. Login \n 2. Register\n";
+	drawLine();
 	cin >> menuChoice;
 	//login
 	if (menuChoice == 1) {
-		cout << "\n\n\nDriver Login\n";
-		line();
-		cout << "Email: ";
-		cin >> Email;
-		cout << "password: ";
-		cin >> Password;
-		line();
-	}//Eligibility
+		ifstream myfile;
+		myfile.open("driverFile.csv", ios::in);
+		string line, email, field, pass;
+		int linenum = 0;
+		cin.ignore();
+		cout << "\n";
+		cout << "\n\driver Login\n";
+		cout << "*************************************\n";
+		cout << "Enter Your Email : ";
+		getline(cin, email);
+		vector <vector<string> > array;
+		vector<string> v;
+
+		while (getline(myfile, line)) {
+			v.clear();
+			stringstream ss(line);
+			while (getline(ss, field, ',')) {
+				v.push_back(field);
+			}
+			array.push_back(v);
+		}
+		//array.size() needs to have as many lines of data in the csv file as colums you want it to read as they are directly related
+		for (size_t i = 0; i < array.size(); ++i) {
+			for (size_t j = 0; j < array.size(); ++j) {
+				//cout << array[i][j] << ", ";
+				if (array[i][j] == email) {
+					cout << "\nEmail Found in line : " << i + 1 << " " << array[i][j];
+				repassb:
+					cout << "\n\nEnter Your password : ";
+					getline(cin, pass);
+					if (array[i][7] == pass) {
+						cout << "\nPassword Correct Welcome " << array[i][0] << "\n\n";
+					}
+					else {
+						cout << "\nPassword Inncorrect Try Again.";
+						goto repassb;
+					}
+				}
+
+			}
+
+		}
+		myfile.close();
+		driverMenu();
+	}
+
+	
+	//Eligibility and registry
 	if (menuChoice == 2) {
 		cout << "Eligibility Questions\n";
-		line();
+		drawLine();
 
 		cout << "\nEnter Full licence number: ";
 		cin >> DRI.licenceNumber;
@@ -94,21 +172,21 @@ void driverLogin() {
 		cin >> DRI.WOFExpiry;
 		cout << "Enter Age: ";
 		cin >> DRI.age;
-		line();
+		drawLine();
 		cout << "Checking eligibility, ";
 		if (DRI.age >= 20 && DRI.experiance >= 10) {
-			line();
+			drawLine();
 			cout << "\tYou are Eligible Welcome";
-			line();
+			drawLine();
 		}
 		else {
-			line();
+			drawLine();
 			cout << "\tYou are Not Eligible";
-			line();
+			drawLine();
 		}
 
 		cout << "\n\nDriver Registration\n";
-		line();
+		drawLine();
 		cout << "\nPlease enter your First Name: ";
 		cin >> DRI.firstName;
 		cout << "\nEnter your Last Name: ";
@@ -145,7 +223,7 @@ void driverLogin() {
 		cin >> DRI.password;
 		cout << "\nRenter Password: ";
 		cin >> DRI.rePassword;
-		line();
+		drawLine();
 		while (DRI.password != DRI.rePassword)
 		{
 			cout << "\nthose password dot not match please try again";
@@ -161,6 +239,8 @@ void driverLogin() {
 		driverFile.open("driverFile.csv", ios::in | ofstream::app);
 		driverFile << DRI.firstName << "," << DRI.lastName << "," << DRI.gender << "," << DRI.dateOfBirth << "," << DRI.Nationality << "," << DRI.licenceNumber << "," << DRI.licenceExpiry << "," << DRI.experiance << "," << DRI.contactNumber << "," << DRI.emailAddress << "," << DRI.streetAddress << "," << DRI.bankName << "," << DRI.bankAccountName << "," << DRI.bankAccountNumber << "," << DRI.carRegistrationNumber << "," << DRI.carModel << "," << DRI.WOFExpiry << "," << DRI.endorcementNumber << "," << DRI.endorcementNumberExpiry << "," << DRI.password << "," << DRI.rePassword << "\n";
 		driverFile.close();
+
+		driverLogin();
 	}
 
 }
@@ -509,134 +589,62 @@ relog:
 
 
 
+void adminMenu() {
+	//Login 
+	cout << "\n\nAdmin Menu\n";
+	drawLine();
+	cout << "\nLogin:\n";
+	cout << "Username: ";
+	cin >> usernameCheck;
+	cout << "\nPassword: ";
+	cin >> passwordCheck;
+	//Password Checking
+	while (usernameCheck != storedLogin && passwordCheck != storedPassword) {
+		cout << "\nThat login dosen't match please try again.\n";
+		cout << "\nLogin:\n";
+		cout << "Username: ";
+		cin >> usernameCheck;
+		cout << "\nPassword: ";
+		cin >> passwordCheck;
+	}
+	drawLine();
+	cout << "Welcome Admins";
+	drawLine();
+
+	//Weekly Report
+	cout << "\n\nWeekly Report";
+	drawLine();
+	cout << "\n" << ctime_s;
+	cout << "\nNumber of trips: ";
+	cout << "\nPayments: ";
+	cout << "\nPaid to drivers: $";
+	cout << "\nGross: ";
+	cout << "\nTax deduction: $";
+	cout << "\nNet profit: ";
+	cout << "\n";
+	drawLine();
 	
+	//Driver Report
+	cout << "Driver Report\n";
+	drawLine();
 
-	
+	drawLine();
 
-//void adminMenu() {
-//	string usernameCheck;
-//	string passwordCheck;
-//	string storedLogin = "OnlyTripper";
-//	string storedPassword = "500Miles";
-//
-//	//Login 
-//	cout << "\n\nAdmin Menu\n";
-//	line();
-//	cout << "\nLogin:\n";
-//	cout << "Username: ";
-//	cin >> usernameCheck;
-//	cout << "\nPassword: ";
-//	cin >> passwordCheck;
-//	//Password Checking
-//	while (usernameCheck != storedLogin && passwordCheck != storedPassword) {
-//		cout << "\nThat login dosen't match please try again.\n";
-//		cout << "\nLogin:\n";
-//		cout << "Username: ";
-//		cin >> usernameCheck;
-//		cout << "\nPassword: ";
-//		cin >> passwordCheck;
-//	}
-//	line();
-//	cout << "Welcome Admins";
-//	line();
-//
-//	//Weekly Report
-//	cout << "\n\nWeekly Report";
-//	line();
-//	cout << "\n" << ctime;
-//	cout << "\nNumber of trips: ";
-//	cout << "\nPayments: ";
-//	cout << "\nPaid to drivers: $";
-//	cout << "\nGross: ";
-//	cout << "\nTax deduction: $";
-//	cout << "\nNet profit: ";
-//	cout << "\n";
-//	line();
-//	
-//	//Driver Report
-//	cout << "Driver Report\n";
-//	line();
-//	fstream driverFile;
-//
-//	driverFile.open("driverFile.csv", ios::in);
-//
-//	int driverinfo;
-//	int drivernum = 1;
-//
-//	vector<string> row;
-//	string rowB, word, temp;
-//
-//	while (driverFile >> temp) {
-//		row.clear();
-//
-//		getline(driverFile, rowB);
-//		stringstream s(rowB);
-//		while (getline(s, word, ', ')) {
-//			row.push_back(word);
-//		}
-//
-//		driverinfo = stoi(row[0]);
-//
-//		if (driverinfo == drivernum) {
-//			cout << row[0] << "\n";
-//			cout << row[1] << "\n";
-//			cout << row[2] << "\n";
-//			cout << row[3] << "\n";
-//			cout << row[4] << "\n";
-//			break;
-//		}
-//
-//	}
-//	driverFile.close();
-//	line();
-//
-//	//Customer Report
-//	cout << "Customer Report\n";
-//	line();
-//	//getting customer info
-//	fstream customerFile;
-//
-//	customerFile.open("customerFile.csv", ios::in);
-//
-//	int customerinfo;
-//	int customernum = 1;
-//
-//	vector<string> row;
-//	string rowB, word, temp;
-//
-//	while (customerFile >> temp) {
-//		row.clear();
-//
-//		getline(customerFile, rowB);
-//		stringstream s(rowB);
-//		while (getline(s, word, ', ')) {
-//			row.push_back(word);
-//		}
-//
-//		customerinfo = stoi(row[0]);
-//
-//		if (customerinfo == customernum) {
-//			cout << row[0] << "\n";
-//			cout << row[1] << "\n";
-//			cout << row[2] << "\n";
-//			cout << row[3] << "\n";
-//			cout << row[4] << "\n";
-//			break;
-//		}
-//
-//	}
-//	customerFile.close();
-//	line();
-//
-//	//Cancellation Report
-//	cout << "Cancelation Report";
-//	line();
-//	cout << "\nAmount of cancelattions: ";
-//	cout << "Profit loss: $";
-//	cout << "\n";
-//	line();
-//}
+	//Customer Report
+	cout << "Customer Report\n";
+	drawLine();
+	//getting customer info
 
+	drawLine();
+
+	//Cancellation Report
+	cout << "Cancelation Report";
+	drawLine();
+	cout << "\nAmount of cancelattions: ";
+	cout << "Profit loss: $";
+	cout << "\n";
+	drawLine();
+}
 
 int main()
 {
@@ -670,7 +678,7 @@ int main()
 		goto rerun;
 
 	case 4 :
-
+		adminMenu();
 		goto rerun;
 
 	case 5 : 
@@ -687,6 +695,8 @@ int main()
 
 
 	}
+
+
 
 
 
