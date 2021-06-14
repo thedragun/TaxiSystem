@@ -200,11 +200,11 @@ void userMain(int hold) {
 
 	switch (ans) {
 	case 1:
-
+		
 		break;
 
 	case 2:
-		
+	{
 		int randId;
 		srand(time(0));
 		randId = rand() % 1000 + 8000;
@@ -219,33 +219,33 @@ void userMain(int hold) {
 			cout << "\nStarting location is : " << array[hold][3];
 			loc == array[hold][3];
 		}
-			else {
-				cout << "\n\nStarting location is : " << loc;
-			}
-		reuse:
-		cout << "\n\nEnter Destination (Enter "<< quote << "Home" << quote << " or Seprate address) : ";
+		else {
+			cout << "\n\nStarting location is : " << loc;
+		}
+	reuse:
+		cout << "\n\nEnter Destination (Enter " << quote << "Home" << quote << " or Seprate address) : ";
 		cin >> des;
 		if (des == loc) {
 			cout << "\nStarting location cannot be the same as destination. Try again.";
 			goto reuse;
 		}
-			else if (des == "Home" || des == "home") {
-				cout << "\nStarting location is : " << array[hold][3];
-				des = array[hold][3];
-			}
-				else {
-					cout << "\nDestination location is : " << des;
-				}
+		else if (des == "Home" || des == "home") {
+			cout << "\nStarting location is : " << array[hold][3];
+			des = array[hold][3];
+		}
+		else {
+			cout << "\nDestination location is : " << des;
+		}
 		cout << "\n\nEnter Booking Date (Enter " << quote << "Today" << quote << " or (DD*MM*YY) : ";
 		cin >> date;
 		if (date == "Today" || date == "today") {
 			auto t = time(nullptr);
 			auto tm = *localtime(&t);
-			cout << "\nBooking Date Set for : " <<  put_time(&tm, "%d-%m-%Y") << endl;
+			cout << "\nBooking Date Set for : " << put_time(&tm, "%d-%m-%Y") << endl;
 		}
-			else {
-				cout << "\nDate is set to : " << date;
-			}
+		else {
+			cout << "\nDate is set to : " << date;
+		}
 		cout << "\nEnter Booking Time (Enter " << quote << "Now" << quote << " or (Hour:Min) : ";
 		cin >> tim;
 		if (tim == "Now" || tim == "now") {
@@ -253,10 +253,10 @@ void userMain(int hold) {
 			auto tm = *localtime(&t);
 			cout << "\nBooking Time Set for : " << put_time(&tm, "%H-%M") << endl;
 		}
-			else {
+		else {
 			cout << "\nTime Set for : " << tim;
-			}
-		repas:
+		}
+	repas:
 		cout << "\nEnter Number of passengers : ";
 		cin >> pas;
 		if (pas > 4) {
@@ -275,17 +275,26 @@ void userMain(int hold) {
 		cin >> confirm;
 		if (confirm == 'Y' || confirm == 'y')
 			file << "," << randId << "," << array[hold][0] << "," << loc << "," << des << "," << pas;
+	}
 		break;
 
-	case 3: 
-		auto t = time(nullptr);
-		auto tm = *localtime(&t);
-		cout << "\nBooking Time Set for : " << put_time(&tm, "%H-%M") << endl;
-		cout << "Trip Cost is ";
+	case 3: {
+		time_t now = time(0);
+		struct tm tstruct = *localtime(&now);
+
+		int f = tstruct.tm_hour;
+		cout << "\nStandard trip cost is $1.35 per km and $1.65 in peak hours (7am-9am and 5pm-7pm)\n";
+		if (f == 7 || f == 8 || f == 9 || f == 17 || f == 18 || f == 19) {
+			cout << "\nStandard Trip Cost at this time is $1.65 per km\n\n";
+		}
+		else {
+			cout << "\nStandard Trip Cost at this time is $1.35 per km\n\n";
+		}
+	}
 		break;
 
 	case 4:
-
+		
 		break;
 
 	case 5:
@@ -377,7 +386,6 @@ relog:
 		ofstream myfile;
 		cout << "\n\nRegister\n";
 		cout << "*************************************\n";
-		for (int i = 0; i < 8; i++) {
 			myfile.open("customerFile.csv", ios::out | ofstream::app);
 			cin.ignore();
 			cout << "\nEnter Full Name : ";
@@ -414,26 +422,26 @@ relog:
 			if (pass1 == pass2) {
 				UR.password = pass2;
 				myfile << UR.name << "," << UR.number << "," << UR.email << "," << UR.address << "," << UR.payment << "," << UR.date << "," << UR.cvc << "," << UR.password << ",\n";
-				cout << "*************************************\n";
-				cout << "\n\nThank you for Registering\n" << UR.name;
-				cout << "*************************************\n";
+				cout << "\n\n*************************************\n";
+				cout << " Thank you for Registering " << UR.name;
+				cout << "\n*************************************\n\n\n";
 				myfile.close();
-				break;
 			}
 			
 			
 			
 
-		} 
-	}
-
-
+	} 
 	else {
-		cout << "\nPlease Enter a Valid Input.\n";
-		goto relog;
+	cout << "\nPlease Enter a Valid Input.\n";
+	goto relog;
 	}
-	
 }
+
+
+
+	
+
 	
 
 //void adminMenu() {
