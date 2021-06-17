@@ -286,10 +286,11 @@ void tripBooked() {
 	}
 	cout << "\n\nFinding a Driver for you...\n";
 	system("pause");
-	cout << "\nYour Driver is " << array[0][0];
-	cout << "\n\nYour Driver Licence Plate Number is  " << array[0][1];
-	cout << "\n\nYour Drivers Endorcement Number is  " << array[0][2];
-	cout << "\n\nDrivers Car Model : " << array[0][3];
+	flag = (rand() % 4) + 1;
+	cout << "\nYour Driver is " << array[flag][0];
+	cout << "\n\nYour Driver Licence Plate Number is  " << array[flag][1];
+	cout << "\n\nYour Drivers Endorcement Number is  " << array[flag][2];
+	cout << "\n\nDrivers Car Model : " << array[flag][3];
 	cout << "\n\nYour Ride will be here in " << (rand() % 15) + 2 << " Minuets";
 	cout << "Cancel Ride? (Y or N)";
 	cin >> confirm;
