@@ -59,20 +59,102 @@ public:
 	}
 };
 
-void fracture(deque<string> dataToBeBroken) {
+struct fractureToDMenu {
 	string ID, name, location, destination, passengers, payment, date, time;
-	string processing;
+
+	fractureToDMenu()
+	{
+		ID = "";
+		name = "";
+		location = "";
+		destination = "";
+		passengers = "";
+		payment = "";
+		date = "";
+		time = "";
+
+	}
+};
+
+void fracture(deque<string> dataToBeBroken) {
+	struct fractureToDMenu transferInput;
 	int i = 0, limiter = 0;
 	//breaking up the data
+	for (limiter = 0; limiter != 7; limiter++) {
+		switch (limiter)
+		{
+		case 0:
+			transferInput.ID = dataToBeBroken.front();
+				for ( i = 0; i != 2; i++)
+				{
+					dataToBeBroken.pop_front();
+				}
+			break;
 
-	for (limiter = 0; limiter != 8; limiter++) {
-		dataToBeBroken;
+		case 1:
+			transferInput.name = dataToBeBroken.front();
+				for ( i = 0; i != 2; i++)
+				{
+					dataToBeBroken.pop_front();
+				}
+			break;
+
+		case 2:
+			transferInput.location = dataToBeBroken.front();
+				for ( i = 0; i != 2; i++)
+				{
+					dataToBeBroken.pop_front();
+				}
+			break;
+
+		case 3:
+			transferInput.destination = dataToBeBroken.front();
+			for ( i = 0; i != 2; i++)
+			{
+				dataToBeBroken.pop_front();
+			}
+			break;
+
+		case 4:
+			transferInput.passengers = dataToBeBroken.front();
+			for ( i = 0; i != 2; i++)
+			{
+				dataToBeBroken.pop_front();
+			}
+			break;
+
+		case 5:
+			transferInput.payment = dataToBeBroken.front();
+			for ( i = 0; i != 2; i++)
+			{
+				dataToBeBroken.pop_front();
+			}
+			break;
+
+		case 6:
+			transferInput.date = dataToBeBroken.front();
+			for ( i = 0; i != 2; i++)
+			{
+				dataToBeBroken.pop_front();
+			}
+			break;
+
+		case 7:
+			transferInput.time = dataToBeBroken.front();
+			for ( i = 0; i != 2; i++)
+			{
+				dataToBeBroken.pop_front();
+			}
+			break;
+
+		}
 	}
 }
 
 void driverMenu() {
 	//retreaving info from trips file
-	string readData, temp;
+	struct fractureToDMenu transferOutput;
+	string readData, temp, completed;
 	deque<string> rowStorage;
     fstream tripsFile;
 
@@ -90,14 +172,26 @@ void driverMenu() {
 	//displaying data
 	cout << "Avaliable Trips\n";
 	drawLine();
-	cout << "Trip Number: ";
-	cout << "Customer Name: ";
-	cout << "Contact Number: ";
-	cout << "Starting Location: ";
-	cout << "Destination: ";
-	cout << "Date and Time: ";
-	cout << "Current Job State: ";
+	cout << "Trip Number: " << transferOutput.ID;
+	cout << "Customer Name: " << transferOutput.name;
+	cout << "Starting Location: " << transferOutput.location;
+	cout << "Destination: " << transferOutput.destination;
+	cout << "Date and Time: " << transferOutput.date << " at " << transferOutput.time;
 	drawLine();
+	//admin logging
+	cout << "Has this trip been completed? (yes or no) ";
+	cin >> completed;
+
+	int tripsCompleted = 0, totalEarnings, taxTotal = 23, totalAfterTax;
+
+	if (completed == "yes") {
+		tripsCompleted++;
+		
+		cout << "how much were you paid";
+		cin >> totalEarnings;
+
+		
+	}
 
 	cout << "\n\nTrips Today\n";
 	drawLine();
@@ -113,12 +207,12 @@ void driverLogin() {
 	struct DriverRegistryInfo DRI;
 	int menuChoice;
 	string Email, Password;
-	//Menu
 	cout << "\n\nDriver Login\n";
+	//Menu
 	drawLine();
-	cout << "\n1. Login \n 2. Register\n";
-	drawLine();
+	cout << "\n1. Login \n2. Register\n";
 	cin >> menuChoice;
+	drawLine();
 	//login
 	if (menuChoice == 1) {
 		ifstream myfile;
