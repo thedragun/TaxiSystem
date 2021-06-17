@@ -7,10 +7,7 @@
 #include <vector>
 #include <cmath>
 #include <iomanip>
-
 using namespace std;
-
-
 void drawLine() {
 	for (int i = 0; i != 66; i++) {
 		cout << "*";
@@ -245,6 +242,9 @@ void driverLogin() {
 
 }
 
+void tripBooked(int hold) {
+
+}
 
 void userMain(int hold) {
 	int ans, ans2;
@@ -398,6 +398,7 @@ void userMain(int hold) {
 		if (confirm == 'Y' || confirm == 'y') {
 			
 			file << randId << "," << array[hold][0] << "," << loc << "," << des << "," << pas << "," << pay << "\n";
+			tripBooked(hold);
 				
 		}
 		else if (confirm == 'N' || confirm == 'n') {
@@ -410,7 +411,6 @@ void userMain(int hold) {
 	case 3: {
 		time_t now = time(0);
 		struct tm tstruct = *localtime(&now);
-
 		int f = tstruct.tm_hour;
 		cout << "\nTrip cost is $1.35 per km and $1.65 in peak hours (7am-9am and 5pm-7pm)\n";
 		if (f == 7 || f == 8 || f == 9 || f == 17 || f == 18 || f == 19) {
@@ -669,13 +669,10 @@ int main()
 	cin >> ans;
 
 	switch (ans) {
-	case 1: {
+	case 1: 
 		/*printTerms();*/
-		auto t = time(nullptr);
-		auto tm = *localtime(&t);
-		cout << "\nBooking Date Set for : " << put_time(&tm, "%d-%m-%Y") << endl;
 		
-	}
+	
 		goto rerun;
 
 	case 2 : 
