@@ -7,6 +7,9 @@
 #include <vector>
 #include <cmath>
 #include <iomanip>
+#include <deque>
+#include <stdlib.h>
+
 using namespace std;
 void drawLine() {
 	for (int i = 0; i != 66; i++) {
@@ -56,10 +59,21 @@ public:
 	}
 };
 
+void fracture(deque<string> dataToBeBroken) {
+	string ID, name, location, destination, passengers, payment, date, time;
+	string processing;
+	int i = 0, limiter = 0;
+	//breaking up the data
+
+	for (limiter = 0; limiter != 8; limiter++) {
+		dataToBeBroken;
+	}
+}
+
 void driverMenu() {
 	//retreaving info from trips file
 	string readData, temp;
-	vector<string> rowStorage;
+	deque<string> rowStorage;
     fstream tripsFile;
 
 	tripsFile.open("tripsFile.csv", ios::in);
@@ -67,8 +81,10 @@ void driverMenu() {
 
 		getline(tripsFile, readData, '\n');
 		string collumnSection = readData;
-		rowStorage.push_back(collumnSection);
-		rowStorage.push_back(", ");
+		for (int i = 0; i != 8; i++) {
+			rowStorage.push_back(collumnSection);
+			rowStorage.push_back(", ");
+		}
 	}
 	
 	//displaying data
@@ -181,6 +197,9 @@ void driverLogin() {
 			cout << "\tYou are Not Eligible";
 			drawLine();
 		}
+		srand((NULL));
+
+
 
 		cout << "\n\nDriver Registration\n";
 		drawLine();
@@ -234,7 +253,7 @@ void driverLogin() {
 		//Data Transfer to External File
 		fstream driverFile;
 		driverFile.open("driverFile.csv", ios::in | ofstream::app);
-		driverFile << DRI.firstName << "," << DRI.lastName << "," << DRI.gender << "," << DRI.dateOfBirth << "," << DRI.Nationality << "," << DRI.licenceNumber << "," << DRI.licenceExpiry << "," << DRI.experiance << "," << DRI.contactNumber << "," << DRI.emailAddress << "," << DRI.streetAddress << "," << DRI.bankName << "," << DRI.bankAccountName << "," << DRI.bankAccountNumber << "," << DRI.carRegistrationNumber << "," << DRI.carModel << "," << DRI.WOFExpiry << "," << DRI.endorcementNumber << "," << DRI.endorcementNumberExpiry << "," << DRI.password << "," << DRI.rePassword << "\n";
+		driverFile << DRI.firstName << "," << DRI.lastName << "," << DRI.gender << "," << DRI.dateOfBirth << "," << DRI.Nationality << "," << DRI.licenceNumber << "," << DRI.licenceExpiry << "," << DRI.experiance << "," << DRI.contactNumber << "," << DRI.emailAddress << "," << DRI.streetAddress << "," << DRI.bankName << "," << DRI.bankAccountName << "," << DRI.bankAccountNumber << "," << DRI.carRegistrationNumber << "," << DRI.carModel << "," << DRI.WOFExpiry << "," << DRI.licencePlate << "," << DRI.endorcementNumber << "," << DRI.endorcementNumberExpiry << "," << DRI.password << "," << DRI.rePassword << "\n";
 		driverFile.close();
 
 		driverLogin();
@@ -592,62 +611,64 @@ relog:
 
 
 
-//void adminMenu() {
-//	//Login 
-//	cout << "\n\nAdmin Menu\n";
-//	drawLine();
-//	cout << "\nLogin:\n";
-//	cout << "Username: ";
-//	cin >> usernameCheck;
-//	cout << "\nPassword: ";
-//	cin >> passwordCheck;
-//	//Password Checking
-//	while (usernameCheck != storedLogin && passwordCheck != storedPassword) {
-//		cout << "\nThat login dosen't match please try again.\n";
-//		cout << "\nLogin:\n";
-//		cout << "Username: ";
-//		cin >> usernameCheck;
-//		cout << "\nPassword: ";
-//		cin >> passwordCheck;
-//	}
-//	drawLine();
-//	cout << "Welcome Admins";
-//	drawLine();
-//
-//	//Weekly Report
-//	cout << "\n\nWeekly Report";
-//	drawLine();
-//	cout << "\n" << ctime_s;
-//	cout << "\nNumber of trips: ";
-//	cout << "\nPayments: ";
-//	cout << "\nPaid to drivers: $";
-//	cout << "\nGross: ";
-//	cout << "\nTax deduction: $";
-//	cout << "\nNet profit: ";
-//	cout << "\n";
-//	drawLine();
-//	
-//	//Driver Report
-//	cout << "Driver Report\n";
-//	drawLine();
-//
-//	drawLine();
-//
-//	//Customer Report
-//	cout << "Customer Report\n";
-//	drawLine();
-//	//getting customer info
-//
-//	drawLine();
-//
-//	//Cancellation Report
-//	cout << "Cancelation Report";
-//	drawLine();
-//	cout << "\nAmount of cancelattions: ";
-//	cout << "Profit loss: $";
-//	cout << "\n";
-//	drawLine();
-//}
+
+void adminMenu() {
+	string usernameCheck, passwordCheck, storedPassword = "500Miles", storedLogin = "OnlyTrippers";
+	//Login 
+	cout << "\n\nAdmin Menu\n";
+	drawLine();
+	cout << "\nLogin:\n";
+	cout << "Username: ";
+	cin >> usernameCheck;
+	cout << "\nPassword: ";
+	cin >> passwordCheck;
+	//Password Checking
+	while (usernameCheck != storedLogin && passwordCheck != storedPassword) {
+		cout << "\nThat login dosen't match please try again.\n";
+		cout << "\nLogin:\n";
+		cout << "Username: ";
+		cin >> usernameCheck;
+		cout << "\nPassword: ";
+		cin >> passwordCheck;
+	}
+	drawLine();
+	cout << "Welcome Admins";
+	drawLine();
+
+	//Weekly Report
+	cout << "\n\nWeekly Report";
+	drawLine();
+	cout << "\n" << ctime_s;
+	cout << "\nNumber of trips: ";
+	cout << "\nPayments: ";
+	cout << "\nPaid to drivers: $";
+	cout << "\nGross: ";
+	cout << "\nTax deduction: $";
+	cout << "\nNet profit: ";
+	cout << "\n";
+	drawLine();
+	
+	//Driver Report
+	cout << "Driver Report\n";
+	drawLine();
+
+	drawLine();
+
+	//Customer Report
+	cout << "Customer Report\n";
+	drawLine();
+	//getting customer info
+
+	drawLine();
+
+	//Cancellation Report
+	cout << "Cancelation Report";
+	drawLine();
+	cout << "\nAmount of cancelattions: ";
+	cout << "Profit loss: $";
+	cout << "\n";
+	drawLine();
+}
 
 int main()
 {
