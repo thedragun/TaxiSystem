@@ -12,7 +12,7 @@
 
 using namespace std;
 void drawLine() {
-	for (int i = 0; i != 66; i++) {
+	for (int i = 0; i != 37; i++) {
 		cout << "*";
 	}
 }
@@ -49,13 +49,13 @@ void printTerms() {
 
 struct DriverRegistryInfo {
 public:
-	string firstName, lastName, gender, licenceExpiry, dateOfBirth, Nationality, emailAddress, streetAddress, bankName, bankAccountName, carModel, password, rePassword, endorcementNumberExpiry, WOFExpiry, licencePlate;
-	int age, licenceNumber, contactNumber, bankAccountNumber, experiance, carRegistrationNumber, endorcementNumber;
+	string firstName, lastName, gender, licenceExpiry, dateOfBirth, Nationality, emailAddress, streetAddress, bankName, bankAccountName, carModel, password, rePassword, endorcementNumberExpiry, WOFExpiry, licencePlate, bankAccountNumber;
+	int age, licenceNumber, contactNumber, experiance, carRegistrationNumber, endorcementNumber;
 
 	DriverRegistryInfo() 
 	{
-		firstName = "", gender = "", lastName = "", dateOfBirth = "", Nationality = "", emailAddress = "", streetAddress = "", bankName = "", carModel = "", password = "", rePassword = "", endorcementNumberExpiry = "", licenceExpiry = "";
-		licenceNumber = 0, contactNumber = 0, bankAccountNumber = 0, carRegistrationNumber = 0,endorcementNumber = 0;
+		firstName = "", gender = "", lastName = "", dateOfBirth = "", Nationality = "", emailAddress = "", streetAddress = "", bankName = "", carModel = "", password = "", rePassword = "", endorcementNumberExpiry = "", licenceExpiry = "", bankAccountNumber ="";
+		licenceNumber = 0, contactNumber = 0, carRegistrationNumber = 0,endorcementNumber = 0;
 	}
 };
 
@@ -209,6 +209,9 @@ void driverLogin() {
 	string Email, Password;
 	cout << "\n\nDriver Login\n";
 	//Menu
+	cout << "\n\nDriver Login\n";
+	drawLine();
+	cout << "\n1. Login \n2. Register\n";
 	drawLine();
 	cout << "\n1. Login \n2. Register\n";
 	cin >> menuChoice;
@@ -272,7 +275,8 @@ void driverLogin() {
 		cout << "\nEnter Years of Driving Experiance: ";
 		cin >> DRI.experiance;
 		cout << "\nEnter Car Model: ";
-		cin >> DRI.carModel;
+		cin.ignore();
+		getline(cin,DRI.carModel);
 		cout << "\nEnter licence Plate: ";
 		cin >> DRI.licencePlate;
 		cout << "Enter WOF expiry: ";
@@ -306,7 +310,8 @@ void driverLogin() {
 		cout << "\nEnter Date Of birth: ";
 		cin >> DRI.dateOfBirth;
 		cout << "\nEnter Nationality";
-		cin >> DRI.Nationality;
+		cin.ignore();
+		getline(cin, DRI.Nationality);
 		cout << "\nLicence Number: " << DRI.licenceNumber;
 		cout << "\nExperiance: " << DRI.experiance;
 		cout << "\nEnter Contact Number: ";
@@ -314,13 +319,17 @@ void driverLogin() {
 		cout << "\nEnter Email addresss: ";
 		cin >> DRI.emailAddress;
 		cout << "\nEnter Address: ";
-		cin >> DRI.streetAddress;
+		cin.ignore();
+		getline(cin, DRI.streetAddress);
 		cout << "\nEnter Bank Account Number: ";
-		cin >> DRI.bankAccountNumber;
+		cin.ignore();
+		getline(cin,DRI.bankAccountNumber);
 		cout << "\nEnter Bank Name: ";
-		cin >> DRI.bankName;
+		cin.ignore();
+		getline(cin,DRI.bankName);
 		cout << "\nEnter Account Name: ";
-		cin >> DRI.bankAccountName;
+		cin.ignore();
+		getline(cin,DRI.bankAccountName);
 		cout << "\nEnter Car Registration Number: ";
 		cin >> DRI.carRegistrationNumber;
 		cout << "\nCar Model: " << DRI.carModel;
@@ -347,7 +356,7 @@ void driverLogin() {
 		//Data Transfer to External File
 		fstream driverFile;
 		driverFile.open("driverFile.csv", ios::in | ofstream::app);
-		driverFile << DRI.firstName << "," << DRI.lastName << "," << DRI.gender << "," << DRI.dateOfBirth << "," << DRI.Nationality << "," << DRI.licenceNumber << "," << DRI.licenceExpiry << "," << DRI.experiance << "," << DRI.contactNumber << "," << DRI.emailAddress << "," << DRI.streetAddress << "," << DRI.bankName << "," << DRI.bankAccountName << "," << DRI.bankAccountNumber << "," << DRI.carRegistrationNumber << "," << DRI.carModel << "," << DRI.WOFExpiry << "," << DRI.licencePlate << "," << DRI.endorcementNumber << "," << DRI.endorcementNumberExpiry << "," << DRI.password << "," << DRI.rePassword << "\n";
+		driverFile << DRI.firstName << "," << DRI.licencePlate << "," << DRI.endorcementNumber << "," << DRI.carModel << "," << DRI.Nationality << "," << DRI.licenceNumber << "," << DRI.licenceExpiry << "," << DRI.experiance << "," << DRI.contactNumber << "," << DRI.emailAddress << "," << DRI.streetAddress << "," << DRI.bankName << "," << DRI.bankAccountName << "," << DRI.bankAccountNumber << "," << DRI.carRegistrationNumber << "," << DRI.dateOfBirth << "," << DRI.WOFExpiry << "," << DRI.lastName << "," << DRI.gender << "," << DRI.endorcementNumberExpiry << "," << DRI.password << "," << DRI.rePassword << "\n";
 		driverFile.close();
 
 		driverLogin();
@@ -356,7 +365,25 @@ void driverLogin() {
 }
 
 void tripBooked(int hold) {
+	ifstream myfile;
+	string line, field;
+	int linenum = 0;
+	myfile.open("driverFile.csv", ios::out);
+	vector <vector<string> > array;
+	vector<string> v;
+	while (getline(myfile, line)) {
+		v.clear();
+		stringstream ss(line);
+		while (getline(ss, field, ',')) {
+			v.push_back(field);
+		}
+		array.push_back(v);
+	}
+	cout << "\n\nFinding a Driver for you...";
+	system("pause");
+	cout << "\n\nYour";
 
+	myfile.close();
 }
 
 void userMain(int hold) {
@@ -405,7 +432,7 @@ void userMain(int hold) {
 	trip:
 		int randId;
 		srand(time(0));
-		randId = rand() % 1000 + 8000;
+		randId = (rand() % 1000) + 8000;
 		cout << "\n\nTrip Booking\n";
 		cout << "*************************************\n";
 		cout << "Randomly Genorated Trip ID : " << randId;
