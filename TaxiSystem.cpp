@@ -14,10 +14,12 @@
 #include <conio.h>
 #include<stdio.h>
 
+
+
 using namespace std;
 void drawLine() {
 	for (int i = 0; i != 37; i++) {
-		cout << "*";
+		cout << YELLOW "*" << RESET;
 	}
 }
 
@@ -596,10 +598,12 @@ void userMain(int hold)
 			cout << "\nPassengers cannot me more than 4. Try Again.";
 			goto repas;
 		}
-		cout << "\nEnter Any Special Reqirements : ";
-		cin >> spe;
+		cout << "\nEnter Any Special Reqirements (None or Write a request) : ";
+		cin.ignore();
+		getline(cin, spe);
 		cout << "\nEnter Luggage Requirements (Eg 1 Suitcase) : ";
-		cin >> lug;
+		cin.ignore();
+		getline(cin, lug);
 		cout << "\nCalculating Trip Cost...\n\n";
 		system("pause");
 		if (setloc == "Airport") {
@@ -631,12 +635,12 @@ void userMain(int hold)
 		cin >> confirm;
 		if (confirm == 'Y' || confirm == 'y') {
 			
-			file << randId << "," << array[hold][0] << "," << loc << "," << des << "," << pas << "," << pay << "\n";
+			file << randId << "," << array[hold][0] << "," << loc << "," << des << "," << pas << "," << pay << ","<< spe <<  "\n";
 			tripBooked();
 				
 		}
 		else if (confirm == 'N' || confirm == 'n') {
-			canFile << randId << "," << array[hold][0] << "," << loc << "," << des << "," << pas << "," << pay << "\n";
+			canFile << randId << "," << array[hold][0] << "," << loc << "," << des << "," << pas << "," << pay << "," << spe << "\n";
 		}
 		
 	}
@@ -690,7 +694,6 @@ void userMain(int hold)
 	myfile.close();
 	canFile.close();
 }
-
 
 struct UserReg {
 public:
@@ -844,9 +847,6 @@ relog:
 	}
 }
 
-
-
-
 void adminMenu() {
 	string usernameCheck, passwordCheck, storedPassword = "500Miles", storedLogin = "OnlyTrippers";
 	//Login 
@@ -926,7 +926,8 @@ int main()
 
 	switch (ans) {
 	case 1: {
-		printTerms();
+		//printTerms();
+		
 	}
 		goto rerun;
 
