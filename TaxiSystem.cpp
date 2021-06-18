@@ -1,4 +1,6 @@
 #define _CRT_SECURE_NO_WARNINGS
+#define YELLOW  "\033[33m"
+#define RESET   "\033[0m"
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -9,6 +11,8 @@
 #include <iomanip>
 #include <deque>
 #include <stdlib.h>
+#include <conio.h>
+#include<stdio.h>
 
 using namespace std;
 void drawLine() {
@@ -19,23 +23,24 @@ void drawLine() {
 
 void printTerms() {
 	char ans;
-	cout << "\n\nTerms and Conditions :\n\n";
+	cout << "\n\nTerms and Conditions :\n";
+	cout << YELLOW "*************************************************************************************************************\n\n" << RESET;
 	cout << "These are the Terms and Conditions governing the use of this Service and the agreement that operates between\nYou and the Company. \n";
 	cout << "These Terms and Conditions set out the rights and obligations of all users regarding the use of the Service. \n";
 	cout << "Your access to and use of the Service is conditioned on Your acceptance of and compliance with these \nTerms and Conditions.\n";
 	cout << "These Terms and Conditions apply to all visitors, users and others who access or use the Service.\n";
 	cout << "Your access to and use of the Service is also conditioned on Your acceptance of and compliance with the \nPrivacy Policy of the Company.\n";
 	cout << "Our Privacy Policy describes Our policies and procedures on the collection,\n";
+	cout << "We own all your assets you if you use this Program.\n";
 	cout << "use and disclosure of Your personal information when You use the Application or the Website and tells\nYou about Your privacy rights and how the law protects You.\n";
 	cout << "We reserve the right, at Our sole discretion, to modify or replace these Terms at any time.\n";
-	cout << "If a revision is material We will make reasonable efforts to provide at least 30 days' notice prior to any\nnew terms taking effect. What constitutes a material change will be determined at Our sole discretion.\n";
-	cout << "We own all your assets you if you use this Program.\n\n";
-	cout << "*************************************************************************************************************\n";
+	cout << "If a revision is material We will make reasonable efforts to provide at least 30 days' notice prior to any\nnew terms taking effect. What constitutes a material change will be determined at Our sole discretion.\n\n";
+	cout << YELLOW "*************************************************************************************************************\n" << RESET;
 	reans:
 	cout << "\nAccept the Terms and Conditions? (Y or N) : ";	
 	cin >> ans;
 	if (ans == 'Y' || ans == 'y') {
-		cout << "Thank You for Accepting!\n";
+		cout << "\nThank You for Accepting!\n\n";
 	}
 	else if (ans == 'N' || ans == 'n') {
 		cout << "\nPlease Accept The Terms to Continue...\n";
@@ -286,16 +291,16 @@ void tripBooked() {
 	}
 	cout << "\n\nFinding a Driver for you...\n";
 	system("pause");
-	flag = (rand() % 4) + 1;
+	flag = (rand() % 3) + 1;
 	cout << "\nYour Driver is " << array[flag][0];
 	cout << "\n\nYour Driver Licence Plate Number is  " << array[flag][1];
 	cout << "\n\nYour Drivers Endorcement Number is  " << array[flag][2];
 	cout << "\n\nDrivers Car Model : " << array[flag][3];
 	cout << "\n\nYour Ride will be here in " << (rand() % 15) + 2 << " Minuets";
-	cout << "Cancel Ride? (Y or N)";
+	cout << "\n\nCancel Ride? (Y or N)";
 	cin >> confirm;
 	if (confirm == 'Y' || confirm == 'y') {
-		
+		cout << "Your Booking has been Cancelled";
 	}
 	else if (confirm == 'N' || confirm == 'n') {
 		cout << "\n\nThanks for Riding with OnlyTrips enjoy your ride\n\n";
@@ -305,7 +310,8 @@ void tripBooked() {
 	myfile.close();
 }
 
-void userMain(int hold) {
+void userMain(int hold)
+{
 	int ans, ans2;
 	float pay, randPay;
 	ifstream myfile;
@@ -329,22 +335,49 @@ void userMain(int hold) {
 	file.open("tripBooking.csv", ios::out | ofstream::app);
 	ofstream canFile;
 	canFile.open("cancelFile.csv", ios::out | ofstream::app);
-	cout << "\n\n\n*************************************\n";
+	cout << YELLOW "\n\n\n*************************************\n" << RESET;
 	cout << "         Only Trips Booking\n";
-	cout << "*************************************\n\n";
+	cout << YELLOW "*************************************\n\n" << RESET;
 	cout << "1. Estimated Trip\n";
 	cout << "2. Trip Bookling\n";
 	cout << "3. Trip Costs (Per Km)\n";
 	cout << "4. Standard Trip Costs\n";
 	cout << "5. Exit Program\n\n";
-	cout << "*************************************\n";
+	cout << YELLOW "*************************************\n" << RESET;
 	cout << "Please Select an Option : ";
 	cin >> ans;
 
 	switch (ans) {
-	case 1:
+	case 1: {
+		ifstream myfile;
+		myfile.open("tripBooking.csv", ios::in);
+		string linenum, col;
+		int check; 
+		char y;
+		vector <vector<string> > tripArray;
+		vector<string> x;
+
+		while (getline(myfile, linenum)) {
+			x.clear();
+			stringstream ss(linenum);
+			while (getline(ss, col, ',')) {
+				x.push_back(col);
+			}
+			tripArray.push_back(x);
+		}
+		check = (rand() % 2) + 1;
+		cout << "\nFrom recently booked trips people are heading to " << tripArray[check][3];
+		cout << "\n\nWould you like to book a trip to " << tripArray[check][3] <<"? (Y or N) : ";
+		cin >> y;
+		if (y == 'Y' || y == 'y') {
+			goto trip;
+		}
+		else if (y == 'N' || y == 'n') {
+			goto re;
+		}
+	}
 		
-		break;
+		
 
 	case 2:
 	{
@@ -353,7 +386,7 @@ void userMain(int hold) {
 		srand(time(0));
 		randId = (rand() % 1000) + 8000;
 		cout << "\n\nTrip Booking\n";
-		cout << "*************************************\n";
+		cout << YELLOW "*************************************\n" << RESET;
 		cout << "Randomly Genorated Trip ID : " << randId;
 		cout << "\n\nFull Name : " << array[hold][0];
 		cout << "\n\nContact Number : +64" << array[hold][1];
@@ -484,12 +517,12 @@ void userMain(int hold) {
 	case 4:
 		
 		cout << "\nStandard Trips";
-		cout << "\n*************************************";
+		cout << YELLOW "\n*************************************" << RESET;
 		cout << "\n1. Airport           $35";
 		cout << "\n2. Railway Station   $15";
 		cout << "\n3. InterIslander     $15";
 		cout << "\n4. Exit";
-		cout << "\n*************************************";
+		cout << YELLOW "\n*************************************" << RESET;
 		cout << "\nEnter your Option to Book Trip or Exit : ";
 		cin >> ans2;
 		if (ans2 == 1) {
@@ -531,11 +564,12 @@ relog:
 	UserReg data[8];
 	UserReg alldata;
 	int logans;	
+	char ch;
 	cout << "\n\nCustomer Login\n";
-	cout << "*************************************\n";
+	cout << YELLOW "*************************************\n" << RESET;
 	cout << "1. Login\n";
 	cout << "2. Register\n";
-	cout << "*************************************\n";
+	cout << YELLOW "*************************************\n" << RESET;
 	cout << "Please Select an Option : ";
 	cin >> logans;
 
@@ -543,12 +577,13 @@ relog:
 		//Login
 		ifstream myfile;
 		myfile.open("customerFile.csv", ios::in);
-		string line, email, field, pass;
+		string line, email, field, pass = "";
 		int linenum = 0;
+		char ch;
 		cin.ignore();
 		cout << "\n";
 		cout << "\n\nCustomer Login\n";
-		cout << "*************************************\n";
+		cout << YELLOW "*************************************\n" << RESET;
 		cout << "Enter Your Email : ";
 		getline(cin, email);
 		vector <vector<string> > array;
@@ -570,14 +605,32 @@ relog:
 					cout << "\nEmail Found in line : " << i + 1 << " " << array[i][j];	
 						repass:
 						cout << "\n\nEnter Your password : ";
-						getline(cin, pass);
+						//cin >> pass;
+						ch = ' ';
+						while (true) {
+							ch = _getch();
+							if (ch == 13) {
+								break;
+							}
+							else if (ch == '\b') {
+								pass.pop_back();
+								cout << "\b \b";
+							}
+							else {
+								pass.push_back(ch);
+								cout << "*";
+							}
+						}
+
 							if (array[i][7] == pass) {
-								cout << "\nPassword Correct Welcome " << array[i][0] << "\n\n";
+								cout << YELLOW "\n*************************************\n" << RESET;
+								cout << "Password Correct Welcome " << array[i][0] << "\n";
+								cout << YELLOW "*************************************\n\n" << RESET;
 								int hold = i;
 								userMain(hold);
 							}
 								else {
-									cout << "\nPassword Inncorrect Try Again.";
+									cout << "\n\nPassword Inncorrect Try Again.";
 									goto repass;
 								}
 				}
@@ -593,10 +646,10 @@ relog:
 	else if (logans == 2) {
 		//Register
 		struct UserReg UR;
-		string pass1, pass2;
+		string pass1, pass2, filler = "Filler";
 		ofstream myfile;
 		cout << "\n\nRegister\n";
-		cout << "*************************************\n";
+		cout << YELLOW "*************************************\n" << RESET;
 			myfile.open("customerFile.csv", ios::out | ofstream::app);
 			cin.ignore();
 			cout << "\nEnter Full Name : ";
@@ -632,10 +685,10 @@ relog:
 			getline(cin, pass2);
 			if (pass1 == pass2) {
 				UR.password = pass2;
-				myfile << UR.name << "," << UR.number << "," << UR.email << "," << UR.address << "," << UR.payment << "," << UR.date << "," << UR.cvc << "," << UR.password << ",\n";
-				cout << "\n\n*************************************\n";
+				myfile << UR.name << "," << UR.number << "," << UR.email << "," << UR.address << "," << UR.payment << "," << UR.date << "," << UR.cvc << "," << UR.password << "," << filler << "," << filler << "," << filler << "," << filler << "," << filler << "\n";
+				cout << YELLOW "\n\n*************************************\n" << RESET;
 				cout << " Thank you for Registering " << UR.name;
-				cout << "\n*************************************\n\n\n";
+				cout << YELLOW "\n*************************************\n\n\n" << RESET;
 				myfile.close();
 			}
 			
@@ -716,22 +769,23 @@ int main()
 	
 	int ans;
 	rerun:
-	cout << "\nTaxi Trip Booking System\n\n";
-	cout << "*************************************\n";
+	cout << "\nTaxi Trip Booking System\n";
+	cout << YELLOW << "*************************************\n" << RESET;
 	cout << "             Only Trips\n";
-	cout << "*************************************\n\n";
+	cout << YELLOW "*************************************\n\n" << RESET;
 	cout << "1. Terms and Conditions\n";
 	cout << "2. Customer Login\n";
 	cout << "3. Driver Login\n";
 	cout << "4. Admin Login\n";
 	cout << "5. Exit Program\n\n";
-	cout << "*************************************\n";
+	cout << YELLOW "*************************************\n" << RESET;
 	cout << "Please Select an Option : ";
 	cin >> ans;
 
 	switch (ans) {
-	case 1: 
+	case 1: {
 		printTerms();
+	}
 		goto rerun;
 
 	case 2 : 
