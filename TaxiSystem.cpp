@@ -203,71 +203,116 @@ void driverMenu() {
 	drawLine();
 }
 
+void fracturePasswordEdition()
+{
+
+	
+
+	ifstream driverFile;
+	deque<string> check;
+	driverFile.open("driverFile.csv", ios::in);
+
+	for (int i = 0; i != 20; i++) {
+
+
+		string passwordCheck, checkAgainst;
+		while (getline(driverFile, checkAgainst)) {
+
+			getline(driverFile, checkAgainst, '\n');
+			string collumnSection = checkAgainst;
+			for (int i = 0; i != 8; i++) {
+				check.push_back(collumnSection);
+				check.push_back(", ");
+			}
+
+			check.front() = checkAgainst;
+
+			if (passwordCheck == checkAgainst) {
+				cout << "\nPassword found. logging you in.\n";
+				cin >> passwordCheck;
+
+				driverMenu();
+
+			}
+
+			for (int i2 = 0; i2 != 2; i2++) {
+				check.pop_front();
+			}
+
+
+			if (i == 20) {
+				cout << "password not found";
+			}
+		}
+
+
+	}
+}
+
 void driverLogin() {
 	struct DriverRegistryInfo DRI;
 	int menuChoice;
 	string Email, Password;
-	cout << "\n\nDriver Login\n";
+
 	//Menu
 	cout << "\n\nDriver Login\n";
 	drawLine();
 	cout << "\n1. Login \n2. Register\n";
-	drawLine();
-	cout << "\n1. Login \n2. Register\n";
 	cin >> menuChoice;
 	drawLine();
+
 	//login
 	if (menuChoice == 1) {
-		ifstream myfile;
-		myfile.open("driverFile.csv", ios::in);
-		string line, email, field, pass;
-		int linenum = 0;
-		cin.ignore();
-		cout << "\n";
-		cout << "\n\driver Login\n";
-		cout << "*************************************\n";
-		cout << "Enter Your Email : ";
-		getline(cin, email);
-		vector <vector<string> > array;
-		vector<string> v;
+		string emailCheck, passwordCheck, checkAgainst, dataRead;
+		deque<string> gatheredRow{" "};
+		ifstream driverFile;
+		drawLine();
 
-		while (getline(myfile, line)) {
-			v.clear();
-			stringstream ss(line);
-			while (getline(ss, field, ',')) {
-				v.push_back(field);
+		cout << "\nplease enter your email: ";
+		cin >> emailCheck;
+
+
+		driverFile.open("driverFile.csv", ios::in);			//getting file info
+		while (getline(driverFile, checkAgainst)) {
+
+			getline(driverFile, dataRead, '\n');
+			string collumnSection = dataRead;
+			for (int i = 0; i != 8; i++)
+			{
+				gatheredRow.push_back(collumnSection);
+				gatheredRow.push_back(", ");
 			}
-			array.push_back(v);
-		}
-		//array.size() needs to have as many lines of data in the csv file as colums you want it to read as they are directly related
-		for (size_t i = 0; i < array.size(); ++i) {
-			for (size_t j = 0; j < array.size(); ++j) {
-				//cout << array[i][j] << ", ";
-				if (array[i][j] == email) {
-					cout << "\nEmail Found in line : " << i + 1 << " " << array[i][j];
-				repassb:
-					cout << "\n\nEnter Your password : ";
-					getline(cin, pass);
-					if (array[i][7] == pass) {
-						cout << "\nPassword Correct Welcome " << array[i][0] << "\n\n";
-					}
-					else {
-						cout << "\nPassword Inncorrect Try Again.";
-						goto repassb;
-					}
+			//checking for email
+
+			for (int i = 0; i != 20; i++) {
+				checkAgainst = gatheredRow.front();
+
+				if (emailCheck == checkAgainst) {
+					cout << "Email found. please enter your password: ";
+					cin >> passwordCheck;
+
+					fracturePasswordEdition();
+
+				}
+
+				for (int i2 = 0; i2 != 2; i2++) {
+					gatheredRow.pop_front();
+				}
+
+				if (i == 20) {
+					cout << "email not found please check your spelling.";
 				}
 
 			}
 
 		}
-		myfile.close();
-		driverMenu();
-	}
 
+	}
 	
 	//Eligibility and registry
 	if (menuChoice == 2) {
-		cout << "Eligibility Questions\n";
+		drawLine();
+		cout << "\nEligibility Questions\n";
 		drawLine();
 
 		cout << "\nEnter Full licence number: ";
@@ -279,89 +324,89 @@ void driverLogin() {
 		getline(cin,DRI.carModel);
 		cout << "\nEnter licence Plate: ";
 		cin >> DRI.licencePlate;
-		cout << "Enter WOF expiry: ";
+		cout << "\nEnter WOF expiry: ";
 		cin >> DRI.WOFExpiry;
-		cout << "Enter Age: ";
+		cout << "\nEnter Age: ";
 		cin >> DRI.age;
 		drawLine();
-		cout << "Checking eligibility, ";
+		cout << "\nChecking eligibility\n";
 		if (DRI.age >= 20 && DRI.experiance >= 10) {
 			drawLine();
-			cout << "\tYou are Eligible Welcome";
+			cout << "\n\tYou are Eligible Welcome\n";
 			drawLine();
+		
+			cout << "\n\nDriver Registration\n";
+			drawLine();
+			cout << "\nPlease enter your First Name: ";
+			cin >> DRI.firstName;
+			cout << "\nEnter your Last Name: ";
+			cin >> DRI.lastName;
+			cout << "\nEnter Gender: ";
+			cin >> DRI.gender;
+			cout << "\nEnter Date Of birth: ";
+			cin >> DRI.dateOfBirth;
+			cout << "\nEnter Nationality: ";
+			cin.ignore();
+			getline(cin, DRI.Nationality);
+			cout << "\nLicence Number: " << DRI.licenceNumber << "\n";
+			cout << "\nExperiance: " << DRI.experiance << "\n";
+			cout << "\nEnter Contact Number: ";
+			cin >> DRI.contactNumber;
+			cout << "\nEnter Email addresss: ";
+			cin >> DRI.emailAddress;
+			cout << "\nEnter Address: ";
+			cin.ignore();
+			getline(cin, DRI.streetAddress);
+			cout << "\nEnter Bank Account Number: ";
+			cin.ignore();
+			getline(cin, DRI.bankAccountNumber);
+			cout << "\nEnter Bank Name: ";
+			cin.ignore();
+			getline(cin, DRI.bankName);
+			cout << "\nEnter Account Name: ";
+			cin.ignore();
+			getline(cin, DRI.bankAccountName);
+			cout << "\nEnter Car Registration Number: ";
+			cin >> DRI.carRegistrationNumber;
+			cout << "\nCar Model: " << DRI.carModel;
+			cout << "\nWOF Expiry: " << DRI.WOFExpiry;
+			cout << "\nEnter Endorcement Number: ";
+			cin >> DRI.endorcementNumber;
+			cout << "\nEnter Endorcement Number Expiry Date: ";
+			cin >> DRI.endorcementNumberExpiry;
+			cout << "\nEnter Password: ";
+			cin >> DRI.password;
+			cout << "\nRenter Password: ";
+			cin >> DRI.rePassword;
+			drawLine();
+			while (DRI.password != DRI.rePassword)
+			{
+				cout << "\nthose password dot not match please try again";
+				cout << "please enter a password: ";
+				cin >> DRI.password;
+				cout << "\nplease reenter the password: ";
+				cin >> DRI.rePassword;
+			}
+
+			cout << "Thank You For Registering " << DRI.firstName;
+			//Data Transfer to External File
+			fstream driverFile;
+			driverFile.open("driverFile.csv", ios::in | ofstream::app);
+			driverFile << DRI.firstName << "," << DRI.licencePlate << "," << DRI.endorcementNumber << "," << DRI.carModel << "," << DRI.Nationality << "," << DRI.licenceNumber << "," << DRI.licenceExpiry << "," << DRI.experiance << "," << DRI.contactNumber << "," << DRI.emailAddress << "," << DRI.streetAddress << "," << DRI.bankName << "," << DRI.bankAccountName << "," << DRI.bankAccountNumber << "," << DRI.carRegistrationNumber << "," << DRI.dateOfBirth << "," << DRI.WOFExpiry << "," << DRI.lastName << "," << DRI.gender << "," << DRI.endorcementNumberExpiry << "," << DRI.password << "," << DRI.rePassword << "\n";
+			driverFile.close();
+
+			driverLogin();
+		
+
+			srand((NULL));
+
 		}
 		else {
 			drawLine();
 			cout << "\tYou are Not Eligible";
 			drawLine();
 		}
-		srand((NULL));
-
-
-
-		cout << "\n\nDriver Registration\n";
-		drawLine();
-		cout << "\nPlease enter your First Name: ";
-		cin >> DRI.firstName;
-		cout << "\nEnter your Last Name: ";
-		cin >> DRI.lastName;
-		cout << "\nEnter Gender: ";
-		cin >> DRI.gender;
-		cout << "\nEnter Date Of birth: ";
-		cin >> DRI.dateOfBirth;
-		cout << "\nEnter Nationality";
-		cin.ignore();
-		getline(cin, DRI.Nationality);
-		cout << "\nLicence Number: " << DRI.licenceNumber;
-		cout << "\nExperiance: " << DRI.experiance;
-		cout << "\nEnter Contact Number: ";
-		cin >> DRI.contactNumber;
-		cout << "\nEnter Email addresss: ";
-		cin >> DRI.emailAddress;
-		cout << "\nEnter Address: ";
-		cin.ignore();
-		getline(cin, DRI.streetAddress);
-		cout << "\nEnter Bank Account Number: ";
-		cin.ignore();
-		getline(cin,DRI.bankAccountNumber);
-		cout << "\nEnter Bank Name: ";
-		cin.ignore();
-		getline(cin,DRI.bankName);
-		cout << "\nEnter Account Name: ";
-		cin.ignore();
-		getline(cin,DRI.bankAccountName);
-		cout << "\nEnter Car Registration Number: ";
-		cin >> DRI.carRegistrationNumber;
-		cout << "\nCar Model: " << DRI.carModel;
-		cout << "\nWOF Expiry: " << DRI.WOFExpiry;
-		cout << "\nEnter Endorcement Number: ";
-		cin >> DRI.endorcementNumber;
-		cout << "\nEnter Endorcement Number Expiry Date: ";
-		cin >> DRI.endorcementNumberExpiry;
-		cout << "\nEnter Password: ";
-		cin >> DRI.password;
-		cout << "\nRenter Password: ";
-		cin >> DRI.rePassword;
-		drawLine();
-		while (DRI.password != DRI.rePassword)
-		{
-			cout << "\nthose password dot not match please try again";
-				cout << "please enter a password: ";
-				cin >> DRI.password;
-				cout << "\nplease reenter the password: ";
-				cin >> DRI.rePassword;
-		}
-
-		cout << "Thank You For Registering " << DRI.firstName;
-		//Data Transfer to External File
-		fstream driverFile;
-		driverFile.open("driverFile.csv", ios::in | ofstream::app);
-		driverFile << DRI.firstName << "," << DRI.licencePlate << "," << DRI.endorcementNumber << "," << DRI.carModel << "," << DRI.Nationality << "," << DRI.licenceNumber << "," << DRI.licenceExpiry << "," << DRI.experiance << "," << DRI.contactNumber << "," << DRI.emailAddress << "," << DRI.streetAddress << "," << DRI.bankName << "," << DRI.bankAccountName << "," << DRI.bankAccountNumber << "," << DRI.carRegistrationNumber << "," << DRI.dateOfBirth << "," << DRI.WOFExpiry << "," << DRI.lastName << "," << DRI.gender << "," << DRI.endorcementNumberExpiry << "," << DRI.password << "," << DRI.rePassword << "\n";
-		driverFile.close();
-
-		driverLogin();
 	}
-
 }
 
 void tripBooked(int hold) {
