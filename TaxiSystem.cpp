@@ -14,9 +14,8 @@
 #include <conio.h>
 #include<stdio.h>
 
-
-
 using namespace std;
+
 void drawLine() {
 	for (int i = 0; i != 37; i++) {
 		cout << YELLOW "*" << RESET;
