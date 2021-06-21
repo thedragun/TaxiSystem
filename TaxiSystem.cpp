@@ -59,124 +59,27 @@ public:
 	}
 };
 
-struct fractureToDMenu {
-	string ID, name, location, destination, passengers, payment, date, time;
-
-	fractureToDMenu()
-	{
-		ID = "";
-		name = "";
-		location = "";
-		destination = "";
-		passengers = "";
-		payment = "";
-		date = "";
-		time = "";
-
-	}
-};
-
-void fracture(deque<string> dataToBeBroken) {
-	struct fractureToDMenu transferInput;
-	int i = 0, limiter = 0;
-	//breaking up the data
-	for (limiter = 0; limiter != 7; limiter++) {
-		switch (limiter)
-		{
-		case 0:
-			transferInput.ID = dataToBeBroken.front();
-				for ( i = 0; i != 2; i++)
-				{
-					dataToBeBroken.pop_front();
-				}
-			break;
-
-		case 1:
-			transferInput.name = dataToBeBroken.front();
-				for ( i = 0; i != 2; i++)
-				{
-					dataToBeBroken.pop_front();
-				}
-			break;
-
-		case 2:
-			transferInput.location = dataToBeBroken.front();
-				for ( i = 0; i != 2; i++)
-				{
-					dataToBeBroken.pop_front();
-				}
-			break;
-
-		case 3:
-			transferInput.destination = dataToBeBroken.front();
-			for ( i = 0; i != 2; i++)
-			{
-				dataToBeBroken.pop_front();
-			}
-			break;
-
-		case 4:
-			transferInput.passengers = dataToBeBroken.front();
-			for ( i = 0; i != 2; i++)
-			{
-				dataToBeBroken.pop_front();
-			}
-			break;
-
-		case 5:
-			transferInput.payment = dataToBeBroken.front();
-			for ( i = 0; i != 2; i++)
-			{
-				dataToBeBroken.pop_front();
-			}
-			break;
-
-		case 6:
-			transferInput.date = dataToBeBroken.front();
-			for ( i = 0; i != 2; i++)
-			{
-				dataToBeBroken.pop_front();
-			}
-			break;
-
-		case 7:
-			transferInput.time = dataToBeBroken.front();
-			for ( i = 0; i != 2; i++)
-			{
-				dataToBeBroken.pop_front();
-			}
-			break;
-
-		}
-	}
-}
-
 void driverMenu() {
-	//retreaving info from trips file
-	struct fractureToDMenu transferOutput;
-	string readData, temp, completed;
-	deque<string> rowStorage;
-    fstream tripsFile;
+	string completed, data[8];
 
-	tripsFile.open("tripsFile.csv", ios::in);
-	while (getline(tripsFile, readData)) {
+	fstream tripsFile;
+	tripsFile.open("tripBooking.csv", ios::in);
 
-		getline(tripsFile, readData, '\n');
-		string collumnSection = readData;
-		for (int i = 0; i != 8; i++) {
-			rowStorage.push_back(collumnSection);
-			rowStorage.push_back(", ");
-		}
+
+	for (int i = 0; i != 8; i++) {
+		getline(tripsFile, data[i], ',');
 	}
-	
+
+	string id = data[0], name = data[1], location = data[2], destination = data[3], passengers = data[4], payment = data[5], date = data[6], time = data[7];
+
 	//displaying data
 	cout << "Avaliable Trips\n";
 	drawLine();
-	cout << "Trip Number: " << transferOutput.ID;
-	cout << "Customer Name: " << transferOutput.name;
-	cout << "Starting Location: " << transferOutput.location;
-	cout << "Destination: " << transferOutput.destination;
-	cout << "Date and Time: " << transferOutput.date << " at " << transferOutput.time;
+	cout << "Trip Number: " << id;
+	cout << "Customer Name: " << name;
+	cout << "Starting Location: " << location;
+	cout << "Destination: " << destination;
+	cout << "Date and Time: " << date << " at " << time;
 	drawLine();
 	//admin logging
 	cout << "Has this trip been completed? (yes or no) ";
@@ -203,52 +106,6 @@ void driverMenu() {
 	drawLine();
 }
 
-void fracturePasswordEdition()
-{
-
-	
-
-	ifstream driverFile;
-	deque<string> check;
-	driverFile.open("driverFile.csv", ios::in);
-
-	for (int i = 0; i != 20; i++) {
-
-
-		string passwordCheck, checkAgainst;
-		while (getline(driverFile, checkAgainst)) {
-
-			getline(driverFile, checkAgainst, '\n');
-			string collumnSection = checkAgainst;
-			for (int i = 0; i != 8; i++) {
-				check.push_back(collumnSection);
-				check.push_back(", ");
-			}
-
-			check.front() = checkAgainst;
-
-			if (passwordCheck == checkAgainst) {
-				cout << "\nPassword found. logging you in.\n";
-				cin >> passwordCheck;
-
-				driverMenu();
-
-			}
-
-			for (int i2 = 0; i2 != 2; i2++) {
-				check.pop_front();
-			}
-
-
-			if (i == 20) {
-				cout << "password not found";
-			}
-		}
-
-
-	}
-}
-
 void driverLogin() {
 	struct DriverRegistryInfo DRI;
 	int menuChoice;
@@ -263,50 +120,40 @@ void driverLogin() {
 
 	//login
 	if (menuChoice == 1) {
-		string emailCheck, passwordCheck, checkAgainst, dataRead;
-		deque<string> gatheredRow{" "};
+		string emailCheck, passwordCheck;
+		string aquiredString, token;
+
 		ifstream driverFile;
+		driverFile.open("driverFile.csv", ios::in);	
+		getline(driverFile, aquiredString, '\n');//putting the data into a string
+		
+		istringstream ss(aquiredString);//making it a stringstream object
+
 		drawLine();
 
 		cout << "\nplease enter your email: ";
 		cin >> emailCheck;
+		cout << "\nplease enter your password: ";
+		cin >> passwordCheck;
 
+		while (getline(ss, token, ',')){//breaking up the string stream object int indiviudual strings
 
-		driverFile.open("driverFile.csv", ios::in);			//getting file info
-		while (getline(driverFile, checkAgainst)) {
+			if (token == emailCheck) {//checking email against the piece of string
 
-			getline(driverFile, dataRead, '\n');
-			string collumnSection = dataRead;
-			for (int i = 0; i != 8; i++)
-			{
-				gatheredRow.push_back(collumnSection);
-				gatheredRow.push_back(", ");
-			}
-			//checking for email
-
-			for (int i = 0; i != 20; i++) {
-				checkAgainst = gatheredRow.front();
-
-				if (emailCheck == checkAgainst) {
-					cout << "Email found. please enter your password: ";
-					cin >> passwordCheck;
-
-					fracturePasswordEdition();
-
+				if (token == passwordCheck) {//checking password against the piece of string
+					driverMenu();
 				}
-
-				for (int i2 = 0; i2 != 2; i2++) {
-					gatheredRow.pop_front();
+				else {
+					cout << "password failed";
 				}
-
-				if (i == 20) {
-					cout << "email not found please check your spelling.";
-				}
-
 			}
 
+			else {
+
+				cout << "username failed";
+			}
 		}
-
+		
 	}
 	
 	//Eligibility and registry
