@@ -122,6 +122,7 @@ void driverLogin() {
 	if (menuChoice == 1) {
 		string emailCheck, passwordCheck;
 		string aquiredString, token;
+		vector<string> processing;
 
 		ifstream driverFile;
 		driverFile.open("driverFile.csv", ios::in);	
@@ -131,30 +132,44 @@ void driverLogin() {
 
 		drawLine();
 
-		cout << "\nplease enter your email: ";
+		cout << "\nplease enter your email: ";//getting checks
 		cin >> emailCheck;
 		cout << "\nplease enter your password: ";
 		cin >> passwordCheck;
 
-		while (getline(ss, token, ',')){//breaking up the string stream object int indiviudual strings
+		while (getline(ss, token, ',')) {//breaking up the string stream object int indiviudual strings
+			processing.push_back(token);
+		}
 
-			if (token == emailCheck) {//checking email against the piece of string
-
-				if (token == passwordCheck) {//checking password against the piece of string
-					driverMenu();
-				}
-				else {
-					cout << "password failed";
-				}
+		int check1 = 0, check2 = 0;//setting up the checks
+		
+		for (int i = 0; i != 8; i++) {
+			if (processing.at(i) == emailCheck) {//checking for email
+				check1 = 1;
+				break;
 			}
-
-			else {
-
-				cout << "username failed";
+			else 
+			{
+				cout << " |!|email failure|!| ";
 			}
 		}
-		
+
+		for (int i = 0; i != 8; i++) {
+			if (processing.at(i) == passwordCheck) {//checking for password
+				check2 = 1;
+				break;
+			}
+			else
+			{
+				cout << "|!|password failure|!|";
+			}
+		}
+
+		if (check1 == 1 && check2 == 1) {//if both checks are cleared then open driver menu
+			driverMenu();
+		}
 	}
+
 	
 	//Eligibility and registry
 	if (menuChoice == 2) {
