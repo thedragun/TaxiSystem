@@ -256,10 +256,12 @@ void driverLogin() {
 	}
 }
 
-void tripBooked(int hold) {
+void tripBooked() {
 	ifstream myfile;
+	srand(time(NULL));
 	string line, field;
-	int linenum = 0;
+	int linenum = 0, flag;
+	char confirm;
 	myfile.open("driverFile.csv", ios::out);
 	vector <vector<string> > array;
 	vector<string> v;
@@ -271,9 +273,23 @@ void tripBooked(int hold) {
 		}
 		array.push_back(v);
 	}
-	cout << "\n\nFinding a Driver for you...";
+	cout << "\n\nFinding a Driver for you...\n";
 	system("pause");
-	cout << "\n\nYour";
+	flag = (rand() % 4) + 1;
+	cout << "\nYour Driver is " << array[flag][0];
+	cout << "\n\nYour Driver Licence Plate Number is  " << array[flag][1];
+	cout << "\n\nYour Drivers Endorcement Number is  " << array[flag][2];
+	cout << "\n\nDrivers Car Model : " << array[flag][3];
+	cout << "\n\nYour Ride will be here in " << (rand() % 15) + 2 << " Minuets";
+	cout << "Cancel Ride? (Y or N)";
+	cin >> confirm;
+	if (confirm == 'Y' || confirm == 'y') {
+		
+	}
+	else if (confirm == 'N' || confirm == 'n') {
+		cout << "\n\nThanks for Riding with OnlyTrips enjoy your ride\n\n";
+	}
+	
 
 	myfile.close();
 }
@@ -284,7 +300,7 @@ void userMain(int hold) {
 	ifstream myfile;
 	myfile.open("customerFile.csv", ios::in);
 	string line, field, loc, des, date, tim, spe, lug, setloc = "None";
-	int linenum = 0, pas;
+	int linenum = 0, pas, flag = 0;
 	char quote = '"', confirm;
 	vector <vector<string> > array;
 	vector<string> v;
@@ -388,7 +404,7 @@ void userMain(int hold) {
 			cout << "\nTime Set for : " << tim << endl;
 		}
 	repas:
-		cout << "\nEnter Number of passengers : ";
+		cout << "\n\nEnter Number of passengers : ";
 		cin >> pas;
 		if (pas > 4) {
 			cout << "\nPassengers cannot me more than 4. Try Again.";
@@ -430,7 +446,7 @@ void userMain(int hold) {
 		if (confirm == 'Y' || confirm == 'y') {
 			
 			file << randId << "," << array[hold][0] << "," << loc << "," << des << "," << pas << "," << pay << "\n";
-			tripBooked(hold);
+			tripBooked();
 				
 		}
 		else if (confirm == 'N' || confirm == 'n') {
@@ -452,7 +468,7 @@ void userMain(int hold) {
 			cout << "\nStandard Trip Cost at this time is $1.35 per km\n\n";
 		}
 	}
-		break;
+		  goto re;
 
 	case 4:
 		
@@ -704,9 +720,7 @@ int main()
 
 	switch (ans) {
 	case 1: 
-		/*printTerms();*/
-		
-	
+		printTerms();
 		goto rerun;
 
 	case 2 : 
