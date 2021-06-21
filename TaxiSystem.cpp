@@ -22,6 +22,15 @@ void drawLine() {
 	}
 }
 
+int tripNum() {
+	srand((NULL));
+	int num;
+
+	num = rand() % 1000 + 1000;
+
+	return num;
+}
+
 void printTerms() {
 	char ans;
 	cout << "\n\nTerms and Conditions :\n";
@@ -66,50 +75,222 @@ public:
 };
 
 void driverMenu() {
-	string completed, data[8];
 
-	fstream tripsFile;
-	tripsFile.open("tripBooking.csv", ios::in);
+	ifstream myfile;
+	myfile.open("tripsBooking.csv", ios::in);
+	string line, email, field, pass;
+	int linenum = 0, menuChoice;
+	vector <vector<string> > array;
+	vector<string> v;
 
-
-	for (int i = 0; i != 8; i++) {
-		getline(tripsFile, data[i], ',');
+	while (getline(myfile, line)) {
+		v.clear();
+		stringstream ss(line);
+		while (getline(ss, field, ',')) {
+			v.push_back(field);
+		}
+		array.push_back(v);
 	}
 
-	string id = data[0], name = data[1], location = data[2], destination = data[3], passengers = data[4], payment = data[5], date = data[6], time = data[7];
-
-	//displaying data
-	cout << "Avaliable Trips\n";
+	cout << "Driver Menu\n";
 	drawLine();
-	cout << "\nTrip Number: " << id;
-	cout << "\nCustomer Name: " << name;
-	cout << "\nStarting Location: " << location;
-	cout << "\nDestination: " << destination;
-	cout << "\nDate and Time: " << date << " at " << time;
-	drawLine();
-	//admin logging
-	cout << "Has this trip been completed? (yes or no) ";
-	cin >> completed;
+	cout << "please select an option: \n\n";
+	cout << "1. avaliable trips\n";
+	cout << "2. daily statistics\n";
+	cin >> menuChoice;
 
-	int tripsCompleted = 0, totalEarnings, taxTotal = 23, totalAfterTax;
+	string accept, completed;
+	int tripSelection, completedTrips = 0, totalEarnings = 0, taxTotal = 0, TaT = 0;
 
-	if (completed == "yes") {
-		tripsCompleted++;
-		
-		cout << "how much were you paid";
-		cin >> totalEarnings;
 
-		
+	switch (menuChoice) {
+
+	case 1:
+		decline:
+		cout << "please select a trip: ";
+		cout << "Trip " << 1 << "\n";
+		cout << "\nCustomer Name: " << array[0][1];
+		cout << "\nStarting Location: " << array[0][2];
+		cout << "\nDestination: " << array[0][3];
+		cout << "\nDate and Time: " << array[0][4] << " at " << array[0][5];
+
+		cout << "Trip " << 2 << "\n";
+		cout << "\nCustomer Name: " << array[1][1];
+		cout << "\nStarting Location: " << array[1][2];
+		cout << "\nDestination: " << array[1][3];
+		cout << "\nDate and Time: " << array[1][4] << " at " << array[1][5];
+
+
+		cout << "Trip " << 3 << "\n";
+		cout << "\nCustomer Name: " << array[2][1];
+		cout << "\nStarting Location: " << array[2][2];
+		cout << "\nDestination: " << array[2][3];
+		cout << "\nDate and Time: " << array[2][4] << " at " << array[2][5];
+
+
+		cout << "Trip " << 4 << "\n";
+		cout << "\nCustomer Name: " << array[3][1];
+		cout << "\nStarting Location: " << array[3][2];
+		cout << "\nDestination: " << array[3][3];
+		cout << "\nDate and Time: " << array[3][4] << " at " << array[3][5];
+
+
+		cout << "Trip " << 5 << "\n";
+		cout << "\nCustomer Name: " << array[4][1];
+		cout << "\nStarting Location: " << array[4][2];
+		cout << "\nDestination: " << array[4][3];
+		cout << "\nDate and Time: " << array[4][4] << " at " << array[4][5];
+
+		cin >> tripSelection;
+		switch (tripSelection) {
+		case 1:
+			//displaying data
+			drawLine();
+			cout << "Trip " << 1 << "\n";
+			drawLine();
+			cout << "\nTrip Number: " << array[0][0];
+			cout << "\nCustomer Name: " << array[0][1];
+			cout << "\nStarting Location: " << array[0][2];
+			cout << "\nDestination: " << array[0][3] << "\n";
+			cout << "\nDate and Time: " << array[0][4] << " at " << array[0][5];
+			drawLine();
+			cout << "accept trip? y/n";
+			cin >> accept;
+			if (accept == "y") {
+				cout << ">>>>>>>>>>> Trip Status: active <<<<<<<<<<";
+				cout << "completed? y/n: ";
+				cin >> completed;
+				if (completed == "y") {
+					completedTrips++;
+				}
+
+			}
+			else {
+				goto decline;
+			}
+
+			break;
+		case 2:
+			drawLine();
+			cout << "Trip " << 2 << "\n";
+			drawLine();
+			cout << "\nTrip Number: " << array[1][0];
+			cout << "\nCustomer Name: " << array[1][1];
+			cout << "\nStarting Location: " << array[1][2];
+			cout << "\nDestination: " << array[1][3] << "\n";
+			cout << "\nDate and Time: " << array[1][4] << " at " << array[1][5];
+			drawLine();
+			cout << "accept trip? y/n";
+			cin >> accept;
+			if (accept == "y") {
+				cout << ">>>>>>>>>>> Trip Status: active <<<<<<<<<<";
+				cout << "completed? y/n: ";
+				cin >> completed;
+				if (completed == "y") {
+					completedTrips++;
+				}
+
+			}
+			else {
+				goto decline;
+			}
+
+			break;
+		case 3:
+			drawLine();
+			cout << "Trip " << 2 << "\n";
+			drawLine();
+			cout << "\nTrip Number: " << array[2][0];
+			cout << "\nCustomer Name: " << array[2][1];
+			cout << "\nStarting Location: " << array[2][2];
+			cout << "\nDestination: " << array[2][3] << "\n";
+			cout << "\nDate and Time: " << array[2][4] << " at " << array[2][5];
+			drawLine();
+			cout << "accept trip? y/n";
+			cin >> accept;
+			if (accept == "y") {
+				cout << ">>>>>>>>>>> Trip Status: active <<<<<<<<<<";
+				cout << "completed? y/n: ";
+				cin >> completed;
+				if (completed == "y") {
+					completedTrips++;
+				}
+
+			}
+			else {
+				goto decline;
+			}
+
+			break;
+		case 4:
+			drawLine();
+			cout << "Trip " << 2 << "\n";
+			drawLine();
+			cout << "\nTrip Number: " << array[3][0];
+			cout << "\nCustomer Name: " << array[3][1];
+			cout << "\nStarting Location: " << array[31][2];
+			cout << "\nDestination: " << array[3][3] << "\n";
+			cout << "\nDate and Time: " << array[3][4] << " at " << array[3][5];
+			drawLine();
+			cout << "accept trip? y/n";
+			cin >> accept;
+			if (accept == "y") {
+				cout << ">>>>>>>>>>> Trip Status: active <<<<<<<<<<";
+				cout << "completed? y/n: ";
+				cin >> completed;
+				if (completed == "y") {
+					completedTrips++;
+				}
+
+			}
+			else {
+				goto decline;
+			}
+
+			break;
+		case 5:
+			drawLine();
+			cout << "Trip " << 2 << "\n";
+			drawLine();
+			cout << "\nTrip Number: " << array[4][0];
+			cout << "\nCustomer Name: " << array[4][1];
+			cout << "\nStarting Location: " << array[4][2];
+			cout << "\nDestination: " << array[4][3] << "\n";
+			cout << "\nDate and Time: " << array[4][4] << " at " << array[4][5];
+			drawLine();
+			cout << "accept trip? y/n"; 
+			cin >> accept;
+			if (accept == "y") {
+				cout << ">>>>>>>>>>> Trip Status: active <<<<<<<<<<";
+				cout << "completed? y/n: ";
+				cin >> completed;
+				if (completed == "y") {
+					completedTrips++;
+				}
+
+			}
+			else {
+				goto decline;
+			}
+			break;
+
+
+		}
+
+		break;
+
+	case 2:
+		//displaying
+		cout << "\n\nTrips Today\n";
+		drawLine();
+		cout << ctime_s;
+		cout << "Number of trips: " << completedTrips;
+		cout << "Total Earnings: " << totalEarnings;
+		cout << "Tax Total: " << taxTotal;
+		cout << "Total after Tax: " << TaT;
+		drawLine();
+		break;
 	}
-
-	cout << "\n\nTrips Today\n";
-	drawLine();
-	cout << ctime_s;
-	cout << "Number of trips: ";
-	cout << "Total Earnings: ";
-	cout << "Tax Total: ";
-	cout << "Total after Tax: ";
-	drawLine();
 }
 
 void driverLogin() {
@@ -142,8 +323,54 @@ void driverLogin() {
 			array.push_back(v);
 		}
 
+		cout << "\nplease enter your email: ";
+		cin >> email;
+
+		for (size_t i = 0; i < array.size(); ++i) {
+			for (size_t j = 0; j < array.size(); ++j) {
+				//cout << array[i][j] << ", ";
+				if (array[i][j] == email) {
+					cout << "\nEmail Found in line : " << i + 1 << " " << array[i][j];
+				repass:
+					cout << "\n\nEnter Your password : ";
+					cin >> pass;
+					int ch = ' ';
+					while (true) {
+						ch = _getch();
+						if (ch == 13) {
+							break;
+						}
+						else if (ch == '\b') {
+							pass.pop_back();
+							cout << "\b \b";
+						}
+						else {
+							pass.push_back(ch);
+							cout << "*";
+						}
+					}
+
+					if (array[i][j] == pass) {
+						cout << "\n*************************************\n";
+						cout << "Password Correct Welcome " << array[i][0] << "\n";
+						cout << "*************************************\n\n";
+						driverMenu();
+					}
+					else {
+						cout << "\n\nPassword Inncorrect Try Again.";
+						goto repass;
+					}
+				
+				}
+
+			}
+
+		}
+		myfile.close();
 
 
+	
+		//END OF LOGIN
 	}
 
 	
