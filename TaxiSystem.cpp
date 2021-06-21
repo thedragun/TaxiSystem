@@ -75,11 +75,11 @@ void driverMenu() {
 	//displaying data
 	cout << "Avaliable Trips\n";
 	drawLine();
-	cout << "Trip Number: " << id;
-	cout << "Customer Name: " << name;
-	cout << "Starting Location: " << location;
-	cout << "Destination: " << destination;
-	cout << "Date and Time: " << date << " at " << time;
+	cout << "\nTrip Number: " << id;
+	cout << "\nCustomer Name: " << name;
+	cout << "\nStarting Location: " << location;
+	cout << "\nDestination: " << destination;
+	cout << "\nDate and Time: " << date << " at " << time;
 	drawLine();
 	//admin logging
 	cout << "Has this trip been completed? (yes or no) ";
@@ -120,54 +120,24 @@ void driverLogin() {
 
 	//login
 	if (menuChoice == 1) {
-		string emailCheck, passwordCheck;
-		string aquiredString, token;
-		vector<string> processing;
+		ifstream myfile;
+		myfile.open("driverFile.csv", ios::in);
+		string line, email, field, pass;
+		int linenum = 0;
+		vector <vector<string> > array;
+		vector<string> v;
 
-		ifstream driverFile;
-		driverFile.open("driverFile.csv", ios::in);	
-		getline(driverFile, aquiredString, '\n');//putting the data into a string
-		
-		istringstream ss(aquiredString);//making it a stringstream object
-
-		drawLine();
-
-		cout << "\nplease enter your email: ";//getting checks
-		cin >> emailCheck;
-		cout << "\nplease enter your password: ";
-		cin >> passwordCheck;
-
-		while (getline(ss, token, ',')) {//breaking up the string stream object int indiviudual strings
-			processing.push_back(token);
+		while (getline(myfile, line)) {
+			v.clear();
+			stringstream ss(line);
+			while (getline(ss, field, ',')) {
+				v.push_back(field);
+			}
+			array.push_back(v);
 		}
 
-		int check1 = 0, check2 = 0;//setting up the checks
-		
-		for (int i = 0; i != 8; i++) {
-			if (processing.at(i) == emailCheck) {//checking for email
-				check1 = 1;
-				break;
-			}
-			else 
-			{
-				cout << " |!|email failure|!| ";
-			}
-		}
 
-		for (int i = 0; i != 8; i++) {
-			if (processing.at(i) == passwordCheck) {//checking for password
-				check2 = 1;
-				break;
-			}
-			else
-			{
-				cout << "|!|password failure|!|";
-			}
-		}
 
-		if (check1 == 1 && check2 == 1) {//if both checks are cleared then open driver menu
-			driverMenu();
-		}
 	}
 
 	
