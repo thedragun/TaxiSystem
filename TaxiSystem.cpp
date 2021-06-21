@@ -604,6 +604,7 @@ void userMain(int hold)
 		cout << "\nEnter Luggage Requirements (Eg 1 Suitcase) : ";
 		cin.ignore();
 		getline(cin, lug);
+		cout << YELLOW "*************************************************************************************************************\n" << RESET;
 		cout << "\nCalculating Trip Cost...\n\n";
 		system("pause");
 		if (setloc == "Airport") {
@@ -633,6 +634,7 @@ void userMain(int hold)
 		cout << "\n\nCVC : " << array[hold][6];
 		cout << "\n\nConfirm Payment Method and Book Trip? (Y or N) : ";
 		cin >> confirm;
+		cout << YELLOW "*************************************************************************************************************\n" << RESET;
 		if (confirm == 'Y' || confirm == 'y') {
 			
 			file << randId << "," << array[hold][0] << "," << loc << "," << des << "," << pas << "," << pay << ","<< spe <<  "\n";
@@ -791,8 +793,9 @@ relog:
 	else if (logans == 2) {
 		//Register
 		struct UserReg UR;
-		string pass1, pass2, filler = "Filler";
+		string pass1 = "", pass2 = "", filler = "Filler";
 		ofstream myfile;
+		char ch1, ch2;
 		cout << "\n\nRegister\n";
 		cout << YELLOW "*************************************\n" << RESET;
 			myfile.open("customerFile.csv", ios::out | ofstream::app);
@@ -824,10 +827,38 @@ relog:
 			getline(cin, UR.cvc);
 
 			cout << "\nEnter Password : ";
-			getline(cin, pass1);
+			ch1 = ' ';
+			while (true) {
+				ch1 = _getch();
+				if (ch1 == 13) {
+					break;
+				}
+				else if (ch1 == '\b') {
+					pass1.pop_back();
+					cout << "\b \b";
+				}
+				else {
+					pass1.push_back(ch1);
+					cout << "*";
+				}
+			}
 
 			cout << "\nRe-Enter Password :  ";
-			getline(cin, pass2);
+			ch2 = ' ';
+			while (true) {
+				ch2 = _getch();
+				if (ch2 == 13) {
+					break;
+				}
+				else if (ch2 == '\b') {
+					pass2.pop_back();
+					cout << "\b \b";
+				}
+				else {
+					pass2.push_back(ch2);
+					cout << "*";
+				}
+			}
 			if (pass1 == pass2) {
 				UR.password = pass2;
 				myfile << UR.name << "," << UR.number << "," << UR.email << "," << UR.address << "," << UR.payment << "," << UR.date << "," << UR.cvc << "," << UR.password << "," << filler << "," << filler << "," << filler << "," << filler << "," << filler << "\n";
@@ -926,8 +957,7 @@ int main()
 
 	switch (ans) {
 	case 1: {
-		//printTerms();
-		
+		printTerms();
 	}
 		goto rerun;
 
