@@ -280,6 +280,8 @@ void driverMenu() {
 		break;
 
 	case 2:
+
+		TaT - taxTotal * 25 / 100;
 		//displaying
 		cout << "\n\nTrips Today\n";
 		drawLine();
@@ -960,7 +962,7 @@ void adminMenu() {
 	drawLine();
 
 	//Weekly Report
-	cout << "\n\nWeekly Report";
+	cout << "\n\nWeekly Report\n";
 	drawLine();
 	cout << "\n" << ctime_s;
 	cout << "\nNumber of trips: ";
