@@ -405,7 +405,7 @@ void userMain(int hold)
 			cout << "\n\nStarting location is : " << loc;
 		}
 	reuse:
-		if (setloc == "Airport" || setloc == "Railway Station" || setloc == "InterIslander") {
+		if (setloc == "Airport" || setloc == "Railway Station" || setloc == "CBD") {
 			cout << "\n\nDestination is set to " << setloc;
 			setloc == "None";
 			des = setloc;
@@ -471,7 +471,7 @@ void userMain(int hold)
 		if (setloc == "Airport") {
 			pay = 35;
 		}
-		else if (setloc == "Railway Station" || setloc == "InterIslander") {
+		else if (setloc == "Railway Station" || setloc == "CBD") {
 			pay = 15;
 		}
 		else {
@@ -499,6 +499,7 @@ void userMain(int hold)
 		if (confirm == 'Y' || confirm == 'y') {
 			
 			file << randId << "," << array[hold][0] << "," << loc << "," << des << "," << pas << "," << pay << ","<< spe <<  "\n";
+			
 			tripBooked();
 				
 		}
@@ -529,7 +530,7 @@ void userMain(int hold)
 		cout << YELLOW "\n*************************************" << RESET;
 		cout << "\n1. Airport           $35";
 		cout << "\n2. Railway Station   $15";
-		cout << "\n3. InterIslander     $15";
+		cout << "\n3. CBD               $15";
 		cout << "\n4. Exit";
 		cout << YELLOW "\n*************************************" << RESET;
 		cout << "\nEnter your Option to Book Trip or Exit : ";
@@ -543,7 +544,7 @@ void userMain(int hold)
 			goto trip;
 		}
 		else if (ans2 == 3) {
-			setloc = "InterIslander";
+			setloc = "CBD";
 			goto trip;
 		}
 		else {
@@ -818,7 +819,19 @@ int main()
 
 	switch (ans) {
 	case 1: {
-		printTerms();
+		//printTerms();
+		cout << "\t\t\t                         Genorated Bill\n";
+		cout << YELLOW "\t\t\t******************************************************************\n" << RESET;
+		cout << YELLOW "\t\t\t*" << RESET "\tTrip ID\t\t\t\t\t\t" << "873\n";
+		cout << YELLOW "\t\t\t*" << RESET "\tName\t\t\t\t\t\t" << "Joel Simpson\n";
+		cout << YELLOW "\t\t\t*" << RESET "\tContact Number\n";
+		cout << YELLOW "\t\t\t*" << RESET "\tStarting Location\n";
+		cout << YELLOW "\t\t\t*" << RESET "\tDestination \n";
+		cout << YELLOW "\t\t\t*" << RESET "\tTrip Total\n";
+		cout << YELLOW "\t\t\t*" << RESET "\tService Fee\n";
+		cout << YELLOW "\t\t\t*" << RESET "\n";
+		cout << YELLOW "\t\t\t*" << RESET "\n";
+		cout << YELLOW "\t\t\t*" << RESET "\tTotal\n";
 	}
 		goto rerun;
 
