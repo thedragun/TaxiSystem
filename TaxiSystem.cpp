@@ -329,8 +329,7 @@ void driverLogin() {
 		cin >> email;
 
 		for (size_t i = 0; i < array.size(); ++i) {
-			for (size_t j = 0; j < array.size(); ++j) {
-				//cout << array[i][j] << ", ";
+			for (size_t j = 0; j < 21; ++j) {
 				if (array[i][j] == email) {
 					cout << "\nEmail Found in line : " << i + 1 << " " << array[i][j];
 				repass:
@@ -352,7 +351,7 @@ void driverLogin() {
 						}
 					}
 
-					if (array[i][j] == pass) {
+					if (array[i][20] == pass) {
 						cout << "\n*************************************\n";
 						cout << "Password Correct Welcome " << array[i][0] << "\n";
 						cout << "*************************************\n\n";
