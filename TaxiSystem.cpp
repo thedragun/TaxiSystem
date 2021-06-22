@@ -330,7 +330,7 @@ void driverLogin() {
 
 		for (size_t i = 0; i < array.size(); ++i) {
 			for (size_t j = 0; j < array.size(); ++j) {
-				//cout << array[i][j] << ", ";
+				cout << array[i][j] << ", ";
 				if (array[i][j] == email) {
 					cout << "\nEmail Found in line : " << i + 1 << " " << array[i][j];
 				repass:
@@ -416,6 +416,7 @@ void driverLogin() {
 			cin.ignore();
 			getline(cin, DRI.Nationality);
 			cout << "\nLicence Number: " << DRI.licenceNumber << "\n";
+			cout << "\nLicence Expiry: " << DRI.licenceExpiry << "\n";
 			cout << "\nExperiance: " << DRI.experiance << "\n";
 			cout << "\nEnter Contact Number: ";
 			cin >> DRI.contactNumber;
