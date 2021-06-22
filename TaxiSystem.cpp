@@ -100,6 +100,7 @@ void driverMenu() {
 	cout << "please select an option: \n\n";
 	cout << "1. avaliable trips\n";
 	cout << "2. daily statistics\n";
+	cout << "3. main menu";
 	cin >> menuChoice;
 
 	switch (menuChoice) {
@@ -164,7 +165,7 @@ void driverMenu() {
 				cin >> completed;
 				if (completed == "y") {
 					completedTrips++;
-					
+
 					cout << "\nplease enter how much you were paid: ";
 					cin >> temp;
 
@@ -284,7 +285,7 @@ void driverMenu() {
 			cout << "\nDestination: " << array[4][3] << "\n";
 			cout << "\nDate and Time: " << array[4][4] << " at " << array[4][5] << "\n";
 			drawLine();
-			cout << "accept trip? y/n"; 
+			cout << "accept trip? y/n";
 			cin >> accept;
 			if (accept == "y") {
 				cout << ">>>>>>>>>>> Trip Status: active <<<<<<<<<<\n";
@@ -314,7 +315,7 @@ void driverMenu() {
 	case 2:
 
 		totalEarnings = totalEarnings + temp;
-		TaT - (totalEarnings * taxTotal) / 100;
+		TaT = (totalEarnings * taxTotal) / 100;
 		//displaying
 		cout << "\n\nTrips Today\n";
 		drawLine();
@@ -329,6 +330,9 @@ void driverMenu() {
 		drawLine();
 
 		goto redo;
+		break;
+	case 3: 
+
 		break;
 	}
 
@@ -979,10 +983,6 @@ relog:
 	}
 }
 
-struct adminInfo {
-
-};
-
 void adminMenu() {
 	string usernameCheck, passwordCheck, storedPassword = "500Miles", storedLogin = "OnlyTrippers";
 	//Login 
@@ -1005,8 +1005,59 @@ void adminMenu() {
 	drawLine();
 	cout << "Welcome Admins";
 	drawLine();
+
 	//file access
-	
+
+	//driver File
+	ifstream driverFile;
+	driverFile.open("driverFile.csv", ios::in);
+	string line, email, field, pass;
+	int linenum = 0;
+	vector <vector<string> > array1;
+	vector<string> v;
+
+	while (getline(driverFile, line)) {
+		v.clear();
+		stringstream ss(line);
+		while (getline(ss, field, ',')) {
+			v.push_back(field);
+		}
+		array1.push_back(v);
+	}
+
+	//customer file
+	ifstream customerFile;
+	customerFile.open("customerFile.csv", ios::in);
+	string line, email, field, pass;
+	int linenum = 0;
+	vector <vector<string> > array2;
+	vector<string> v;
+
+	while (getline(customerFile, line)) {
+		v.clear();
+		stringstream ss(line);
+		while (getline(ss, field, ',')) {
+			v.push_back(field);
+		}
+		array2.push_back(v);
+	}
+	//cancelation file
+	ifstream cancelFile;
+	cancelFile.open("cancelFile.csv", ios::in);
+	string line, email, field, pass;
+	int linenum = 0;
+	vector <vector<string> > array3;
+	vector<string> v;
+
+	while (getline(cancelFile, line)) {
+		v.clear();
+		stringstream ss(line);
+		while (getline(ss, field, ',')) {
+			v.push_back(field);
+		}
+		array3.push_back(v);
+	}
+
 	//Weekly Report
 	cout << "\n\nWeekly Report\n";
 	drawLine();
@@ -1062,7 +1113,7 @@ int main()
 	switch (ans) {
 	case 1: {
 		//printTerms();
-		cout << "\t\t\t                         Genorated Bill\n";
+		cout << "\t\t\t                         Generated Bill\n";
 		cout << YELLOW "\t\t\t******************************************************************\n" << RESET;
 		cout << YELLOW "\t\t\t*" << RESET "\tTrip ID\t\t\t\t\t\t" << "873\n";
 		cout << YELLOW "\t\t\t*" << RESET "\tName\t\t\t\t\t\t" << "Joel Simpson\n";
