@@ -1186,11 +1186,16 @@ void adminMenu() {
 	
 
 	//Cancellation Report
-	int j;
+	int cancelAmount = 0, loss = 0;
+	for (int j = 0; j != 10; j++)
+	{
+		cancelAmount = cancelAmount + stoi(array3[j][4]);
+		loss = loss + stoi(array3[j][5]);
+	}
 	cout << "Cancelation Report";
 	drawLine();
-	cout << "\nAmount of cancelattions: " << array3[j][0];
-	cout << "Profit loss: $" << array3[j][1];
+	cout << "\nAmount of cancelattions: " << cancelAmount;
+	cout << "Profit loss: $" << loss;
 	cout << "\n";
 	drawLine();
 }
