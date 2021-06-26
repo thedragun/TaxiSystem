@@ -15,7 +15,25 @@
 #include <conio.h>
 #include<stdio.h>
 
+
 using namespace std;
+void drawCar() {
+	char six = '"';
+	cout << "\t\t\t             Thanks for Riding with Only Trips\n";
+	cout << "\t\t\t                      ___..............._\n";
+	cout << "\t\t\t             __.. ' _'."<< six << six << six << six << six << six<<"\\"<< six << six << six << six << six << six << six << six<<" - .`-.\n";
+	cout << "\t\t\t ______.-'         (_) |      \\           ` \\`-. _\n";
+	cout << "\t\t\t/_       --------------'-------\\---....______\\__`.`  -..___\n";
+	cout << RED"\t\t\t|"<<RESET<<"  T     _.----._           Xxx|x...           |          _.._`- - ._\n";
+	cout << RED"\t\t\t|"<<RESET<<"  |   .' ..--.. `.         XXX|"<<YELLOW<<"ONLYTRIPS"<<RESET<<"==    |       .'.---..`.     -._\n";
+	cout << "\t\t\t\\_j   /  /  __  \\  \\        XXX|XXXXXXXXXXX==  |      / /  __  \\ \\        `-.\n";
+	cout << "\t\t\t _|  |  |  /  \\  |  |       XXX|"<< six << six <<"'            |     / |  /  \\  | |          |\n";
+	cout << "\t\t\t|__\\_j  |  \\__/  |  L__________|_______________|_____j |  \\__/  | L__________J\n";
+	cout << "\t\t\t     `'\\ \\      / ./__________________________________\\ \\      / /___________\\\n";
+	cout << "\t\t\t        `.`----'.'                                     `.`----'.'\n";
+	cout << "\t\t\t          `"<<six<<six<<six<<six<<"'                                         `"<< six<<six<<six<<six<<"'\n";
+
+}
 
 void drawLine() {
 	for (int i = 0; i != 37; i++) {
@@ -75,6 +93,7 @@ public:
 		licenceNumber = 0, contactNumber = 0, carRegistrationNumber = 0,endorcementNumber = 0;
 	}
 };
+
 
 void driverMenu(int linenum) {
 	string accept, completed;
@@ -360,6 +379,7 @@ void driverMenu(int linenum) {
 
 	myfile.close();
 	myfile.close();
+
 }
 
 void driverLogin() {
@@ -561,21 +581,30 @@ void tripBooked() {
 		}
 		array.push_back(v);
 	}
+
+
+	
 	cout << "\n\nFinding a Driver for you...\n\n";
 	system("pause");
+	cout << YELLOW "\n*************************************************************************************************************\n" << RESET;
+
 	flag = (rand() % 3) + 1;
-	cout << "\nYour Driver is " << array[flag][0];
-	cout << "\n\nYour Driver Licence Plate Number is  " << array[flag][1];
-	cout << "\n\nYour Drivers Endorcement Number is  " << array[flag][2];
-	cout << "\n\nDrivers Car Model : " << array[flag][3];
-	cout << "\n\nYour Ride will be here in " << (rand() % 15) + 2 << " Minuets";
-	cout << "\n\nCancel Ride? (Y or N)";
+	cout << "\n\n\n\n\t\t\t                          Driver Found\n";
+	cout << YELLOW "\t\t\t******************************************************************\n" << RESET;
+	cout << YELLOW "\t\t\t*" << RESET "\tYour Driver is                              " << array[flag][0] << "\n";
+	cout << YELLOW "\t\t\t*" << RESET "\tYour Drivers Licence Plate Number is        " << array[flag][1] << "\n";
+	cout << YELLOW "\t\t\t*" << RESET "\tYour Drivers Endorcement Number is          " << array[flag][2] << "\n";
+	cout << YELLOW "\t\t\t*" << RESET "\tDrivers Car Model                           " << array[flag][3] << "\n";
+	cout << YELLOW "\t\t\t*" << RESET "\tYour Ride will be here in                   " << (rand() % 15) + 2 << " Minuets\n";
+	cout << YELLOW "\t\t\t*" << RESET "\tCancel Ride? (Y or N)                       ";
 	cin >> confirm;
+	cout << YELLOW "\t\t\t*" << RESET "\n";
+	cout << YELLOW "\t\t\t******************************************************************\n\n\n\n\n\n" << RESET;
 	if (confirm == 'Y' || confirm == 'y') {
 		cout << "Your Booking has been Cancelled";
 	}
 	else if (confirm == 'N' || confirm == 'n') {
-		cout << "\n\nThanks for Riding with OnlyTrips enjoy your ride\n\n";
+		drawCar();
 	}
 	
 
@@ -585,6 +614,7 @@ void tripBooked() {
 void userMain(int hold)
 {
 	//Joel
+re:
 	int ans, ans2;
 	float pay, randPay;
 	ifstream myfile;
@@ -603,7 +633,6 @@ void userMain(int hold)
 		}
 		array.push_back(v);
 	}
-	re:
 	ofstream file;
 	file.open("tripBooking.csv", ios::out | ofstream::app);
 	ofstream canFile;
@@ -678,7 +707,7 @@ void userMain(int hold)
 		if (setloc == "Airport" || setloc == "Railway Station" || setloc == "CBD") {
 			cout << "\n\nDestination is set to " << setloc;
 			des = setloc;
-			setloc = "None";
+			
 			
 		}
 		else {
@@ -741,7 +770,7 @@ void userMain(int hold)
 		getline(cin, spe);
 		cout << "\nEnter Luggage Requirements (Eg 1 Suitcase) : ";
 		getline(cin, lug);
-		cout << YELLOW "*************************************************************************************************************\n" << RESET;
+		cout << YELLOW "\n\n*************************************************************************************************************\n" << RESET;
 		cout << "\nCalculating Trip Cost...\n\n";
 		system("pause");
 		if (setloc == "Airport") {
@@ -755,7 +784,7 @@ void userMain(int hold)
 			time_t now = time(0);
 			struct tm tstruct = *localtime(&now);
 			int f = tstruct.tm_hour;
-			cout << "\nTrip cost is $1.35 per km and $1.65 in peak hours (7am-9am and 5pm-7pm)\n";
+			
 			if (f == 7 || f == 8 || f == 9 || f == 17 || f == 18 || f == 19) {
 				pay = (randPay * 1.65) + 5;
 			}
@@ -765,7 +794,8 @@ void userMain(int hold)
 			}
 		}
 		int service = 5;
-		cout << YELLOW "*************************************************************************************************************\n" << RESET;
+		cout << YELLOW "\n\n*************************************************************************************************************\n\n" << RESET;
+		cout << "\nTrip cost is $1.35 per km and $1.65 in peak hours (7am-9am and 5pm-7pm)\n";
 		cout << "\nYour Total Payment is $" << pay << endl;
 		cout << "\nService Fee $" << service;
 		cout << "\n\nPayment Details : ";
@@ -830,7 +860,7 @@ void userMain(int hold)
 
 	case 4:
 		
-		cout << "\nStandard Trips";
+		cout << "\n\n\n\nStandard Trips";
 		cout << YELLOW "\n*************************************" << RESET;
 		cout << "\n1. Airport           $35";
 		cout << "\n2. Railway Station   $15";
@@ -1047,6 +1077,7 @@ relog:
 }
 
 void adminMenu() {
+
 	string usernameCheck, passwordCheck, storedPassword = "500Miles", storedLogin = "OnlyTrippers";
 	//Login 
 	cout << "\n\nAdmin Menu\n";
@@ -1220,15 +1251,14 @@ int main()
 	cin >> ans;
 
 	switch (ans) {
-	case 1: {
-
+	case 1: 
 		printTerms();
-    
-	}
 		goto rerun;
 
 	case 2 : 
+	
 		userReg();
+	
 		goto rerun;
 	case 3 :
 		driverLogin();
