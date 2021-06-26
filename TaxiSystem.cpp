@@ -1,6 +1,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 #define YELLOW  "\033[33m"
 #define RESET   "\033[0m"
+#define RED     "\033[31m"
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -32,6 +33,7 @@ int tripNum() {
 }
 
 void printTerms() {
+	//Joel
 	char ans;
 	cout << "\n\nTerms and Conditions :\n";
 	cout << YELLOW "*************************************************************************************************************\n\n" << RESET;
@@ -542,6 +544,7 @@ void driverLogin() {
 }
 
 void tripBooked() {
+	//Joel
 	ifstream myfile;
 	srand(time(NULL));
 	string line, field;
@@ -558,7 +561,7 @@ void tripBooked() {
 		}
 		array.push_back(v);
 	}
-	cout << "\n\nFinding a Driver for you...\n";
+	cout << "\n\nFinding a Driver for you...\n\n";
 	system("pause");
 	flag = (rand() % 3) + 1;
 	cout << "\nYour Driver is " << array[flag][0];
@@ -581,6 +584,7 @@ void tripBooked() {
 
 void userMain(int hold)
 {
+	//Joel
 	int ans, ans2;
 	float pay, randPay;
 	ifstream myfile;
@@ -639,6 +643,7 @@ void userMain(int hold)
 		cout << "\n\nWould you like to book a trip to " << tripArray[check][3] <<"? (Y or N) : ";
 		cin >> y;
 		if (y == 'Y' || y == 'y') {
+			setloc = tripArray[check][3];
 			goto trip;
 		}
 		else if (y == 'N' || y == 'n') {
@@ -653,17 +658,18 @@ void userMain(int hold)
 	trip:
 		int randId;
 		srand(time(0));
-		randId = (rand() % 1000) + 8000;
+		randId = (rand() % 9999) + 1000;
 		cout << "\n\nTrip Booking\n";
 		cout << YELLOW "*************************************\n" << RESET;
-		cout << "Randomly Genorated Trip ID : " << randId;
+		cout << "Trip ID : " << randId;
 		cout << "\n\nFull Name : " << array[hold][0];
 		cout << "\n\nContact Number : +64" << array[hold][1];
 		cout << "\n\nEnter Starting Location (Enter " << quote << "Home" << quote << " or Seprate address) : ";
-		cin >> loc;
+		cin.ignore();
+		getline(cin, loc);
 		if (loc == "Home" || loc == "home") {
 			cout << "\nStarting location is : " << array[hold][3];
-			loc == array[hold][3];
+			loc = array[hold][3];
 		}
 		else {
 			cout << "\n\nStarting location is : " << loc;
@@ -671,12 +677,12 @@ void userMain(int hold)
 	reuse:
 		if (setloc == "Airport" || setloc == "Railway Station" || setloc == "CBD") {
 			cout << "\n\nDestination is set to " << setloc;
-			setloc == "None";
 			des = setloc;
+			setloc = "None";
+			
 		}
 		else {
 			cout << "\n\nEnter Destination (Enter " << quote << "Home" << quote << " or Seprate address) : ";
-			cin.ignore();
 			getline(cin, des);
 			if (des == loc || loc == setloc) {
 				cout << "\nStarting location cannot be the same as destination. Try again.";
@@ -694,11 +700,14 @@ void userMain(int hold)
 		cout << "\n\nEnter Booking Date (Enter " << quote << "Today" << quote << " or (DD*MM*YY) : ";
 		cin >> date;
 		if (date == "Today" || date == "today") {
-			auto t = time(nullptr);
-			auto tm = *localtime(&t);
-			cout << "\nBooking Date Set for : " << put_time(&tm, "%d-%m-%Y") << endl;
-			
-			
+			time_t curr_time;
+			tm* curr_tm;
+			char date_string[100];
+			time(&curr_time);
+			curr_tm = localtime(&curr_time);
+			strftime(date_string, 50, "%B %d %Y", curr_tm);
+			cout << "\nBooking Date Set for : " << date_string << endl;
+			date = date_string;
 			
 		}
 		else {
@@ -707,11 +716,15 @@ void userMain(int hold)
 		cout << "\nEnter Booking Time (Enter " << quote << "Now" << quote << " or (Hour:Min) : ";
 		cin >> tim;
 		if (tim == "Now" || tim == "now") {
-			time_t now = time(0);
-			struct tm tstruct = *localtime(&now);
-			int f = tstruct.tm_hour;
-			int o = tstruct.tm_min;
-			cout << "\nBooking Time Set for : " << f << ":" << o;
+			time_t curr_time;
+			tm* curr_tm;
+			char time_string[100];
+			time(&curr_time);
+			curr_tm = localtime(&curr_time);
+			strftime(time_string, 50, "%T", curr_tm);
+
+			cout << "\nBooking Time Set for : " << time_string;
+			tim = time_string;
 		}
 		else {
 			cout << "\nTime Set for : " << tim << endl;
@@ -727,7 +740,6 @@ void userMain(int hold)
 		cin.ignore();
 		getline(cin, spe);
 		cout << "\nEnter Luggage Requirements (Eg 1 Suitcase) : ";
-		cin.ignore();
 		getline(cin, lug);
 		cout << YELLOW "*************************************************************************************************************\n" << RESET;
 		cout << "\nCalculating Trip Cost...\n\n";
@@ -752,23 +764,51 @@ void userMain(int hold)
 				
 			}
 		}
+		int service = 5;
+		cout << YELLOW "*************************************************************************************************************\n" << RESET;
 		cout << "\nYour Total Payment is $" << pay << endl;
-		cout << "\nPayment Details : ";
+		cout << "\nService Fee $" << service;
+		cout << "\n\nPayment Details : ";
 		cout << "\n\nVisa Card : " << array[hold][4];
 		cout << "\n\nExpiry Date : " << array[hold][5];
 		cout << "\n\nCVC : " << array[hold][6];
-		cout << "\n\nConfirm Payment Method and Book Trip? (Y or N) : ";
+		cout << "\n\nConfirm Payment Method and Book Trip? (Y = Yes confirm and book or N = Cancel Booking) : ";
 		cin >> confirm;
-		cout << YELLOW "*************************************************************************************************************\n" << RESET;
+		cout << YELLOW "*************************************************************************************************************" << RESET;
 		if (confirm == 'Y' || confirm == 'y') {
 			
-			file << randId << "," << array[hold][0] << "," << loc << "," << des << "," << pas << "," << pay << ","<< spe <<  "\n";
-			
+			file << randId << "," << array[hold][0] << "," << loc << "," << des << "," << pas << "," << pay << ","<< spe << ","<< lug << "," << date << "," << tim <<   "\n";
+			cout << "\n\n\n\n\t\t\t                                 Bill\n";
+			cout << YELLOW "\t\t\t******************************************************************\n" << RESET;
+			cout << YELLOW "\t\t\t*" << RESET "\tTrip ID                                " << randId << "\n";
+			cout << YELLOW "\t\t\t*" << RESET "\tName                                   " << array[hold][0] << "\n";
+			cout << YELLOW "\t\t\t*" << RESET "\tContact Number                         " << array[hold][1] << "\n";
+			cout << YELLOW "\t\t\t*" << RESET "\tStarting Location                      " << loc << "\n";
+			cout << YELLOW "\t\t\t*" << RESET "\tDestination                            " << des << "\n";
+			cout << YELLOW "\t\t\t*" << RESET "\tTrip Total                             $" << pay << "\n";
+			cout << YELLOW "\t\t\t*" << RESET "\tService Fee                            $" << service << "\n";
+			cout << YELLOW "\t\t\t*" << RESET "\n";
+			cout << YELLOW "\t\t\t*" << RESET "\n";
+			cout << YELLOW "\t\t\t*" << RESET "\tTotal                                  $" << pay + service << "\n";
+			cout << YELLOW "\t\t\t*" << RESET "\n";
+			cout << YELLOW "\t\t\t******************************************************************\n\n\n\n\n\n" << RESET;
 			tripBooked();
 				
 		}
 		else if (confirm == 'N' || confirm == 'n') {
-			canFile << randId << "," << array[hold][0] << "," << loc << "," << des << "," << pas << "," << pay << "," << spe << "\n";
+			char reconfirm;
+			cout << RED "\n\n*************************************\n" << RESET;
+			cout << "Are you sure you want to cancel? (Y or N) \n";
+			cout << RED "*************************************\n" << RESET;
+			cin >> reconfirm;
+			if (reconfirm == 'y'|| reconfirm == 'Y') {
+				canFile << randId << "," << array[hold][0] << "," << loc << "," << des << "," << pas << "," << pay << "," << spe << "," << lug << "," << date << "," << tim << "\n";
+			}
+			else {
+				break;
+			}
+
+			
 		}
 		
 	}
@@ -824,6 +864,7 @@ void userMain(int hold)
 }
 
 struct UserReg {
+	//Joel
 public:
 	string name, number, email, address, payment, date, cvc, password;
 
@@ -833,6 +874,7 @@ public:
 };
 
 void userReg() {
+	// Joel 
 relog:
 	UserReg data[8];
 	UserReg alldata;
@@ -872,7 +914,7 @@ relog:
 		}
 		//array.size() needs to have as many lines of data in the csv file as colums you want it to read as they are directly related
 		for (size_t i = 0; i < array.size(); ++i) {
-			for (size_t j = 0; j < array.size(); ++j) {
+			for (size_t j = 0; j < 7; ++j) {
 				//cout << array[i][j] << ", ";
 				if (array[i][j] == email) {
 					cout << "\nEmail Found in line : " << i + 1 << " " << array[i][j];	
@@ -941,7 +983,7 @@ relog:
 			getline(cin, UR.address);
 
 
-			cout << "\nEnter Payment method : ";
+			cout << "\nEnter Visa Card Number : ";
 			getline(cin, UR.payment);
 
 
@@ -987,7 +1029,7 @@ relog:
 			}
 			if (pass1 == pass2) {
 				UR.password = pass2;
-				myfile << UR.name << "," << UR.number << "," << UR.email << "," << UR.address << "," << UR.payment << "," << UR.date << "," << UR.cvc << "," << UR.password << "," << filler << "," << filler << "," << filler << "," << filler << "," << filler << "\n";
+				myfile << UR.name << "," << UR.number << "," << UR.email << "," << UR.address << "," << UR.payment << "," << UR.date << "," << UR.cvc << "," << UR.password << "\n";
 				cout << YELLOW "\n\n*************************************\n" << RESET;
 				cout << " Thank you for Registering " << UR.name;
 				cout << YELLOW "\n*************************************\n\n\n" << RESET;
@@ -1174,19 +1216,9 @@ int main()
 
 	switch (ans) {
 	case 1: {
-		//printTerms();
-		cout << "\t\t\t                         Generated Bill\n";
-		cout << YELLOW "\t\t\t******************************************************************\n" << RESET;
-		cout << YELLOW "\t\t\t*" << RESET "\tTrip ID\t\t\t\t\t\t" << "873\n";
-		cout << YELLOW "\t\t\t*" << RESET "\tName\t\t\t\t\t\t" << "Joel Simpson\n";
-		cout << YELLOW "\t\t\t*" << RESET "\tContact Number\n";
-		cout << YELLOW "\t\t\t*" << RESET "\tStarting Location\n";
-		cout << YELLOW "\t\t\t*" << RESET "\tDestination \n";
-		cout << YELLOW "\t\t\t*" << RESET "\tTrip Total\n";
-		cout << YELLOW "\t\t\t*" << RESET "\tService Fee\n";
-		cout << YELLOW "\t\t\t*" << RESET "\n";
-		cout << YELLOW "\t\t\t*" << RESET "\n";
-		cout << YELLOW "\t\t\t*" << RESET "\tTotal\n";
+
+		printTerms();
+    
 	}
 		goto rerun;
 
