@@ -94,269 +94,292 @@ public:
 	}
 };
 
-void driverMenu() {
-	//string accept, completed;
-	//int tripSelection, completedTrips = 0, totalEarnings = 0, taxTotal = 25, temp = 0;
-	//double  TaT = 0;
 
-	//ifstream myfile;
-	//myfile.open("tripBooking.csv", ios::in);
-	//string line, email, field, pass;
-	//int linenum = 0, menuChoice;
-	//vector <vector<string> > array;
-	//vector<string> v;
+void driverMenu(int linenum) {
+	string accept, completed;
+	int tripSelection, completedTrips = 0, totalEarnings = 0, taxTotal = 25, temp = 0;
+	double  TaT = 0;
 
-	//while (getline(myfile, line)) {
-	//	v.clear();
-	//	stringstream ss(line);
-	//	while (getline(ss, field, ',')) {
-	//		v.push_back(field);
-	//	}
-	//	array.push_back(v);
-	//}
-	//redo:
-	//cout << "Driver Menu\n";
-	//drawLine();
-	//cout << "please select an option: \n\n";
-	//cout << "1. avaliable trips\n";
-	//cout << "2. daily statistics\n";
-	//cout << "3. main menu";
-	//cin >> menuChoice;
+	ifstream myfile;
+	myfile.open("tripBooking.csv", ios::in);
+	string line, email, field, pass;
+	int linenum = 0, menuChoice;
+	vector <vector<string> > array;
+	vector<string> v;
 
-	//switch (menuChoice) {
+	while (getline(myfile, line)) {
+		v.clear();
+		stringstream ss(line);
+		while (getline(ss, field, ',')) {
+			v.push_back(field);
+		}
+		array.push_back(v);
+	}
+	redo:
+	cout << "Driver Menu\n";
+	drawLine();
+	cout << "please select an option: \n\n";
+	cout << "1. avaliable trips\n";
+	cout << "2. daily statistics\n";
+	cout << "3. main menu";
+	cin >> menuChoice;
 
-	//case 1:
-	//decline:
-	//	drawLine();
-	//	cout << "\nTrip 1\n";
-	//	cout << "\nCustomer Name: " << array[0][1];
-	//	cout << "\nStarting Location: " << array[0][2];
-	//	cout << "\nDestination: " << array[0][3];
-	//	cout << "\nDate and Time: " << array[0][4] << " at " << array[0][5];
+	ifstream myfile;
+	myfile.open("driverFile.csv", ios::app);
+	string line, email, field, pass;
+	int linenum = 0, menuChoice;
+	vector <vector<string> > array;
+	vector<string> v;
 
-	//	cout << "\n\nTrip 2\n";
-	//	cout << "\nCustomer Name: " << array[1][1];
-	//	cout << "\nStarting Location: " << array[1][2];
-	//	cout << "\nDestination: " << array[1][3];
-	//	cout << "\nDate and Time: " << array[1][4] << " at " << array[1][5];
+	while (getline(myfile, line)) {
+		v.clear();
+		stringstream ss(line);
+		while (getline(ss, field, ',')) {
+			v.push_back(field);
+		}
+		array.push_back(v);
+	}
 
+	switch (menuChoice) {
 
-	//	cout << "\n\nTrip 3\n";
-	//	cout << "\nCustomer Name: " << array[2][1];
-	//	cout << "\nStarting Location: " << array[2][2];
-	//	cout << "\nDestination: " << array[2][3];
-	//	cout << "\nDate and Time: " << array[2][4] << " at " << array[2][5];
+	case 1:
+	decline:
+		drawLine();
+		cout << "\nTrip 1\n";
+		cout << "\nCustomer Name: " << array[0][1];
+		cout << "\nStarting Location: " << array[0][2];
+		cout << "\nDestination: " << array[0][3];
+		cout << "\nDate and Time: " << array[0][4] << " at " << array[0][5];
 
-
-	//	cout << "\n\nTrip 4\n";
-	//	cout << "\nCustomer Name: " << array[3][1];
-	//	cout << "\nStarting Location: " << array[3][2];
-	//	cout << "\nDestination: " << array[3][3];
-	//	cout << "\nDate and Time: " << array[3][4] << " at " << array[3][5];
-
-
-	//	cout << "\n\nTrip 5\n";
-	//	cout << "\nCustomer Name: " << array[4][1];
-	//	cout << "\nStarting Location: " << array[4][2];
-	//	cout << "\nDestination: " << array[4][3];
-	//	cout << "\nDate and Time: " << array[4][4] << " at " << array[4][5] << "\n";
-	//	drawLine();
-	//	cout << "\nplease select a trip: ";
-	//	cin >> tripSelection;
-	//	cout << "\n";
-	//	drawLine();
-	//	switch (tripSelection) {
-	//	case 1:
-	//		//displaying data
-	//		drawLine();
-	//		cout << "\nTrip " << 1 << "\n";
-	//		drawLine();
-	//		cout << "\nTrip Number: " << array[0][0];
-	//		cout << "\nCustomer Name: " << array[0][1];
-	//		cout << "\nStarting Location: " << array[0][2];
-	//		cout << "\nDestination: " << array[0][3] << "\n";
-	//		cout << "\nDate and Time: " << array[0][4] << " at " << array[0][5] << "\n";
-	//		drawLine();
-	//		cout << "\naccept trip? y/n";
-	//		cin >> accept;
-	//		if (accept == "y") {
-	//			cout << ">>>>>>>>>>> Trip Status: active <<<<<<<<<<\n";
-	//			cout << "completed? y/n: ";
-	//			cin >> completed;
-	//			if (completed == "y") {
-	//				completedTrips++;
-
-	//				cout << "\nplease enter how much you were paid: ";
-	//				cin >> temp;
-
-	//				goto redo;
-	//			}
-
-	//		}
-	//		else {
-	//			goto decline;
-	//		}
-
-	//		break;
-	//	case 2:
-	//		drawLine();
-	//		cout << "Trip " << 2 << "\n";
-	//		drawLine();
-	//		cout << "\nTrip Number: " << array[1][0];
-	//		cout << "\nCustomer Name: " << array[1][1];
-	//		cout << "\nStarting Location: " << array[1][2];
-	//		cout << "\nDestination: " << array[1][3] << "\n";
-	//		cout << "\nDate and Time: " << array[1][4] << " at " << array[1][5] << "\n";
-	//		drawLine();
-	//		cout << "accept trip? y/n";
-	//		cin >> accept;
-	//		if (accept == "y") {
-	//			cout << ">>>>>>>>>>> Trip Status: active <<<<<<<<<<\n";
-	//			cout << "completed? y/n: ";
-	//			cin >> completed;
-	//			if (completed == "y") {
-	//				completedTrips++;
+		cout << "\n\nTrip 2\n";
+		cout << "\nCustomer Name: " << array[1][1];
+		cout << "\nStarting Location: " << array[1][2];
+		cout << "\nDestination: " << array[1][3];
+		cout << "\nDate and Time: " << array[1][4] << " at " << array[1][5];
 
 
-	//				cout << "\nplease enter how much you were paid: ";
-	//				cin >> temp;
-
-	//				goto redo;
-
-	//			}
-
-	//		}
-	//		else {
-	//			goto decline;
-	//		}
-
-	//		break;
-	//	case 3:
-	//		drawLine();
-	//		cout << "Trip " << 2 << "\n";
-	//		drawLine();
-	//		cout << "\nTrip Number: " << array[2][0];
-	//		cout << "\nCustomer Name: " << array[2][1];
-	//		cout << "\nStarting Location: " << array[2][2];
-	//		cout << "\nDestination: " << array[2][3] << "\n";
-	//		cout << "\nDate and Time: " << array[2][4] << " at " << array[2][5] << "\n";
-	//		drawLine();
-	//		cout << "accept trip? y/n";
-	//		cin >> accept;
-	//		if (accept == "y") {
-	//			cout << ">>>>>>>>>>> Trip Status: active <<<<<<<<<<\n";
-	//			cout << "completed? y/n: ";
-	//			cin >> completed;
-	//			if (completed == "y") {
-	//				completedTrips++;
-
-	//				cout << "\nplease enter how much you were paid: ";
-	//				cin >> temp;
-
-	//				goto redo;
-
-	//			}
-
-	//		}
-	//		else {
-	//			goto decline;
-	//		}
-
-	//		break;
-	//	case 4:
-	//		drawLine();
-	//		cout << "Trip " << 2 << "\n";
-	//		drawLine();
-	//		cout << "\nTrip Number: " << array[3][0];
-	//		cout << "\nCustomer Name: " << array[3][1];
-	//		cout << "\nStarting Location: " << array[31][2];
-	//		cout << "\nDestination: " << array[3][3] << "\n";
-	//		cout << "\nDate and Time: " << array[3][4] << " at " << array[3][5] << "\n";
-	//		drawLine();
-	//		cout << "accept trip? y/n";
-	//		cin >> accept;
-	//		if (accept == "y") {
-	//			cout << ">>>>>>>>>>> Trip Status: active <<<<<<<<<<\n";
-	//			cout << "completed? y/n: ";
-	//			cin >> completed;
-	//			if (completed == "y") {
-	//				completedTrips++;
-
-	//				cout << "\nplease enter how much you were paid: ";
-	//				cin >> temp;
-
-	//				goto redo;
-
-	//			}
-
-	//		}
-	//		else {
-	//			goto decline;
-	//		}
-
-	//		break;
-	//	case 5:
-	//		drawLine();
-	//		cout << "Trip " << 2 << "\n";
-	//		drawLine();
-	//		cout << "\nTrip Number: " << array[4][0];
-	//		cout << "\nCustomer Name: " << array[4][1];
-	//		cout << "\nStarting Location: " << array[4][2];
-	//		cout << "\nDestination: " << array[4][3] << "\n";
-	//		cout << "\nDate and Time: " << array[4][4] << " at " << array[4][5] << "\n";
-	//		drawLine();
-	//		cout << "accept trip? y/n";
-	//		cin >> accept;
-	//		if (accept == "y") {
-	//			cout << ">>>>>>>>>>> Trip Status: active <<<<<<<<<<\n";
-	//			cout << "completed? y/n: ";
-	//			cin >> completed;
-	//			if (completed == "y") {
-	//				completedTrips++;
-
-	//				cout << "\nplease enter how much you were paid: ";
-	//				cin >> temp;
-
-	//				goto redo;
-
-	//			}
-
-	//		}
-	//		else {
-	//			goto decline;
-	//		}
-	//		break;
+		cout << "\n\nTrip 3\n";
+		cout << "\nCustomer Name: " << array[2][1];
+		cout << "\nStarting Location: " << array[2][2];
+		cout << "\nDestination: " << array[2][3];
+		cout << "\nDate and Time: " << array[2][4] << " at " << array[2][5];
 
 
-	//	}
+		cout << "\n\nTrip 4\n";
+		cout << "\nCustomer Name: " << array[3][1];
+		cout << "\nStarting Location: " << array[3][2];
+		cout << "\nDestination: " << array[3][3];
+		cout << "\nDate and Time: " << array[3][4] << " at " << array[3][5];
 
-	//	break;
 
-	//case 2:
+		cout << "\n\nTrip 5\n";
+		cout << "\nCustomer Name: " << array[4][1];
+		cout << "\nStarting Location: " << array[4][2];
+		cout << "\nDestination: " << array[4][3];
+		cout << "\nDate and Time: " << array[4][4] << " at " << array[4][5] << "\n";
+		drawLine();
+		cout << "\nplease select a trip: ";
+		cin >> tripSelection;
+		cout << "\n";
+		drawLine();
+		switch (tripSelection) {
+		case 1:
+			//displaying data
+			drawLine();
+			cout << "\nTrip " << 1 << "\n";
+			drawLine();
+			cout << "\nTrip Number: " << array[0][0];
+			cout << "\nCustomer Name: " << array[0][1];
+			cout << "\nStarting Location: " << array[0][2];
+			cout << "\nDestination: " << array[0][3] << "\n";
+			cout << "\nDate and Time: " << array[0][4] << " at " << array[0][5] << "\n";
+			drawLine();
+			cout << "\naccept trip? y/n";
+			cin >> accept;
+			if (accept == "y") {
+				cout << ">>>>>>>>>>> Trip Status: active <<<<<<<<<<\n";
+				cout << "completed? y/n: ";
+				cin >> completed;
+				if (completed == "y") {
+					completedTrips++;
 
-	//	totalEarnings = totalEarnings + temp;
-	//	TaT = (totalEarnings * taxTotal) / 100;
-	//	//displaying
-	//	cout << "\n\nTrips Today\n";
-	//	drawLine();
-	//	time_t now = time(0);
-	//	struct tm tstruct = *localtime(&now);
-	//	int f = tstruct.tm_hour;
-	//	cout << f;
-	//	cout << "\nNumber of trips: " << completedTrips;
-	//	cout << "\nTotal Earnings: " << totalEarnings;
-	//	cout << "\nTax Total: %" << taxTotal;
-	//	cout << "\nTotal after Tax: " << TaT << "\n";
-	//	drawLine();
+					cout << "\nplease enter how much you were paid: ";
+					cin >> temp;
 
-	//	goto redo;
-	//	break;
-	//case 3: 
+					goto redo;
+				}
 
-	//	break;
-	//}
+			}
+			else {
+				goto decline;
+			}
 
-	//myfile.close();
+			break;
+		case 2:
+			drawLine();
+			cout << "Trip " << 2 << "\n";
+			drawLine();
+			cout << "\nTrip Number: " << array[1][0];
+			cout << "\nCustomer Name: " << array[1][1];
+			cout << "\nStarting Location: " << array[1][2];
+			cout << "\nDestination: " << array[1][3] << "\n";
+			cout << "\nDate and Time: " << array[1][4] << " at " << array[1][5] << "\n";
+			drawLine();
+			cout << "accept trip? y/n";
+			cin >> accept;
+			if (accept == "y") {
+				cout << ">>>>>>>>>>> Trip Status: active <<<<<<<<<<\n";
+				cout << "completed? y/n: ";
+				cin >> completed;
+				if (completed == "y") {
+					completedTrips++;
+
+
+					cout << "\nplease enter how much you were paid: ";
+					cin >> temp;
+
+					goto redo;
+
+				}
+
+			}
+			else {
+				goto decline;
+			}
+
+			break;
+		case 3:
+			drawLine();
+			cout << "Trip " << 2 << "\n";
+			drawLine();
+			cout << "\nTrip Number: " << array[2][0];
+			cout << "\nCustomer Name: " << array[2][1];
+			cout << "\nStarting Location: " << array[2][2];
+			cout << "\nDestination: " << array[2][3] << "\n";
+			cout << "\nDate and Time: " << array[2][4] << " at " << array[2][5] << "\n";
+			drawLine();
+			cout << "accept trip? y/n";
+			cin >> accept;
+			if (accept == "y") {
+				cout << ">>>>>>>>>>> Trip Status: active <<<<<<<<<<\n";
+				cout << "completed? y/n: ";
+				cin >> completed;
+				if (completed == "y") {
+					completedTrips++;
+
+					cout << "\nplease enter how much you were paid: ";
+					cin >> temp;
+
+					goto redo;
+
+				}
+
+			}
+			else {
+				goto decline;
+			}
+
+			break;
+		case 4:
+			drawLine();
+			cout << "Trip " << 2 << "\n";
+			drawLine();
+			cout << "\nTrip Number: " << array[3][0];
+			cout << "\nCustomer Name: " << array[3][1];
+			cout << "\nStarting Location: " << array[31][2];
+			cout << "\nDestination: " << array[3][3] << "\n";
+			cout << "\nDate and Time: " << array[3][4] << " at " << array[3][5] << "\n";
+			drawLine();
+			cout << "accept trip? y/n";
+			cin >> accept;
+			if (accept == "y") {
+				cout << ">>>>>>>>>>> Trip Status: active <<<<<<<<<<\n";
+				cout << "completed? y/n: ";
+				cin >> completed;
+				if (completed == "y") {
+					completedTrips++;
+
+					cout << "\nplease enter how much you were paid: ";
+					cin >> temp;
+
+					goto redo;
+
+				}
+
+			}
+			else {
+				goto decline;
+			}
+
+			break;
+		case 5:
+			drawLine();
+			cout << "Trip " << 2 << "\n";
+			drawLine();
+			cout << "\nTrip Number: " << array[4][0];
+			cout << "\nCustomer Name: " << array[4][1];
+			cout << "\nStarting Location: " << array[4][2];
+			cout << "\nDestination: " << array[4][3] << "\n";
+			cout << "\nDate and Time: " << array[4][4] << " at " << array[4][5] << "\n";
+			drawLine();
+			cout << "accept trip? y/n";
+			cin >> accept;
+			if (accept == "y") {
+				cout << ">>>>>>>>>>> Trip Status: active <<<<<<<<<<\n";
+				cout << "completed? y/n: ";
+				cin >> completed;
+				if (completed == "y") {
+					completedTrips++;
+
+					cout << "\nplease enter how much you were paid: ";
+					cin >> temp;
+
+					goto redo;
+
+				}
+
+			}
+			else {
+				goto decline;
+			}
+			break;
+
+
+		}
+
+		break;
+
+	case 2:
+
+		totalEarnings = totalEarnings + temp;
+		TaT = (totalEarnings * taxTotal) / 100;
+		//displaying
+		cout << "\n\nTrips Today\n";
+		drawLine();
+		time_t now = time(0);
+		struct tm tstruct = *localtime(&now);
+		int f = tstruct.tm_hour;
+		cout << f;
+		cout << "\nNumber of trips: " << completedTrips;
+		cout << "\nTotal Earnings: " << totalEarnings;
+		cout << "\nTax Total: %" << taxTotal;
+		cout << "\nTotal after Tax: " << TaT << "\n";
+		drawLine();
+
+		array[linenum][22] = completedTrips;
+		array[linenum][23] = totalEarnings;
+
+		
+		goto redo;
+		break;
+	case 3: 
+
+		break;
+	}
+
+	myfile.close();
+	myfile.close();
+
 }
 
 void driverLogin() {
@@ -396,6 +419,7 @@ void driverLogin() {
 			for (size_t j = 0; j < 21; ++j) {
 				if (array[i][j] == email) {
 					cout << "\nEmail Found in line : " << i + 1 << " " << array[i][j];
+					int linecount = i + 1;
 				repass:
 					cout << "\n\nEnter Your password : ";
 					cin >> pass;
@@ -419,7 +443,7 @@ void driverLogin() {
 						cout << "\n*************************************\n";
 						cout << "Password Correct Welcome " << array[i][0] << "\n";
 						cout << "*************************************\n\n";
-						driverMenu();
+						driverMenu(linecount);
 					}
 					else {
 						cout << "\n\nPassword Inncorrect Try Again.";
@@ -431,10 +455,9 @@ void driverLogin() {
 			}
 
 		}
+
 		myfile.close();
 
-
-	
 		//END OF LOGIN
 	}
 
@@ -1054,111 +1077,158 @@ relog:
 }
 
 void adminMenu() {
-//	string usernameCheck, passwordCheck, storedPassword = "500Miles", storedLogin = "OnlyTrippers";
-//	//Login 
-//	cout << "\n\nAdmin Menu\n";
-//	drawLine();
-//	cout << "\nLogin:\n";
-//	cout << "Username: ";
-//	cin >> usernameCheck;
-//	cout << "\nPassword: ";
-//	cin >> passwordCheck;
-//	//Password Checking
-//	while (usernameCheck != storedLogin && passwordCheck != storedPassword) {
-//		cout << "\nThat login dosen't match please try again.\n";
-//		cout << "\nLogin:\n";
-//		cout << "Username: ";
-//		cin >> usernameCheck;
-//		cout << "\nPassword: ";
-//		cin >> passwordCheck;
-//	}
-//	drawLine();
-//	cout << "Welcome Admins";
-//	drawLine();
-//
-//	//file access
-//
-//	//driver File
-//	ifstream driverFile;
-//	driverFile.open("driverFile.csv", ios::in);
-//	string line, email, field, pass;
-//	int linenum = 0;
-//	vector <vector<string> > array1;
-//	vector<string> v;
-//
-//	while (getline(driverFile, line)) {
-//		v.clear();
-//		stringstream ss(line);
-//		while (getline(ss, field, ',')) {
-//			v.push_back(field);
-//		}
-//		array1.push_back(v);
-//	}
-//
-//	//customer file
-//	ifstream customerFile;
-//	customerFile.open("customerFile.csv", ios::in);
-//	string line, email, field, pass;
-//	int linenum = 0;
-//	vector <vector<string> > array2;
-//	vector<string> v;
-//
-//	while (getline(customerFile, line)) {
-//		v.clear();
-//		stringstream ss(line);
-//		while (getline(ss, field, ',')) {
-//			v.push_back(field);
-//		}
-//		array2.push_back(v);
-//	}
-//	//cancelation file
-//	ifstream cancelFile;
-//	cancelFile.open("cancelFile.csv", ios::in);
-//	string line, email, field, pass;
-//	int linenum = 0;
-//	vector <vector<string> > array3;
-//	vector<string> v;
-//
-//	while (getline(cancelFile, line)) {
-//		v.clear();
-//		stringstream ss(line);
-//		while (getline(ss, field, ',')) {
-//			v.push_back(field);
-//		}
-//		array3.push_back(v);
-//	}
-//
-//	//Weekly Report
-//	cout << "\n\nWeekly Report\n";
-//	drawLine();
-//	cout << "\nNumber of trips: ";
-//	cout << "\nPayments: ";
-//	cout << "\nPaid to drivers: $";
-//	cout << "\nGross: ";
-//	cout << "\nTax deduction: $";
-//	cout << "\nNet profit: ";
-//	cout << "\n";
-//	drawLine();
-//	
-//	//Driver Report
-//	cout << "Driver Report\n";
-//	drawLine();
-//
-//	drawLine();
-//
-//	//Customer Report
-//	cout << "Customer Report\n";
-//	drawLine();
-//	//getting customer info
-//	
-//
-//	//Cancellation Report
-//	cout << "Cancelation Report";
-//	drawLine();
-//	cout << "\nAmount of cancelattions: ";
-//	cout << "Profit loss: $";
-//	cout << "\n";
-//	drawLine();
+
+	string usernameCheck, passwordCheck, storedPassword = "500Miles", storedLogin = "OnlyTrippers";
+	//Login 
+	cout << "\n\nAdmin Menu\n";
+	drawLine();
+	cout << "\nLogin:\n";
+	cout << "Username: ";
+	cin >> usernameCheck;
+	cout << "\nPassword: ";
+	cin >> passwordCheck;
+	//Password Checking
+	while (usernameCheck != storedLogin && passwordCheck != storedPassword) {
+		cout << "\nThat login dosen't match please try again.\n";
+		cout << "\nLogin:\n";
+		cout << "Username: ";
+		cin >> usernameCheck;
+		cout << "\nPassword: ";
+		cin >> passwordCheck;
+	}
+	drawLine();
+	cout << "Welcome Admins";
+	drawLine();
+
+	//file access
+
+	//driver File
+	ifstream driverFile;
+	driverFile.open("driverFile.csv", ios::in);
+	string line, email, field, pass;
+	int linenum = 0;
+	vector <vector<string> > array1;
+	vector<string> v;
+
+	while (getline(driverFile, line)) {
+		v.clear();
+		stringstream ss(line);
+		while (getline(ss, field, ',')) {
+			v.push_back(field);
+		}
+		array1.push_back(v);
+	}
+
+	//customer file
+	ifstream customerFile;
+	customerFile.open("customerFile.csv", ios::in);
+	string line, email, field, pass;
+	int linenum = 0;
+	vector <vector<string> > array2;
+	vector<string> v;
+
+	while (getline(customerFile, line)) {
+		v.clear();
+		stringstream ss(line);
+		while (getline(ss, field, ',')) {
+			v.push_back(field);
+		}
+		array2.push_back(v);
+	}
+	//cancelation file
+	ifstream cancelFile;
+	cancelFile.open("cancelFile.csv", ios::in);
+	string line, email, field, pass;
+	int linenum = 0;
+	vector <vector<string> > array3;
+	vector<string> v;
+
+	while (getline(cancelFile, line)) {
+		v.clear();
+		stringstream ss(line);
+		while (getline(ss, field, ',')) {
+			v.push_back(field);
+		}
+		array3.push_back(v);
+	}
+	//getting data for Processing 
+	//tripcount
+	int tripTemp, tripCount;
+	for (int i = 0; i != 25; i++)
+	{
+		tripTemp = tripTemp + stoi(array1[i][22]);
+	} 
+	tripCount = tripTemp;
+	//payments
+	int tempPay, payments;
+	for (int i = 0; i != 25; i++) 
+	{
+		tempPay = tempPay + stoi(array1[i][23]);
+	}
+	payments = tempPay;
+	//paid to drivers
+	int taken = 5, paidToDrivers;
+
+	taken = (payments * taken) / 100;
+
+	paidToDrivers % taken;
+
+	//net profit calculation
+	int gross = taken, taxD = 15, netProfit;
+	
+	netProfit = (gross * taxD) / 100;
+
+
+	//Weekly Report
+	cout << "\n\nWeekly Report\n";
+	drawLine();
+	cout << "\nNumber of trips: " << tripCount;
+	cout << "\namount in payments: " << payments;
+	cout << "\nPaid to drivers: $" << paidToDrivers;
+	cout << "\nGross income: " << gross;
+	cout << "\nTax deduction: %" << taxD;
+	cout << "\nNet profit: " << netProfit;
+	cout << "\n";
+	drawLine();
+	
+	//Driver Report
+	cout << "Driver Report\n";
+	drawLine();
+	for (int j = 0; j != 10; j++)
+	{
+		for (int i = 0; i != 7; i++)
+		{
+			cout << array1[j][i];
+		}
+	}
+	drawLine();
+
+	//Customer Report
+	cout << "Customer Report\n";
+	drawLine();
+	for (int j = 0; j != 10; j++)
+	{
+		for (int i = 0; i != 4; i++)
+		{
+			cout << array2[j][i];
+		}
+	}
+	//getting customer info
+	
+
+	//Cancellation Report
+	int cancelAmount = 0, loss = 0;
+	for (int j = 0; j != 10; j++)
+	{
+		cancelAmount = cancelAmount + stoi(array3[j][4]);
+		loss = loss + stoi(array3[j][5]);
+	}
+	cout << "Cancelation Report";
+	drawLine();
+	cout << "\nAmount of cancelattions: " << cancelAmount;
+	cout << "Profit loss: $" << loss;
+	cout << "\n";
+	drawLine();
 }
 
 int main()
