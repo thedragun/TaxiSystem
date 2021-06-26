@@ -74,7 +74,7 @@ public:
 	}
 };
 
-void driverMenu() {
+void driverMenu(int linenum) {
 	string accept, completed;
 	int tripSelection, completedTrips = 0, totalEarnings = 0, taxTotal = 25, temp = 0;
 	double  TaT = 0;
@@ -102,6 +102,22 @@ void driverMenu() {
 	cout << "2. daily statistics\n";
 	cout << "3. main menu";
 	cin >> menuChoice;
+
+	ifstream myfile;
+	myfile.open("driverFile.csv", ios::app);
+	string line, email, field, pass;
+	int linenum = 0, menuChoice;
+	vector <vector<string> > array;
+	vector<string> v;
+
+	while (getline(myfile, line)) {
+		v.clear();
+		stringstream ss(line);
+		while (getline(ss, field, ',')) {
+			v.push_back(field);
+		}
+		array.push_back(v);
+	}
 
 	switch (menuChoice) {
 
@@ -329,6 +345,10 @@ void driverMenu() {
 		cout << "\nTotal after Tax: " << TaT << "\n";
 		drawLine();
 
+		array[linenum][22] = completedTrips;
+		array[linenum][23] = totalEarnings;
+
+		
 		goto redo;
 		break;
 	case 3: 
@@ -336,6 +356,7 @@ void driverMenu() {
 		break;
 	}
 
+	myfile.close();
 	myfile.close();
 }
 
@@ -376,6 +397,7 @@ void driverLogin() {
 			for (size_t j = 0; j < 21; ++j) {
 				if (array[i][j] == email) {
 					cout << "\nEmail Found in line : " << i + 1 << " " << array[i][j];
+					int linecount = i + 1;
 				repass:
 					cout << "\n\nEnter Your password : ";
 					cin >> pass;
@@ -399,7 +421,7 @@ void driverLogin() {
 						cout << "\n*************************************\n";
 						cout << "Password Correct Welcome " << array[i][0] << "\n";
 						cout << "*************************************\n\n";
-						driverMenu();
+						driverMenu(linecount);
 					}
 					else {
 						cout << "\n\nPassword Inncorrect Try Again.";
@@ -411,10 +433,9 @@ void driverLogin() {
 			}
 
 		}
+
 		myfile.close();
 
-
-	
 		//END OF LOGIN
 	}
 
@@ -1057,36 +1078,77 @@ void adminMenu() {
 		}
 		array3.push_back(v);
 	}
+	//getting data for Processing 
+	//tripcount
+	int tripTemp, tripCount;
+	for (int i = 0; i != 25; i++)
+	{
+		tripTemp = tripTemp + stoi(array1[i][22]);
+	} 
+	tripCount = tripTemp;
+	//payments
+	int tempPay, payments;
+	for (int i = 0; i != 25; i++) 
+	{
+		tempPay = tempPay + stoi(array1[i][23]);
+	}
+	payments = tempPay;
+	//paid to drivers
+	int taken = 5, paidToDrivers;
+
+	taken = (payments * taken) / 100;
+
+	paidToDrivers % taken;
+
+	//net profit calculation
+	int gross = taken, taxD = 15, netProfit;
+	
+	netProfit = (gross * taxD) / 100;
+
 
 	//Weekly Report
 	cout << "\n\nWeekly Report\n";
 	drawLine();
-	cout << "\nNumber of trips: ";
-	cout << "\nPayments: ";
-	cout << "\nPaid to drivers: $";
-	cout << "\nGross: ";
-	cout << "\nTax deduction: $";
-	cout << "\nNet profit: ";
+	cout << "\nNumber of trips: " << tripCount;
+	cout << "\namount in payments: " << payments;
+	cout << "\nPaid to drivers: $" << paidToDrivers;
+	cout << "\nGross income: " << gross;
+	cout << "\nTax deduction: %" << taxD;
+	cout << "\nNet profit: " << netProfit;
 	cout << "\n";
 	drawLine();
 	
 	//Driver Report
 	cout << "Driver Report\n";
 	drawLine();
-
+	for (int j = 0; j != 10; j++)
+	{
+		for (int i = 0; i != 7; i++)
+		{
+			cout << array1[j][i];
+		}
+	}
 	drawLine();
 
 	//Customer Report
 	cout << "Customer Report\n";
 	drawLine();
+	for (int j = 0; j != 10; j++)
+	{
+		for (int i = 0; i != 4; i++)
+		{
+			cout << array2[j][i];
+		}
+	}
 	//getting customer info
 	
 
 	//Cancellation Report
+	int j;
 	cout << "Cancelation Report";
 	drawLine();
-	cout << "\nAmount of cancelattions: ";
-	cout << "Profit loss: $";
+	cout << "\nAmount of cancelattions: " << array3[j][0];
+	cout << "Profit loss: $" << array3[j][1];
 	cout << "\n";
 	drawLine();
 }
