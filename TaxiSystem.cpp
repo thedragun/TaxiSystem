@@ -1,3 +1,4 @@
+
 #define _CRT_SECURE_NO_WARNINGS
 #define YELLOW  "\033[33m"
 #define RESET   "\033[0m"
@@ -103,7 +104,7 @@ void driverMenu(int linenum) {
 	ifstream myfile;
 	myfile.open("tripBooking.csv", ios::in);
 	string line, email, field, pass;
-	int linenum = 0, menuChoice;
+	int linenuma = 0, menuChoice;
 	vector <vector<string> > array;
 	vector<string> v;
 
@@ -124,18 +125,18 @@ void driverMenu(int linenum) {
 	cout << "3. main menu";
 	cin >> menuChoice;
 
-	ifstream myfile;
-	myfile.open("driverFile.csv", ios::app);
-	string line, email, field, pass;
-	int linenum = 0, menuChoice;
-	vector <vector<string> > array;
-	vector<string> v;
+	ifstream myfile2;
+	myfile2.open("driverFile.csv", ios::app);
+	string lineb, fieldb;
+	int linenumb = 0, menuChoiceb;
+	vector <vector<string> > arrayb;
+	vector<string> vb;
 
-	while (getline(myfile, line)) {
+	while (getline(myfile2, lineb)) {
 		v.clear();
-		stringstream ss(line);
-		while (getline(ss, field, ',')) {
-			v.push_back(field);
+		stringstream ss(lineb);
+		while (getline(ss, fieldb, ',')) {
+			v.push_back(fieldb);
 		}
 		array.push_back(v);
 	}
@@ -356,10 +357,6 @@ void driverMenu(int linenum) {
 		//displaying
 		cout << "\n\nTrips Today\n";
 		drawLine();
-		time_t now = time(0);
-		struct tm tstruct = *localtime(&now);
-		int f = tstruct.tm_hour;
-		cout << f;
 		cout << "\nNumber of trips: " << completedTrips;
 		cout << "\nTotal Earnings: " << totalEarnings;
 		cout << "\nTax Total: %" << taxTotal;
@@ -1105,7 +1102,7 @@ void adminMenu() {
 	//driver File
 	ifstream driverFile;
 	driverFile.open("driverFile.csv", ios::in);
-	string line, email, field, pass;
+	string line, field;
 	int linenum = 0;
 	vector <vector<string> > array1;
 	vector<string> v;
@@ -1122,56 +1119,56 @@ void adminMenu() {
 	//customer file
 	ifstream customerFile;
 	customerFile.open("customerFile.csv", ios::in);
-	string line, email, field, pass;
-	int linenum = 0;
+	string lineb, fieldb;
+	int linenumb = 0;
 	vector <vector<string> > array2;
-	vector<string> v;
+	vector<string> vc;
 
-	while (getline(customerFile, line)) {
+	while (getline(customerFile, lineb)) {
 		v.clear();
-		stringstream ss(line);
-		while (getline(ss, field, ',')) {
-			v.push_back(field);
+		stringstream ss(lineb);
+		while (getline(ss, fieldb, ',')) {
+			v.push_back(fieldb);
 		}
 		array2.push_back(v);
 	}
 	//cancelation file
 	ifstream cancelFile;
 	cancelFile.open("cancelFile.csv", ios::in);
-	string line, email, field, pass;
-	int linenum = 0;
+	string linec, fieldc;
+	int linenumc = 0;
 	vector <vector<string> > array3;
-	vector<string> v;
+	vector<string> vd;
 
-	while (getline(cancelFile, line)) {
+	while (getline(cancelFile, linec)) {
 		v.clear();
-		stringstream ss(line);
-		while (getline(ss, field, ',')) {
-			v.push_back(field);
+		stringstream ss(linec);
+		while (getline(ss, fieldc, ',')) {
+			v.push_back(fieldc);
 		}
 		array3.push_back(v);
 	}
 	//getting data for Processing 
 	//tripcount
-	int tripTemp, tripCount;
+	int tripTemp = 0, tripCount;
 	for (int i = 0; i != 25; i++)
 	{
 		tripTemp = tripTemp + stoi(array1[i][22]);
 	} 
 	tripCount = tripTemp;
 	//payments
-	int tempPay, payments;
+	int tempPay = 0, payments;
 	for (int i = 0; i != 25; i++) 
 	{
 		tempPay = tempPay + stoi(array1[i][23]);
 	}
 	payments = tempPay;
 	//paid to drivers
-	int taken = 5, paidToDrivers;
+	int taken = 5, paidToDrivers = 0, remainder;
 
 	taken = (payments * taken) / 100;
 
-	paidToDrivers % taken;
+	remainder = paidToDrivers % taken;
 
 	//net profit calculation
 	int gross = taken, taxD = 15, netProfit;
