@@ -15,10 +15,10 @@
 #include <stdlib.h>
 #include <conio.h>
 #include<stdio.h>
-
-
 using namespace std;
+
 void drawCar() {
+	//Joel
 	char six = '"';
 	cout << "\t\t\t             Thanks for Riding with Only Trips\n";
 	cout << "\t\t\t                      ___..............._\n";
@@ -94,7 +94,6 @@ public:
 		licenceNumber = 0, contactNumber = 0, carRegistrationNumber = 0,endorcementNumber = 0;
 	}
 };
-
 
 void driverMenu(int linenum) {
 	string accept, completed;
@@ -562,12 +561,15 @@ void driverLogin() {
 
 void tripBooked() {
 	//Joel
+	//Output For Finalised Trip Booking
 	ifstream myfile;
 	srand(time(NULL));
 	string line, field;
 	int linenum = 0, flag;
 	char confirm;
+	//Open File
 	myfile.open("driverFile.csv", ios::out);
+	//Sort Data into Vector array
 	vector <vector<string> > array;
 	vector<string> v;
 	while (getline(myfile, line)) {
@@ -615,10 +617,12 @@ re:
 	int ans, ans2;
 	float pay, randPay;
 	ifstream myfile;
+	//Open File 
 	myfile.open("customerFile.csv", ios::in);
 	string line, field, loc, des, date, tim, spe, lug, setloc = "None";
 	int linenum = 0, pas, flag = 0;
 	char quote = '"', confirm;
+	//Sort Data into Vector Array 
 	vector <vector<string> > array;
 	vector<string> v;
 
@@ -631,8 +635,10 @@ re:
 		array.push_back(v);
 	}
 	ofstream file;
+	//Open File 
 	file.open("tripBooking.csv", ios::out | ofstream::app);
 	ofstream canFile;
+	//Open File
 	canFile.open("cancelFile.csv", ios::out | ofstream::app);
 	cout << YELLOW "\n\n\n*************************************\n" << RESET;
 	cout << "         Only Trips Booking\n";
@@ -664,6 +670,7 @@ re:
 			}
 			tripArray.push_back(x);
 		}
+		//Display a Random Destination for User
 		check = (rand() % 2) + 1;
 		cout << "\nFrom recently booked trips people are heading to " << tripArray[check][3];
 		cout << "\n\nWould you like to book a trip to " << tripArray[check][3] <<"? (Y or N) : ";
@@ -687,12 +694,14 @@ re:
 		randId = (rand() % 9999) + 1000;
 		cout << "\n\nTrip Booking\n";
 		cout << YELLOW "*************************************\n" << RESET;
+		//Output Data from user info csv
 		cout << "Trip ID : " << randId;
 		cout << "\n\nFull Name : " << array[hold][0];
 		cout << "\n\nContact Number : +64" << array[hold][1];
 		cout << "\n\nEnter Starting Location (Enter " << quote << "Home" << quote << " or Seprate address) : ";
 		cin.ignore();
 		getline(cin, loc);
+		//Set home to users assigned address in registration if home is entered
 		if (loc == "Home" || loc == "home") {
 			cout << "\nStarting location is : " << array[hold][3];
 			loc = array[hold][3];
@@ -701,12 +710,14 @@ re:
 			cout << "\n\nStarting location is : " << loc;
 		}
 	reuse:
+		//If they have selected one of the build in destinations set des to that destination 
 		if (setloc == "Airport" || setloc == "Railway Station" || setloc == "CBD") {
 			cout << "\n\nDestination is set to " << setloc;
 			des = setloc;
 			
 			
 		}
+		//Else ask for input 
 		else {
 			cout << "\n\nEnter Destination (Enter " << quote << "Home" << quote << " or Seprate address) : ";
 			getline(cin, des);
@@ -725,6 +736,7 @@ re:
 		}
 		cout << "\n\nEnter Booking Date (Enter " << quote << "Today" << quote << " or (DD*MM*YY) : ";
 		cin >> date;
+		//Makes the date into a string that can be calledd if user enters "Today"
 		if (date == "Today" || date == "today") {
 			time_t curr_time;
 			tm* curr_tm;
@@ -741,6 +753,7 @@ re:
 		}
 		cout << "\nEnter Booking Time (Enter " << quote << "Now" << quote << " or (Hour:Min) : ";
 		cin >> tim;
+		//Make time into a string that can be called if user enters "now"
 		if (tim == "Now" || tim == "now") {
 			time_t curr_time;
 			tm* curr_tm;
@@ -770,6 +783,7 @@ re:
 		cout << YELLOW "\n\n*************************************************************************************************************\n" << RESET;
 		cout << "\nCalculating Trip Cost...\n\n";
 		system("pause");
+		//If user selected a prebuild destination set price at the equilivent ammount
 		if (setloc == "Airport") {
 			pay = 35;
 		}
@@ -777,6 +791,7 @@ re:
 			pay = 15;
 		}
 		else {
+			//if the time is between 7am and 9am or 5pm and 7pm change the price accordingly
 			randPay = rand() % 30 + 2;
 			time_t now = time(0);
 			struct tm tstruct = *localtime(&now);
@@ -791,6 +806,7 @@ re:
 			}
 		}
 		int service = 5;
+		//Output payment infomation 
 		cout << YELLOW "\n\n*************************************************************************************************************\n\n" << RESET;
 		cout << "\nTrip cost is $1.35 per km and $1.65 in peak hours (7am-9am and 5pm-7pm)\n";
 		cout << "\nYour Total Payment is $" << pay << endl;
@@ -803,8 +819,9 @@ re:
 		cin >> confirm;
 		cout << YELLOW "*************************************************************************************************************" << RESET;
 		if (confirm == 'Y' || confirm == 'y') {
-			
+			//Write data to trips file
 			file << randId << "," << array[hold][0] << "," << loc << "," << des << "," << pas << "," << pay << ","<< spe << ","<< lug << "," << date << "," << tim <<   "\n";
+			//Billing Screen
 			cout << "\n\n\n\n\t\t\t                                 Bill\n";
 			cout << YELLOW "\t\t\t******************************************************************\n" << RESET;
 			cout << YELLOW "\t\t\t*" << RESET "\tTrip ID                                " << randId << "\n";
@@ -829,6 +846,7 @@ re:
 			cout << RED "*************************************\n" << RESET;
 			cin >> reconfirm;
 			if (reconfirm == 'y'|| reconfirm == 'Y') {
+				//If user cancels write data to cancel file
 				canFile << randId << "," << array[hold][0] << "," << loc << "," << des << "," << pas << "," << pay << "," << spe << "," << lug << "," << date << "," << tim << "\n";
 			}
 			else {
@@ -842,6 +860,7 @@ re:
 		break;
 
 	case 3: {
+		//Use the current time to figure out if the price per km is in peak or not 
 		time_t now = time(0);
 		struct tm tstruct = *localtime(&now);
 		int f = tstruct.tm_hour;
@@ -856,7 +875,7 @@ re:
 		  goto re;
 
 	case 4:
-		
+		//Standard trips sends you to trip booking if one is selected with relevent priceing
 		cout << "\n\n\n\nStandard Trips";
 		cout << YELLOW "\n*************************************" << RESET;
 		cout << "\n1. Airport           $35";
@@ -939,15 +958,15 @@ relog:
 			}
 			array.push_back(v);
 		}
-		//array.size() needs to have as many lines of data in the csv file as colums you want it to read as they are directly related
+		//Searching for email in vector array 
 		for (size_t i = 0; i < array.size(); ++i) {
 			for (size_t j = 0; j < 7; ++j) {
-				//cout << array[i][j] << ", ";
+				//Once found let use enter password
 				if (array[i][j] == email) {
 					cout << "\nEmail Found in line : " << i + 1 << " " << array[i][j];	
 						repass:
 						cout << "\n\nEnter Your password : ";
-						//cin >> pass;
+						//Hides password letters and outputs * instead 
 						ch = ' ';
 						while (true) {
 							ch = _getch();
@@ -963,7 +982,7 @@ relog:
 								cout << "*";
 							}
 						}
-
+						//User can enter booking screen if password is correct else go back
 							if (array[i][7] == pass) {
 								cout << YELLOW "\n*************************************\n" << RESET;
 								cout << "Password Correct Welcome " << array[i][0] << "\n";
@@ -991,6 +1010,7 @@ relog:
 		string pass1 = "", pass2 = "", filler = "Filler";
 		ofstream myfile;
 		char ch1, ch2;
+		//User Input data to userfile
 		cout << "\n\nRegister\n";
 		cout << YELLOW "*************************************\n" << RESET;
 			myfile.open("customerFile.csv", ios::out | ofstream::app);
@@ -1022,6 +1042,7 @@ relog:
 			getline(cin, UR.cvc);
 
 			cout << "\nEnter Password : ";
+			//Password hiding
 			ch1 = ' ';
 			while (true) {
 				ch1 = _getch();
@@ -1039,6 +1060,7 @@ relog:
 			}
 
 			cout << "\nRe-Enter Password :  ";
+			//Password hiding 
 			ch2 = ' ';
 			while (true) {
 				ch2 = _getch();
@@ -1230,10 +1252,10 @@ void adminMenu() {
 
 int main()
 {
-
-	
+	//Joel
 	int ans;
-	rerun:
+rerun:
+	//Main Menu
 	cout << "\nTaxi Trip Booking System\n";
 	cout << YELLOW << "*************************************\n" << RESET;
 	cout << "             Only Trips\n";
