@@ -1054,111 +1054,111 @@ relog:
 }
 
 void adminMenu() {
-//	string usernameCheck, passwordCheck, storedPassword = "500Miles", storedLogin = "OnlyTrippers";
-//	//Login 
-//	cout << "\n\nAdmin Menu\n";
-//	drawLine();
-//	cout << "\nLogin:\n";
-//	cout << "Username: ";
-//	cin >> usernameCheck;
-//	cout << "\nPassword: ";
-//	cin >> passwordCheck;
-//	//Password Checking
-//	while (usernameCheck != storedLogin && passwordCheck != storedPassword) {
-//		cout << "\nThat login dosen't match please try again.\n";
-//		cout << "\nLogin:\n";
-//		cout << "Username: ";
-//		cin >> usernameCheck;
-//		cout << "\nPassword: ";
-//		cin >> passwordCheck;
-//	}
-//	drawLine();
-//	cout << "Welcome Admins";
-//	drawLine();
-//
-//	//file access
-//
-//	//driver File
-//	ifstream driverFile;
-//	driverFile.open("driverFile.csv", ios::in);
-//	string line, email, field, pass;
-//	int linenum = 0;
-//	vector <vector<string> > array1;
-//	vector<string> v;
-//
-//	while (getline(driverFile, line)) {
-//		v.clear();
-//		stringstream ss(line);
-//		while (getline(ss, field, ',')) {
-//			v.push_back(field);
-//		}
-//		array1.push_back(v);
-//	}
-//
-//	//customer file
-//	ifstream customerFile;
-//	customerFile.open("customerFile.csv", ios::in);
-//	string line, email, field, pass;
-//	int linenum = 0;
-//	vector <vector<string> > array2;
-//	vector<string> v;
-//
-//	while (getline(customerFile, line)) {
-//		v.clear();
-//		stringstream ss(line);
-//		while (getline(ss, field, ',')) {
-//			v.push_back(field);
-//		}
-//		array2.push_back(v);
-//	}
-//	//cancelation file
-//	ifstream cancelFile;
-//	cancelFile.open("cancelFile.csv", ios::in);
-//	string line, email, field, pass;
-//	int linenum = 0;
-//	vector <vector<string> > array3;
-//	vector<string> v;
-//
-//	while (getline(cancelFile, line)) {
-//		v.clear();
-//		stringstream ss(line);
-//		while (getline(ss, field, ',')) {
-//			v.push_back(field);
-//		}
-//		array3.push_back(v);
-//	}
-//
-//	//Weekly Report
-//	cout << "\n\nWeekly Report\n";
-//	drawLine();
-//	cout << "\nNumber of trips: ";
-//	cout << "\nPayments: ";
-//	cout << "\nPaid to drivers: $";
-//	cout << "\nGross: ";
-//	cout << "\nTax deduction: $";
-//	cout << "\nNet profit: ";
-//	cout << "\n";
-//	drawLine();
-//	
-//	//Driver Report
-//	cout << "Driver Report\n";
-//	drawLine();
-//
-//	drawLine();
-//
-//	//Customer Report
-//	cout << "Customer Report\n";
-//	drawLine();
-//	//getting customer info
-//	
-//
-//	//Cancellation Report
-//	cout << "Cancelation Report";
-//	drawLine();
-//	cout << "\nAmount of cancelattions: ";
-//	cout << "Profit loss: $";
-//	cout << "\n";
-//	drawLine();
+	string usernameCheck, passwordCheck, storedPassword = "500Miles", storedLogin = "OnlyTrippers";
+	//Login 
+	cout << "\n\nAdmin Menu\n";
+	drawLine();
+	cout << "\nLogin:\n";
+	cout << "Username: ";
+	cin >> usernameCheck;
+	cout << "\nPassword: ";
+	cin >> passwordCheck;
+	//Password Checking
+	while (usernameCheck != storedLogin && passwordCheck != storedPassword) {
+		cout << "\nThat login dosen't match please try again.\n";
+		cout << "\nLogin:\n";
+		cout << "Username: ";
+		cin >> usernameCheck;
+		cout << "\nPassword: ";
+		cin >> passwordCheck;
+	}
+	drawLine();
+	cout << "Welcome Admins";
+	drawLine();
+
+	//file access
+
+	//driver File
+	ifstream driverFile;
+	driverFile.open("driverFile.csv", ios::in);
+	string line, email, field, pass;
+	int linenum = 0;
+	vector <vector<string> > array1;
+	vector<string> v;
+
+	while (getline(driverFile, line)) {
+		v.clear();
+		stringstream ss(line);
+		while (getline(ss, field, ',')) {
+			v.push_back(field);
+		}
+		array1.push_back(v);
+	}
+
+	//customer file
+	ifstream customerFile;
+	customerFile.open("customerFile.csv", ios::in);
+	string line, email, field, pass;
+	int linenum = 0;
+	vector <vector<string> > array2;
+	vector<string> v;
+
+	while (getline(customerFile, line)) {
+		v.clear();
+		stringstream ss(line);
+		while (getline(ss, field, ',')) {
+			v.push_back(field);
+		}
+		array2.push_back(v);
+	}
+	//cancelation file
+	ifstream cancelFile;
+	cancelFile.open("cancelFile.csv", ios::in);
+	string line, email, field, pass;
+	int linenum = 0;
+	vector <vector<string> > array3;
+	vector<string> v;
+
+	while (getline(cancelFile, line)) {
+		v.clear();
+		stringstream ss(line);
+		while (getline(ss, field, ',')) {
+			v.push_back(field);
+		}
+		array3.push_back(v);
+	}
+
+	//Weekly Report
+	cout << "\n\nWeekly Report\n";
+	drawLine();
+	cout << "\nNumber of trips: ";
+	cout << "\nPayments: ";
+	cout << "\nPaid to drivers: $";
+	cout << "\nGross: ";
+	cout << "\nTax deduction: $";
+	cout << "\nNet profit: ";
+	cout << "\n";
+	drawLine();
+	
+	//Driver Report
+	cout << "Driver Report\n";
+	drawLine();
+
+	drawLine();
+
+	//Customer Report
+	cout << "Customer Report\n";
+	drawLine();
+	//getting customer info
+	
+
+	//Cancellation Report
+	cout << "Cancelation Report";
+	drawLine();
+	cout << "\nAmount of cancelattions: ";
+	cout << "Profit loss: $";
+	cout << "\n";
+	drawLine();
 }
 
 int main()
@@ -1195,7 +1195,7 @@ int main()
 		goto rerun;
 
 	case 4 :
-		/*adminMenu();*/
+		adminMenu();
 		goto rerun;
 
 	case 5 : 
