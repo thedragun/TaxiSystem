@@ -1074,7 +1074,6 @@ relog:
 }
 
 void adminMenu() {
-
 	string usernameCheck, passwordCheck, storedPassword = "500Miles", storedLogin = "OnlyTrippers";
 	//Login 
 	cout << "\n\nAdmin Menu\n";
@@ -1198,6 +1197,7 @@ void adminMenu() {
 			cout << array1[j][i];
 		}
 	}
+
 	drawLine();
 
 	//Customer Report
@@ -1262,7 +1262,7 @@ int main()
 		goto rerun;
 
 	case 4 :
-		/*adminMenu();*/
+		adminMenu();
 		goto rerun;
 
 	case 5 : 
