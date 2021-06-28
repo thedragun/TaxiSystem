@@ -15,9 +15,8 @@
 #include <stdlib.h>
 #include <conio.h>
 #include<stdio.h>
-
-
 using namespace std;
+
 void drawCar() {
 	char six = '"';
 	cout << "\t\t\t             Thanks for Riding with Only Trips\n";
@@ -94,7 +93,6 @@ public:
 		licenceNumber = 0, contactNumber = 0, carRegistrationNumber = 0,endorcementNumber = 0;
 	}
 };
-
 
 void driverMenu(int linenum) {
 	string accept, completed;
@@ -939,15 +937,15 @@ relog:
 			}
 			array.push_back(v);
 		}
-		//array.size() needs to have as many lines of data in the csv file as colums you want it to read as they are directly related
+		
 		for (size_t i = 0; i < array.size(); ++i) {
 			for (size_t j = 0; j < 7; ++j) {
-				//cout << array[i][j] << ", ";
+				
 				if (array[i][j] == email) {
 					cout << "\nEmail Found in line : " << i + 1 << " " << array[i][j];	
 						repass:
 						cout << "\n\nEnter Your password : ";
-						//cin >> pass;
+						
 						ch = ' ';
 						while (true) {
 							ch = _getch();
