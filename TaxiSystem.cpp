@@ -1187,9 +1187,7 @@ void adminMenu() {
 	//paid to drivers
 	int taken = 5, paidToDrivers = 0, remainder;
 
-	taken = (payments * taken) / 100;
-
-	remainder = paidToDrivers % taken;
+	paidToDrivers = (payments * taken) / 100;
 
 	//net profit calculation
 	int gross = taken, taxD = 15, netProfit;
@@ -1210,13 +1208,14 @@ void adminMenu() {
 	drawLine();
 	
 	//Driver Report
-	cout << "Driver Report\n";
+	cout << "\nDriver Report\n";
 	drawLine();
+	cout << "\n";
 	for (int j = 0; j != 10; j++)
 	{
 		for (int i = 0; i != 7; i++)
 		{
-			cout << array1[j][i];
+			cout << array1[j][i] << "\n";
 		}
 	}
 
@@ -1225,11 +1224,12 @@ void adminMenu() {
 	//Customer Report
 	cout << "Customer Report\n";
 	drawLine();
+	cout << "\n";
 	for (int j = 0; j != 10; j++)
 	{
 		for (int i = 0; i != 4; i++)
 		{
-			cout << array2[j][i];
+			cout << array2[j][i] << "\n";
 		}
 	}
 	//getting customer info
@@ -1242,7 +1242,7 @@ void adminMenu() {
 		cancelAmount = cancelAmount + stoi(array3[j][4]);
 		loss = loss + stoi(array3[j][5]);
 	}
-	cout << "Cancelation Report";
+	cout << "Cancelation Report\n";
 	drawLine();
 	cout << "\nAmount of cancelattions: " << cancelAmount;
 	cout << "Profit loss: $" << loss;
